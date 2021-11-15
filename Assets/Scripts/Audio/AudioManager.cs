@@ -2,18 +2,13 @@ using UnityEngine.Audio;
 using UnityEngine;
 
 using System;
-using Chronos;
 
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
     
-    public static AudioManager instance { get; private set;  }
-
-    
     void Awake()
     {
-        // Add audio source components
         foreach (Sound s in sounds)
         {
             s.SetSource(gameObject.AddComponent<AudioSource>());
