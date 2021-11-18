@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public float shotCooldown;
+    public LayerMask hitMaskNormal;
+    public LayerMask hitMaskPiercing;
+    
+    private float _shotTimer;
+    
+    public void Shoot(bool shoot, Vector2 aimDirection)
     {
         
     }

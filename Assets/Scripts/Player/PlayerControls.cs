@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    private bool _holdJump;
     private bool _jump = false;
     private bool _shoot = false;
 
-    private Controls _controls;
+    private Vector2 _aimInput;
     private Vector2 _directionInput;
     
+    private Controls _controls;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
     
@@ -42,6 +42,11 @@ public class PlayerControls : MonoBehaviour
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _playerCombat = GetComponent<PlayerCombat>();
+    }
+
+    private void Update()
+    {
+        _playerCombat.Shoot(_shoot, _aimInput);
     }
 
     private void FixedUpdate()
