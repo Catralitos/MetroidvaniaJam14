@@ -1,18 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool _holdJump;
+    private bool _jump = false;
+    private bool _shoot = false;
+
+    private Controls _controls;
+    private Vector2 _directionInput;
+    
+    private PlayerMovement _playerMovement;
+    private PlayerCombat _playerCombat;
+    
+    private void Awake()
     {
+        _controls = new Controls();
+        _controls.Player.Move.performed += ctx => { _directionInput = ctx.ReadValue<Vector2>(); };
+        _controls.Player.Move.canceled += _ => { _directionInput = Vector2.zero; };
+        _controls.Player.Jump.performed += ctx => {  _jump = true; };
+        _controls.Player.Jump.canceled += _ => { _jump = false; };
+
+        _controls.Player.Shoot.performed += ctx => { _shoot = true; };
+        _controls.Player.Shoot.canceled += _ => { _shoot = false; };
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _controls.Player.Enable();
+    }
+    
+    private void OnDisable()
+    {
+        _controls.Player.Disable();
+    }
+    
+    private void Start()
+    {
+        _playerMovement = GetComponent<PlayerMovement>();
+        _playerCombat = GetComponent<PlayerCombat>();
+    }
+
+    private void FixedUpdate()
+    {
+        _playerMovement.Move(_directionInput.x, _jump);
     }
 }
