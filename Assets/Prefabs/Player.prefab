@@ -741,6 +741,7 @@ MonoBehaviour:
   frozeControls: 0
   isCrouched: 0
   isMorphed: 0
+  unlockedDash: 0
   unlockedDoubleJump: 0
   unlockedMorphBall: 0
   unlockedTripleBeam: 0
@@ -786,6 +787,9 @@ MonoBehaviour:
   jumpTime: 0.15
   moveSpeed: 10
   numberOfMidairJumps: 1
+  dashCooldown: 0.5
+  dashSpeed: 50
+  startDashTime: 0.1
   wallJumpWindow: 0.5
   feetTrigger: {fileID: 792532263}
   leftTrigger: {fileID: 792532265}

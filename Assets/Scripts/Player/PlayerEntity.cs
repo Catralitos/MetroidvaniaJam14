@@ -18,7 +18,8 @@ public class PlayerEntity : MonoBehaviour
 
     public bool isCrouched;
     public bool isMorphed;
-    
+
+    public bool unlockedDash;
     public bool unlockedDoubleJump;
     public bool unlockedMorphBall;
     public bool unlockedTripleBeam;

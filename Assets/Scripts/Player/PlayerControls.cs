@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    private bool _dash = false;
     private bool _jump = false;
     private bool _shoot = false;
 
@@ -24,6 +22,8 @@ public class PlayerControls : MonoBehaviour
         _controls.Player.Move.canceled += _ => { _directionInput = Vector2.zero; };
         _controls.Player.Jump.performed += ctx => {  _jump = true; };
         _controls.Player.Jump.canceled += _ => { _jump = false; };
+        _controls.Player.Dash.performed += _ => { _dash = true; };
+        _controls.Player.Dash.canceled += _ => { _dash = false; };
 
         _controls.Player.Shoot.performed += ctx => { _shoot = true; };
         _controls.Player.Shoot.canceled += _ => { _shoot = false; };
@@ -55,6 +55,7 @@ public class PlayerControls : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!PlayerEntity.Instance.frozeControls) _playerMovement.Move(_directionInput.x, _jump);
+        if (!PlayerEntity.Instance.unlockedDash) _dash = false;
+        if (!PlayerEntity.Instance.frozeControls) _playerMovement.Move(_directionInput.x, _jump, _dash);
     }
 }

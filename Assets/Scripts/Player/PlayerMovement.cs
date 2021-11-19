@@ -1,17 +1,23 @@
 using System;
+using System.Data;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")] public float jumpForce;
+    [Header("Run and Jump")] public float jumpForce;
     public float jumpTime;
     public float moveSpeed;
     public int numberOfMidairJumps;
+
+    [Header("Dash")] public float dashCooldown;
+    public float dashSpeed;
+    public float startDashTime;
 
     [Header("Physics Checks (Triggers)")] public float wallJumpWindow;
     public ContactTrigger feetTrigger;
     public ContactTrigger leftTrigger;
     public ContactTrigger rightTrigger;
+
     [Header("Physics Checks (Raycasts)")] public float detectionRange;
     public float ledgeOffsetX1;
     public float ledgeOffestY1;
@@ -25,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _canClimbLedge;
     private bool _canClimbLedgeMorph;
     private bool _canWallJump;
+    private bool _dashingLeft;
+    private bool _dashingRight;
     private bool _detectedWall;
     private bool _detectedLedgeBottom;
     private bool _detectedLedgeTop;
@@ -37,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
     private bool _ledgeDetected;
     private bool _ledgeDetectedMorph;
 
+    private float _dashCooldownLeft;
+    private float _dashTime;
     private float _jumpTimeCounter;
-
 
     private int _jumpPresses;
     private int _midairJumps;
@@ -50,15 +59,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        feetTrigger.StartedContactEvent += () => { _isGrounded = true;
+        feetTrigger.StartedContactEvent += () =>
+        {
+            _isGrounded = true;
             _midairJumps = 0;
             _isJumping = false;
             _isSomersaulting = false;
         };
         feetTrigger.StoppedContactEvent += () => { _isGrounded = false; };
-        leftTrigger.StartedContactEvent += () => { _isHuggingWallLeft = true; };
+        leftTrigger.StartedContactEvent += () =>
+        {
+            _isHuggingWallLeft = true;
+            _dashingLeft = false;
+            _dashingRight = false;
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        };
         leftTrigger.StoppedContactEvent += () => { _isHuggingWallLeft = false; };
-        rightTrigger.StartedContactEvent += () => { _isHuggingWallRight = true; };
+        rightTrigger.StartedContactEvent += () =>
+        {
+            _isHuggingWallRight = true;
+            _dashingLeft = false;
+            _dashingRight = false;
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        };
         rightTrigger.StoppedContactEvent += () => { _isHuggingWallRight = false; };
     }
 
@@ -81,6 +104,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _dashCooldownLeft = 0;
+        _dashTime = startDashTime;
         _facingRight = true;
         _midairJumps = numberOfMidairJumps;
     }
@@ -89,14 +115,39 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckSurroundings();
         CheckLedgeClimb();
+
+        _dashCooldownLeft -= Time.deltaTime;
+
+        if (_dashingLeft)
+        {
+            PlayerEntity.Instance.testCylinder.color = Color.blue;
+        }
+        else if (_dashingRight)
+        {
+            PlayerEntity.Instance.testCylinder.color = Color.magenta;
+        }
+        else
+        {
+            PlayerEntity.Instance.testCylinder.color = Color.white;
+        }
     }
 
     //This function is called every FixedUpdate on PlayerControls
-    public void Move(float xInput, bool jump)
+    public void Move(float xInput, bool jump, bool dash)
     {
-        if (!_canClimbLedgeMorph && !_canClimbLedge && ((_facingRight && xInput < 0) || (!_facingRight && xInput > 0)))
+        if (HasToFlip(xInput))
         {
             Flip();
+        }
+
+        if (Dashing() && _dashTime < 0)
+        {
+            Debug.Log("Dash time over");
+            _dashingRight = false;
+            _dashingLeft = false;
+            _dashTime = startDashTime;
+            _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            _dashCooldownLeft = dashCooldown;
         }
 
         if (CanJump())
@@ -104,18 +155,8 @@ public class PlayerMovement : MonoBehaviour
             _midairJumps = numberOfMidairJumps;
             _jumpPresses = 0;
         }
-        
-        if (_isGrounded || (_canWallJump &&
-                            ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight))))
-        {
-            PlayerEntity.Instance.testCylinder.color = Color.red;
-        }
-        else
-        {
-            PlayerEntity.Instance.testCylinder.color = Color.white;
-        }
 
-        if (!_canClimbLedge && !_canClimbLedgeMorph)
+        if (!HangingToLedge())
         {
             if (_isSomersaulting && ((_facingRight && _isHuggingWallRight) || (!_facingRight && _isHuggingWallLeft)))
             {
@@ -127,9 +168,38 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (jump)
+        if (dash && _dashCooldownLeft < 0)
         {
-            if (_canClimbLedge || _canClimbLedgeMorph)
+            if (Math.Abs(xInput) <= 0.1f)
+            {
+                //do nothing
+            }
+            else if (xInput > 0)
+            {
+                _dashingRight = true;
+                _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+            }
+            else if (xInput < 0)
+            {
+                _dashingLeft = true;
+                _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+            }
+        }
+        
+        if (_dashingRight)
+        {
+            _dashTime -= Time.deltaTime;
+            _rb.velocity = Vector2.right * dashSpeed;
+        }
+        else if (_dashingLeft)
+        {
+            _dashTime -= Time.deltaTime;
+            _rb.velocity = Vector2.left * dashSpeed;
+        }
+
+        if (jump && !Dashing())
+        {
+            if (HangingToLedge())
             {
                 if ((_facingRight && xInput < 0) || (!_facingRight && xInput > 0))
                 {
@@ -144,7 +214,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if ((_facingRight && xInput > 0) || (!_facingRight && xInput < 0))
                 {
-                    Debug.Log("Entrou no if certo");
                     FinishLedgeClimb();
                 }
                 else
@@ -167,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     _isSomersaulting = true;
                 }
-                
+
                 _isJumping = true;
                 _jumpTimeCounter = jumpTime;
                 _rb.velocity = Vector2.up * jumpForce;
@@ -205,8 +274,9 @@ public class PlayerMovement : MonoBehaviour
             _isJumping = false;
             _jumpPresses++;
         }
-        
-        if (!_canClimbLedgeMorph && !_canClimbLedge) _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
+
+        if (!Dashing() && !HangingToLedge())
+            _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
     }
 
     public void FinishLedgeClimb()
@@ -216,6 +286,12 @@ public class PlayerMovement : MonoBehaviour
         transform.position = _ledgePos2;
         _ledgeDetected = false;
         _ledgeDetectedMorph = false;
+    }
+
+    private bool HasToFlip(float xInput)
+    {
+        return !_canClimbLedgeMorph && !_canClimbLedge && ((_facingRight && (xInput < 0 || _dashingLeft)
+                                                            || (!_facingRight && (xInput > 0 || _dashingRight))));
     }
 
     private void Flip()
@@ -234,6 +310,16 @@ public class PlayerMovement : MonoBehaviour
     private bool ReadyToWallJump()
     {
         return (_canWallJump && ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight)));
+    }
+
+    private bool Dashing()
+    {
+        return _dashingLeft || _dashingRight;
+    }
+
+    private bool HangingToLedge()
+    {
+        return _canClimbLedge || _canClimbLedgeMorph;
     }
 
     private void CheckSurroundings()
