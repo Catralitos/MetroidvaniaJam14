@@ -13,8 +13,11 @@ public class PlayerEntity : MonoBehaviour
 
     //vou meter aqui os colliders porque vou precisar de fazer um trigger e não é o player em si com colliders
     public List<GameObject> colliders;
-
+    
     public bool frozeControls;
+
+    public bool isCrouched;
+    public bool isMorphed;
     
     public bool unlockedDoubleJump;
     public bool unlockedMorphBall;

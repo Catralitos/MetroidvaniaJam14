@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerControls : MonoBehaviour
     private Controls _controls;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
+    private Vector2 _mousePosition;
     
     private void Awake()
     {
@@ -46,6 +48,8 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
+        _mousePosition = Mouse.current.position.ReadValue();
+        _aimInput = (_mousePosition - (Vector2) (transform.position)).normalized;
         if (!PlayerEntity.Instance.frozeControls) _playerCombat.Shoot(_shoot, _aimInput);
     }
 
