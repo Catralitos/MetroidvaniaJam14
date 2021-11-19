@@ -834,14 +834,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8545c6574160bb479494e21a8143612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotCooldown: 0
-  shotRange: 0
+  shotCooldown: 2
+  shotRange: 10
   hitMaskNormal:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 320
   hitMaskPiercing:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   armJoints:
   - {fileID: 600008146}
   - {fileID: 1320940432}
