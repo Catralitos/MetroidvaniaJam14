@@ -8,13 +8,13 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public int numberOfMidairJumps;
 
-    [Header("Physics Checks")] public float checkRadius;
-    public LayerMask whatIsGround;
+    [Header("Physics Checks")] public float wallJumpWindow; 
+    public LayerMask whatIsLedge;
     public ContactTrigger feetTrigger;
     public ContactTrigger leftTrigger;
     public ContactTrigger rightTrigger;
-    //public Transform feetPos;
 
+    private bool _canWallJump;
     private bool _facingRight;
     private bool _isGrounded;
     private bool _isHuggingWallLeft;
@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimeCounter;
     private int _midairJumps;
 
-    
     private Rigidbody2D _rb;
 
     private void Awake()
@@ -44,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         leftTrigger.enabled = true;
         rightTrigger.enabled = true;
     }
-    
+
     private void OnDisable()
     {
         feetTrigger.enabled = false;
@@ -62,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        //_isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+
     }
 
     //This function is called every FixedUpdate on PlayerControls
@@ -72,12 +71,35 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+
+       
+
+        if (_isGrounded || (_canWallJump &&
+                            ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight))))
+        {
+            PlayerEntity.Instance.testCylinder.color = Color.red;
+        }
+        else
+        {
+            PlayerEntity.Instance.testCylinder.color = Color.white;
+        }
         
+        if (_isSomersaulting && ((_facingRight && _isHuggingWallRight) || (!_facingRight && _isHuggingWallLeft)))
+        {
+            _canWallJump = true;
+        }
+        else
+        {
+            if (_canWallJump) Invoke(nameof(StopWallJump), wallJumpWindow);
+        }
+
+
         if (jump)
         {
-            if (_isGrounded)
+            if (_isGrounded || (_canWallJump &&
+                                ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight))))
             {
-                if (Math.Abs(xInput) <= 0.1)
+                if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;
                 }
@@ -96,12 +118,13 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     _isJumping = false;
+                    _isSomersaulting = false;
                 }
             }
             else if (PlayerEntity.Instance.unlockedDoubleJump && _midairJumps < numberOfMidairJumps)
             {
                 _midairJumps++;
-                if (Math.Abs(xInput) <= 0.1)
+                if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;
                 }
@@ -117,8 +140,8 @@ public class PlayerMovement : MonoBehaviour
             _isSomersaulting = false;
             _isJumping = false;
         }
-        
-        _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
+
+        if (_rb.gravityScale > 0) _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
     }
 
     private void Flip()
@@ -128,4 +151,10 @@ public class PlayerMovement : MonoBehaviour
         scaler.x *= -1;
         transform.localScale = scaler;
     }
+
+    private void StopWallJump()
+    {
+        _canWallJump = false;
+    }
+    
 }

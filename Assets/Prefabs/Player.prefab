@@ -152,10 +152,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliders: []
+  frozeControls: 0
   unlockedDoubleJump: 0
+  unlockedMorphBall: 0
   unlockedTripleBeam: 0
   unlockedPiercingBeam: 0
-  testCylinder: {fileID: 0}
+  testCylinder: {fileID: 6980801993283995932}
 --- !u!114 &6980801993563420554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,11 +195,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 15
-  jumpTime: 0.35
+  jumpTime: 0.15
   moveSpeed: 10
   numberOfMidairJumps: 1
-  checkRadius: 0.3
-  whatIsGround:
+  wallJumpWindow: 0.5
+  whatIsLedge:
     serializedVersion: 2
     m_Bits: 64
   feetTrigger: {fileID: 792532263}
@@ -280,7 +282,7 @@ MonoBehaviour:
   contactLayers:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0
+  coyoteTime: 0.5
   shouldDrawGizmo: 1
   castType: 0
   castDimensions: {x: 0.25, y: 1}
@@ -302,7 +304,7 @@ MonoBehaviour:
   contactLayers:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0
+  coyoteTime: 0.5
   shouldDrawGizmo: 1
   castType: 0
   castDimensions: {x: 0.25, y: 1}

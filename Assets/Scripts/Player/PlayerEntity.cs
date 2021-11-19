@@ -11,13 +11,18 @@ public class PlayerEntity : MonoBehaviour
 
     [HideInInspector]public PlayerCombat Combat { get; private set; }
 
-    //vou emter aqui os colliders porque vou precisar de fazer um trigger e não é o player em si com colliders
+    //vou meter aqui os colliders porque vou precisar de fazer um trigger e não é o player em si com colliders
     public List<GameObject> colliders;
 
+    public bool frozeControls;
+    
     public bool unlockedDoubleJump;
+    public bool unlockedMorphBall;
     public bool unlockedTripleBeam;
     public bool unlockedPiercingBeam;
-
+  
+    
+    
     public SpriteRenderer testCylinder;
     
     void Awake()

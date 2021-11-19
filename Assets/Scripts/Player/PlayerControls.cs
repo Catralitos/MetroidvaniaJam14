@@ -46,11 +46,11 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
-        _playerCombat.Shoot(_shoot, _aimInput);
+        if (!PlayerEntity.Instance.frozeControls) _playerCombat.Shoot(_shoot, _aimInput);
     }
 
     private void FixedUpdate()
     {
-        _playerMovement.Move(_directionInput.x, _jump);
+        if (!PlayerEntity.Instance.frozeControls) _playerMovement.Move(_directionInput.x, _jump);
     }
 }
