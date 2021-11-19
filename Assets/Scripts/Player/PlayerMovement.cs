@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private float _jumpTimeCounter;
 
 
+    private int _jumpPresses;
     private int _midairJumps;
 
     private Rigidbody2D _rb;
@@ -49,7 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        feetTrigger.StartedContactEvent += () => { _isGrounded = true; };
+        feetTrigger.StartedContactEvent += () => { _isGrounded = true;
+            _midairJumps = 0;
+            _isJumping = false;
+            _isSomersaulting = false;
+        };
         feetTrigger.StoppedContactEvent += () => { _isGrounded = false; };
         leftTrigger.StartedContactEvent += () => { _isHuggingWallLeft = true; };
         leftTrigger.StoppedContactEvent += () => { _isHuggingWallLeft = false; };
@@ -77,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _facingRight = true;
+        _midairJumps = numberOfMidairJumps;
     }
 
     private void Update()
@@ -93,6 +99,12 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
+        if (CanJump())
+        {
+            _midairJumps = numberOfMidairJumps;
+            _jumpPresses = 0;
+        }
+        
         if (_isGrounded || (_canWallJump &&
                             ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight))))
         {
@@ -148,17 +160,32 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            //salto no chão/parede
             if (CanJump())
             {
                 if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;
                 }
-
+                
                 _isJumping = true;
                 _jumpTimeCounter = jumpTime;
                 _rb.velocity = Vector2.up * jumpForce;
             }
+            //salto no ar
+            else if (_midairJumps > 0 && _jumpPresses > 0)
+            {
+                if (Math.Abs(xInput) >= 0.1)
+                {
+                    _isSomersaulting = true;
+                }
+
+                _midairJumps--;
+                _isJumping = true;
+                _jumpTimeCounter = jumpTime;
+                _rb.velocity = Vector2.up * jumpForce;
+            }
+            //fazer o salto mais alto conforme o input
             else if (_isJumping)
             {
                 if (_jumpTimeCounter > 0)
@@ -172,27 +199,13 @@ public class PlayerMovement : MonoBehaviour
                     _isSomersaulting = false;
                 }
             }
-            else if (PlayerEntity.Instance.unlockedDoubleJump && _midairJumps < numberOfMidairJumps)
-            {
-                _midairJumps++;
-                if (Math.Abs(xInput) >= 0.1)
-                {
-                    _isSomersaulting = true;
-                }
-
-                _isJumping = true;
-                _jumpTimeCounter = jumpTime;
-                _rb.velocity = Vector2.up * jumpForce;
-            }
         }
         else
         {
-            _midairJumps = 0;
-            _isSomersaulting = false;
             _isJumping = false;
+            _jumpPresses++;
         }
-
-
+        
         if (!_canClimbLedgeMorph && !_canClimbLedge) _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
     }
 
@@ -215,9 +228,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        return !_isJumping && (_isGrounded || (_canWallJump &&
-                                               ((_facingRight && _isHuggingWallLeft) ||
-                                                (!_facingRight && _isHuggingWallRight))));
+        return _isGrounded || ReadyToWallJump();
+    }
+
+    private bool ReadyToWallJump()
+    {
+        return (_canWallJump && ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight)));
     }
 
     private void CheckSurroundings()
