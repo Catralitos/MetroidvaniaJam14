@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -28,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform bottomLedgeRayOrigin;
     public Transform topLedgeRayOrigin;
 
+    public float midAirMorphWindow;
+
     private bool _canClimbLedge;
     private bool _canClimbLedgeMorph;
     private bool _canWallJump;
@@ -42,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isHuggingWallRight;
     private bool _isJumping;
     private bool _isSomersaulting;
+    private bool _fakeMidairCrouch;
     private bool _ledgeDetected;
     private bool _ledgeDetectedMorph;
 
@@ -49,8 +51,11 @@ public class PlayerMovement : MonoBehaviour
     private float _dashTime;
     private float _jumpTimeCounter;
 
+    private int _downPresses;
     private int _jumpPresses;
     private int _midairJumps;
+    private int _upPresses;
+
 
     private Rigidbody2D _rb;
     private Vector2 _ledgePosBottom;
@@ -133,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //This function is called every FixedUpdate on PlayerControls
-    public void Move(float xInput, bool jump, bool dash)
+    public void Move(float xInput, float yInput, bool jump, bool dash)
     {
         if (HasToFlip(xInput))
         {
@@ -142,7 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Dashing() && _dashTime < 0)
         {
-            Debug.Log("Dash time over");
             _dashingRight = false;
             _dashingLeft = false;
             _dashTime = startDashTime;
@@ -158,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!HangingToLedge())
         {
-            if (_isSomersaulting && ((_facingRight && _isHuggingWallRight) || (!_facingRight && _isHuggingWallLeft)))
+            if (CanWallJump())
             {
                 _canWallJump = true;
             }
@@ -170,6 +174,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (dash && _dashCooldownLeft < 0)
         {
+            if (PlayerEntity.Instance.isCrouched)
+            {
+                Uncrouch();
+            }
+
             if (Math.Abs(xInput) <= 0.1f)
             {
                 //do nothing
@@ -185,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
                 _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
             }
         }
-        
+
         if (_dashingRight)
         {
             _dashTime -= Time.deltaTime;
@@ -195,6 +204,41 @@ public class PlayerMovement : MonoBehaviour
         {
             _dashTime -= Time.deltaTime;
             _rb.velocity = Vector2.left * dashSpeed;
+        }
+
+        if (yInput < 0)
+        {
+            _downPresses++;
+            if (_downPresses == 1 && CanCrouch() && Math.Abs(xInput) <= 0.1f)
+            {
+                Crouch();
+            }
+            else if (_downPresses == 1 && !_isGrounded && !CanMorph(xInput))
+            {
+                _fakeMidairCrouch = true;
+                Invoke(nameof(ResetMidAirMorphWindow), midAirMorphWindow);
+            }
+            else if (_downPresses == 1 && CanMorph(xInput))
+            {
+                Morph();
+            }
+        }
+        else if (yInput > 0 && Math.Abs(xInput) <= 0.1f)
+        {
+            _upPresses++;
+            if (_upPresses == 1 && PlayerEntity.Instance.isCrouched)
+            {
+                Uncrouch();
+            }
+            else if (_upPresses == 1 && PlayerEntity.Instance.isMorphed)
+            {
+                Crouch();
+            }
+        }
+        else
+        {
+            _downPresses = 0;
+            _upPresses = 0;
         }
 
         if (jump && !Dashing())
@@ -232,6 +276,11 @@ public class PlayerMovement : MonoBehaviour
             //salto no chão/parede
             if (CanJump())
             {
+                if (PlayerEntity.Instance.isCrouched)
+                {
+                    Uncrouch();
+                }
+
                 if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;
@@ -276,14 +325,52 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (!Dashing() && !HangingToLedge())
+        {
+            if (PlayerEntity.Instance.isCrouched && Math.Abs(xInput) >= 0.1f)
+            {
+                Uncrouch();
+            }
+
             _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
+        }
+    }
+
+    private void Crouch()
+    {
+        PlayerEntity.Instance.isCrouched = true;
+        PlayerEntity.Instance.isMorphed = false;
+    }
+
+    private void Uncrouch()
+    {
+        PlayerEntity.Instance.isCrouched = false;
+    }
+
+    private void Morph()
+    {
+        if (PlayerEntity.Instance.unlockedMorphBall)
+        {
+            _fakeMidairCrouch = false;
+            PlayerEntity.Instance.isCrouched = false;
+            PlayerEntity.Instance.isMorphed = true;
+        }
+    }
+
+    private void ResetMidAirMorphWindow()
+    {
+        _fakeMidairCrouch = false;
     }
 
     public void FinishLedgeClimb()
     {
+        transform.position = _ledgePos2;
+        if (_canClimbLedgeMorph)
+        {
+            Crouch();
+        }
+
         _canClimbLedge = false;
         _canClimbLedgeMorph = false;
-        transform.position = _ledgePos2;
         _ledgeDetected = false;
         _ledgeDetectedMorph = false;
     }
@@ -292,6 +379,11 @@ public class PlayerMovement : MonoBehaviour
     {
         return !_canClimbLedgeMorph && !_canClimbLedge && ((_facingRight && (xInput < 0 || _dashingLeft)
                                                             || (!_facingRight && (xInput > 0 || _dashingRight))));
+    }
+
+    private bool CanWallJump()
+    {
+        return _isSomersaulting && ((_facingRight && _isHuggingWallRight) || (!_facingRight && _isHuggingWallLeft));
     }
 
     private void Flip()
@@ -310,6 +402,18 @@ public class PlayerMovement : MonoBehaviour
     private bool ReadyToWallJump()
     {
         return (_canWallJump && ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight)));
+    }
+
+    private bool CanCrouch()
+    {
+        return _isGrounded && !PlayerEntity.Instance.isCrouched;
+    }
+
+    private bool CanMorph(float xInput)
+    {
+        return ((_isGrounded && PlayerEntity.Instance.isCrouched && Math.Abs(xInput) <= 0.1f) ||
+                (!_isGrounded && _fakeMidairCrouch)) &&
+               !PlayerEntity.Instance.isMorphed;
     }
 
     private bool Dashing()
@@ -343,7 +447,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckLedgeClimb()
     {
-        if (_ledgeDetected && !_canClimbLedge)
+        if (_ledgeDetected && !_canClimbLedge && !PlayerEntity.Instance.isMorphed)
         {
             _canClimbLedge = true;
 
@@ -363,7 +467,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (_ledgeDetectedMorph && !_canClimbLedgeMorph)
+        if (_ledgeDetectedMorph && !_canClimbLedgeMorph && !PlayerEntity.Instance.isMorphed)
         {
             _canClimbLedgeMorph = true;
 

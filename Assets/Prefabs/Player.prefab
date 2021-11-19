@@ -238,7 +238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647352046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalPosition: {x: 0, y: 1.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6980801993563420556}
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464393ffafbb5794e8c8d04b1c5ffb2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliders:
+  states:
   - {fileID: 6980801993283995929}
   - {fileID: 88250728}
   - {fileID: 1749416576}
@@ -743,7 +743,7 @@ MonoBehaviour:
   isMorphed: 0
   unlockedDash: 0
   unlockedDoubleJump: 0
-  unlockedMorphBall: 0
+  unlockedMorphBall: 1
   unlockedTripleBeam: 0
   unlockedPiercingBeam: 0
   testCylinder: {fileID: 6980801993283995932}
@@ -805,6 +805,7 @@ MonoBehaviour:
   wallRayOrigin: {fileID: 1088526676}
   bottomLedgeRayOrigin: {fileID: 754811374}
   topLedgeRayOrigin: {fileID: 647352047}
+  midAirMorphWindow: 1
 --- !u!50 &6980801993563420551
 Rigidbody2D:
   serializedVersion: 4

@@ -56,6 +56,6 @@ public class PlayerControls : MonoBehaviour
     private void FixedUpdate()
     {
         if (!PlayerEntity.Instance.unlockedDash) _dash = false;
-        if (!PlayerEntity.Instance.frozeControls) _playerMovement.Move(_directionInput.x, _jump, _dash);
+        if (!PlayerEntity.Instance.frozeControls) _playerMovement.Move(_directionInput.x, _directionInput.y, _jump, _dash);
     }
 }

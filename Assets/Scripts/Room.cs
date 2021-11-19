@@ -19,7 +19,7 @@ public class Room : MonoBehaviour
 
     public void Start()
     {
-        _playerColliders = PlayerEntity.Instance.colliders;
+        _playerColliders = PlayerEntity.Instance.states;
         _enemies = new List<GameObject>();
     }
 
