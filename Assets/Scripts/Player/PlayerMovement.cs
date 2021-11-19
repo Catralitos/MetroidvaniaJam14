@@ -148,8 +148,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (_isGrounded || (_canWallJump &&
-                                ((_facingRight && _isHuggingWallLeft) || (!_facingRight && _isHuggingWallRight))))
+            if (CanJump())
             {
                 if (Math.Abs(xInput) >= 0.1)
                 {
@@ -193,6 +192,7 @@ public class PlayerMovement : MonoBehaviour
             _isJumping = false;
         }
 
+
         if (!_canClimbLedgeMorph && !_canClimbLedge) _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
     }
 
@@ -211,6 +211,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 scaler = transform.localScale;
         scaler.x *= -1;
         transform.localScale = scaler;
+    }
+
+    private bool CanJump()
+    {
+        return !_isJumping && (_isGrounded || (_canWallJump &&
+                                               ((_facingRight && _isHuggingWallLeft) ||
+                                                (!_facingRight && _isHuggingWallRight))));
     }
 
     private void CheckSurroundings()
