@@ -742,10 +742,10 @@ MonoBehaviour:
   isCrouched: 0
   isMorphed: 0
   isUnderwater: 0
-  unlockedDash: 0
-  unlockedDoubleJump: 0
+  unlockedDash: 1
+  unlockedDoubleJump: 1
   unlockedGravitySuit: 0
-  unlockedMorphBall: 0
+  unlockedMorphBall: 1
   unlockedTripleBeam: 0
   unlockedPiercingBeam: 0
   defaultDrag: 0
@@ -813,6 +813,8 @@ MonoBehaviour:
   wallRayOrigin: {fileID: 1088526676}
   bottomLedgeRayOrigin: {fileID: 754811374}
   topLedgeRayOrigin: {fileID: 647352047}
+  ledgeDropWindow: 1
+  ledgeFreezeControlsWindow: 0.2
   midAirMorphWindow: 1
 --- !u!50 &6980801993563420551
 Rigidbody2D:

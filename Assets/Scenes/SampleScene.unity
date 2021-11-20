@@ -2717,41 +2717,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: defaultMass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: isUnderwater
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: defaultGravity
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: underwaterDrag
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: underwaterMass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: underwaterGravity
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420556, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420556, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.3
+      value: 1.36
       objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420556, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.02
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420556, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_LocalPosition.z

@@ -28,10 +28,13 @@ public class PlayerMovement : MonoBehaviour
     public Transform bottomLedgeRayOrigin;
     public Transform topLedgeRayOrigin;
 
+    public float ledgeDropWindow;
+    public float ledgeFreezeControlsWindow;
     public float midAirMorphWindow;
-
+    
     private bool _canClimbLedge;
     private bool _canClimbLedgeMorph;
+    private bool _canDetectLedge;
     private bool _canWallJump;
     private bool _dashingLeft;
     private bool _dashingRight;
@@ -67,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     {
         feetTrigger.StartedContactEvent += () =>
         {
+            _canDetectLedge = true;
             _isGrounded = true;
             _midairJumps = 0;
             _isJumping = false;
@@ -111,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _canDetectLedge = true;
         _dashCooldownLeft = 0;
         _dashTime = startDashTime;
         _facingRight = true;
@@ -240,6 +245,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if ((_facingRight && xInput < 0) || (!_facingRight && xInput > 0))
                 {
+                    _canDetectLedge = false;
+                    Invoke(nameof(ReCheckLedges), ledgeDropWindow);
                     _canClimbLedge = false;
                     _canClimbLedgeMorph = false;
                     _ledgeDetected = false;
@@ -255,15 +262,19 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
+                    _canDetectLedge = false;
+                    Invoke(nameof(ReCheckLedges), ledgeDropWindow);
                     _canClimbLedge = false;
                     _canClimbLedgeMorph = false;
                     _ledgeDetected = false;
                     _ledgeDetectedMorph = false;
                     _isSomersaulting = false;
                     _isJumping = true;
-                    _jumpTimeCounter = jumpTime;
-                    _rb.velocity = Vector2.up * jumpForce;
+                    _jumpTimeCounter = 0;
+                    _rb.velocity = Vector2.zero;
                 }
+                _previousJumpFrames++;
+                return;
             }
 
             //salto no chão/parede
@@ -284,8 +295,9 @@ public class PlayerMovement : MonoBehaviour
                 _rb.velocity = Vector2.up * jumpForce;
             }
             //salto no ar
-            else if (PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
+            else if ( PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
             {
+                Debug.Log("DUPLO SALTO");
                 if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;
@@ -294,6 +306,7 @@ public class PlayerMovement : MonoBehaviour
                 _midairJumps--;
                 _isJumping = true;
                 _jumpTimeCounter = jumpTime;
+                _rb.velocity = Vector2.zero;
                 _rb.velocity = Vector2.up * jumpForce;
             }
             //fazer o salto mais alto conforme o input
@@ -359,14 +372,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_canClimbLedgeMorph)
         {
+            if (!PlayerEntity.Instance.unlockedMorphBall) return;
             Morph();
         }
 
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        PlayerEntity.Instance.frozeControls = true;
         transform.position = _ledgePos2;
         _canClimbLedge = false;
         _canClimbLedgeMorph = false;
         _ledgeDetected = false;
         _ledgeDetectedMorph = false;
+        Invoke(nameof(RegainControl), ledgeFreezeControlsWindow);
     }
 
     private bool HasToFlip(float xInput)
@@ -422,7 +439,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckSurroundings()
     {
-        if (HangingToLedge() || PlayerEntity.Instance.isCrouched || PlayerEntity.Instance.isMorphed)
+        if (!_canDetectLedge || HangingToLedge() || PlayerEntity.Instance.isCrouched || PlayerEntity.Instance.isMorphed)
         {
             _detectedWall = false;
             _detectedLedgeBottom = false;
@@ -465,7 +482,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckLedgeClimb()
     {
-        if (PlayerEntity.Instance.isMorphed || PlayerEntity.Instance.isCrouched) return;
+        if (!_canDetectLedge || PlayerEntity.Instance.isMorphed || PlayerEntity.Instance.isCrouched) return;
 
         if (_ledgeDetectedMorph && !_canClimbLedgeMorph)
         {
@@ -503,5 +520,16 @@ public class PlayerMovement : MonoBehaviour
     private void StopWallJump()
     {
         _canWallJump = false;
+    }
+
+    private void ReCheckLedges()
+    {
+        _canDetectLedge = true;
+    }
+
+    private void RegainControl()
+    {
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        PlayerEntity.Instance.frozeControls = false;
     }
 }
