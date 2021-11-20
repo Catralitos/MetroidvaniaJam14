@@ -741,11 +741,19 @@ MonoBehaviour:
   frozeControls: 0
   isCrouched: 0
   isMorphed: 0
+  isUnderwater: 0
   unlockedDash: 0
   unlockedDoubleJump: 0
+  unlockedGravitySuit: 0
   unlockedMorphBall: 0
   unlockedTripleBeam: 0
   unlockedPiercingBeam: 0
+  defaultDrag: 0
+  defaultGravity: 8
+  defaultMass: 1
+  underwaterDrag: 100
+  underwaterGravity: 16
+  underwaterMass: 1
   testCylinder: {fileID: 6980801993283995932}
 --- !u!114 &6980801993563420554
 MonoBehaviour:
