@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Physics Checks (Raycasts)")] public float detectionRange;
     public float ledgeOffsetX1;
-    public float ledgeOffestY1;
+    public float ledgeOffsetY1;
     public float ledgeOffsetX2;
-    public float ledgeOffestY2;
+    public float ledgeOffsetY2;
     public LayerMask whatIsLedge;
     public Transform wallRayOrigin;
     public Transform bottomLedgeRayOrigin;
@@ -51,10 +52,10 @@ public class PlayerMovement : MonoBehaviour
     private float _dashTime;
     private float _jumpTimeCounter;
 
-    private int _downPresses;
-    private int _jumpPresses;
+    private int _previousDownFrames;
+    private int _previousJumpFrames;
+    private int _previousUpFrames;
     private int _midairJumps;
-    private int _upPresses;
 
 
     private Rigidbody2D _rb;
@@ -120,21 +121,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CheckSurroundings();
         CheckLedgeClimb();
-
         _dashCooldownLeft -= Time.deltaTime;
-
-        if (_dashingLeft)
-        {
-            PlayerEntity.Instance.testCylinder.color = Color.blue;
-        }
-        else if (_dashingRight)
-        {
-            PlayerEntity.Instance.testCylinder.color = Color.magenta;
-        }
-        else
-        {
-            PlayerEntity.Instance.testCylinder.color = Color.white;
-        }
     }
 
     //This function is called every FixedUpdate on PlayerControls
@@ -157,7 +144,6 @@ public class PlayerMovement : MonoBehaviour
         if (CanJump())
         {
             _midairJumps = numberOfMidairJumps;
-            _jumpPresses = 0;
         }
 
         if (!HangingToLedge())
@@ -208,42 +194,49 @@ public class PlayerMovement : MonoBehaviour
 
         if (yInput < 0)
         {
-            _downPresses++;
-            if (_downPresses == 1 && CanCrouch() && Math.Abs(xInput) <= 0.1f)
+            _previousDownFrames++;
+            if (_previousDownFrames == 1 && CanCrouch() && Math.Abs(xInput) <= 0.1f)
             {
                 Crouch();
             }
-            else if (_downPresses == 1 && !_isGrounded && !CanMorph(xInput))
+            else if (_previousDownFrames == 1 && !_isGrounded && !CanMorph(xInput))
             {
                 _fakeMidairCrouch = true;
                 Invoke(nameof(ResetMidAirMorphWindow), midAirMorphWindow);
             }
-            else if (_downPresses == 1 && CanMorph(xInput))
+            else if (_previousDownFrames == 1 && CanMorph(xInput))
             {
                 Morph();
             }
         }
         else if (yInput > 0 && Math.Abs(xInput) <= 0.1f)
         {
-            _upPresses++;
-            if (_upPresses == 1 && PlayerEntity.Instance.isCrouched)
+            _previousUpFrames++;
+            if (_previousUpFrames == 1 && PlayerEntity.Instance.isCrouched)
             {
                 Uncrouch();
             }
-            else if (_upPresses == 1 && PlayerEntity.Instance.isMorphed)
+            else if (_previousUpFrames == 1 && PlayerEntity.Instance.isMorphed)
             {
-                Crouch();
+                if (_isGrounded)
+                {
+                    Crouch();
+                }
+                else
+                {
+                    Uncrouch();
+                }
             }
         }
         else
         {
-            _downPresses = 0;
-            _upPresses = 0;
+            _previousDownFrames = 0;
+            _previousUpFrames = 0;
         }
 
         if (jump && !Dashing())
         {
-            if (HangingToLedge())
+            if (HangingToLedge() && _previousJumpFrames == 0)
             {
                 if ((_facingRight && xInput < 0) || (!_facingRight && xInput > 0))
                 {
@@ -274,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             //salto no chão/parede
-            if (CanJump())
+            if (CanJump() && _previousJumpFrames == 0)
             {
                 if (PlayerEntity.Instance.isCrouched)
                 {
@@ -291,7 +284,7 @@ public class PlayerMovement : MonoBehaviour
                 _rb.velocity = Vector2.up * jumpForce;
             }
             //salto no ar
-            else if (_midairJumps > 0 && _jumpPresses > 0)
+            else if (PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
             {
                 if (Math.Abs(xInput) >= 0.1)
                 {
@@ -317,11 +310,12 @@ public class PlayerMovement : MonoBehaviour
                     _isSomersaulting = false;
                 }
             }
+            _previousJumpFrames++;
         }
         else
         {
             _isJumping = false;
-            _jumpPresses++;
+            _previousJumpFrames = 0;
         }
 
         if (!Dashing() && !HangingToLedge())
@@ -363,12 +357,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void FinishLedgeClimb()
     {
-        transform.position = _ledgePos2;
         if (_canClimbLedgeMorph)
         {
-            Crouch();
+            Morph();
         }
 
+        transform.position = _ledgePos2;
         _canClimbLedge = false;
         _canClimbLedgeMorph = false;
         _ledgeDetected = false;
@@ -406,14 +400,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanCrouch()
     {
-        return _isGrounded && !PlayerEntity.Instance.isCrouched;
+        return _isGrounded && !PlayerEntity.Instance.isCrouched && !Dashing() && !HangingToLedge();
     }
 
     private bool CanMorph(float xInput)
     {
         return ((_isGrounded && PlayerEntity.Instance.isCrouched && Math.Abs(xInput) <= 0.1f) ||
                 (!_isGrounded && _fakeMidairCrouch)) &&
-               !PlayerEntity.Instance.isMorphed;
+               !PlayerEntity.Instance.isMorphed && !Dashing() && !HangingToLedge();
     }
 
     private bool Dashing()
@@ -428,63 +422,76 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckSurroundings()
     {
-        _detectedWall = Physics2D.Raycast(wallRayOrigin.position, transform.right, detectionRange, whatIsLedge);
-        _detectedLedgeBottom =
-            Physics2D.Raycast(bottomLedgeRayOrigin.position, transform.right, detectionRange, whatIsLedge);
-        _detectedLedgeTop = Physics2D.Raycast(topLedgeRayOrigin.position, transform.right, detectionRange, whatIsLedge);
-
-        if (_detectedWall && !_detectedLedgeBottom && !_detectedLedgeTop && !_ledgeDetected)
+        if (HangingToLedge() || PlayerEntity.Instance.isCrouched || PlayerEntity.Instance.isMorphed)
         {
-            _ledgeDetected = true;
-            _ledgePosBottom = wallRayOrigin.position;
+            _detectedWall = false;
+            _detectedLedgeBottom = false;
+            _detectedLedgeTop = false;
+            return;
         }
-        else if (_detectedWall && !_detectedLedgeBottom && _detectedLedgeTop && !_ledgeDetectedMorph)
+
+        if (_facingRight)
+        {
+            _detectedWall = Physics2D.Raycast(wallRayOrigin.position, transform.right, detectionRange, whatIsLedge);
+            _detectedLedgeBottom =
+                Physics2D.Raycast(bottomLedgeRayOrigin.position, transform.right, detectionRange, whatIsLedge);
+            _detectedLedgeTop =
+                Physics2D.Raycast(topLedgeRayOrigin.position, transform.right, detectionRange, whatIsLedge);
+        }
+        else
+        {
+            _detectedWall =
+                Physics2D.Raycast(wallRayOrigin.position, transform.right * -1, detectionRange, whatIsLedge);
+            _detectedLedgeBottom =
+                Physics2D.Raycast(bottomLedgeRayOrigin.position, transform.right * -1, detectionRange, whatIsLedge);
+            _detectedLedgeTop =
+                Physics2D.Raycast(topLedgeRayOrigin.position, transform.right * -1, detectionRange, whatIsLedge);
+        }
+
+        if (_detectedWall && !_detectedLedgeBottom && _detectedLedgeTop && !_ledgeDetectedMorph)
         {
             _ledgeDetectedMorph = true;
+            _ledgeDetected = false;
+            _ledgePosBottom = wallRayOrigin.position;
+        }
+        else if (!_detectedLedgeBottom && _detectedWall && !_detectedLedgeBottom && !_detectedLedgeTop &&
+                 !_ledgeDetected)
+        {
+            _ledgeDetected = true;
+            _ledgeDetectedMorph = false;
             _ledgePosBottom = wallRayOrigin.position;
         }
     }
 
     private void CheckLedgeClimb()
     {
-        if (_ledgeDetected && !_canClimbLedge && !PlayerEntity.Instance.isMorphed)
-        {
-            _canClimbLedge = true;
+        if (PlayerEntity.Instance.isMorphed || PlayerEntity.Instance.isCrouched) return;
 
-            if (_facingRight)
-            {
-                _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) - ledgeOffsetX1,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY1);
-                _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) + ledgeOffsetX2,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY2);
-            }
-            else
-            {
-                _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x - detectionRange) + ledgeOffsetX1,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY1);
-                _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x - detectionRange) - ledgeOffsetX2,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY2);
-            }
-        }
-
-        if (_ledgeDetectedMorph && !_canClimbLedgeMorph && !PlayerEntity.Instance.isMorphed)
+        if (_ledgeDetectedMorph && !_canClimbLedgeMorph)
         {
             _canClimbLedgeMorph = true;
+            _canClimbLedge = false;
+        }
 
-            if (_facingRight)
-            {
-                _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) - ledgeOffsetX1,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY1);
-                _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) + ledgeOffsetX2,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY2);
-            }
-            else
-            {
-                _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x - detectionRange) + ledgeOffsetX1,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY1);
-                _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x - detectionRange) - ledgeOffsetX2,
-                    Mathf.Floor(_ledgePosBottom.y + detectionRange) + ledgeOffestY2);
-            }
+        if (!_canClimbLedgeMorph && _ledgeDetected && !_canClimbLedge)
+        {
+            _canClimbLedge = true;
+            _canClimbLedgeMorph = false;
+        }
+
+        if (_facingRight)
+        {
+            _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) - ledgeOffsetX1,
+                Mathf.Floor(_ledgePosBottom.y) + ledgeOffsetY1);
+            _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x + detectionRange) + ledgeOffsetX2,
+                Mathf.Floor(_ledgePosBottom.y) + ledgeOffsetY2);
+        }
+        else
+        {
+            _ledgePos1 = new Vector2(Mathf.Floor(_ledgePosBottom.x) + ledgeOffsetX1,
+                Mathf.Floor(_ledgePosBottom.y) + ledgeOffsetY1);
+            _ledgePos2 = new Vector2(Mathf.Floor(_ledgePosBottom.x) - ledgeOffsetX2,
+                Mathf.Floor(_ledgePosBottom.y) + ledgeOffsetY2);
         }
 
         if (_canClimbLedge || _canClimbLedgeMorph)
