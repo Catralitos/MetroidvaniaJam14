@@ -127,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
         CheckSurroundings();
         CheckLedgeClimb();
         _dashCooldownLeft -= Time.deltaTime;
+        PlayerEntity.Instance.facingRight = _facingRight;
     }
 
     //This function is called every FixedUpdate on PlayerControls
@@ -297,7 +298,6 @@ public class PlayerMovement : MonoBehaviour
             //salto no ar
             else if ( PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
             {
-                Debug.Log("DUPLO SALTO");
                 if (Math.Abs(xInput) >= 0.1)
                 {
                     _isSomersaulting = true;

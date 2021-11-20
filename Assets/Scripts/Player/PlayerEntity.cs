@@ -20,6 +20,7 @@ public class PlayerEntity : MonoBehaviour
     
     public bool frozeControls;
 
+    public bool facingRight;
     public bool isCrouched;
     public bool isMorphed;
     public bool isUnderwater;

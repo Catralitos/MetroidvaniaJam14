@@ -5,6 +5,7 @@ public class PlayerControls : MonoBehaviour
 {
     private bool _dash = false;
     private bool _jump = false;
+    private bool _kick = false;
     private bool _shoot = false;
 
     private Vector2 _aimInput;
@@ -24,6 +25,8 @@ public class PlayerControls : MonoBehaviour
         _controls.Player.Jump.canceled += _ => { _jump = false; };
         _controls.Player.Dash.performed += _ => { _dash = true; };
         _controls.Player.Dash.canceled += _ => { _dash = false; };
+        _controls.Player.Melee.performed += _ => { _kick = true; };
+        _controls.Player.Melee.canceled += _ => { _kick = false; };
 
         _controls.Player.Shoot.performed += ctx => { _shoot = true; };
         _controls.Player.Shoot.canceled += _ => { _shoot = false; };
@@ -49,7 +52,11 @@ public class PlayerControls : MonoBehaviour
     {
         _mousePosition = Mouse.current.position.ReadValue();
         _aimInput = (_mousePosition - (Vector2) (transform.position)).normalized;
-        if (!PlayerEntity.Instance.frozeControls) _playerCombat.Shoot(_shoot, _aimInput);
+        if (!PlayerEntity.Instance.frozeControls)
+        {
+            _playerCombat.Shoot(_shoot, _aimInput);
+            _playerCombat.Kick(_kick);
+        }
     }
 
     private void FixedUpdate()
