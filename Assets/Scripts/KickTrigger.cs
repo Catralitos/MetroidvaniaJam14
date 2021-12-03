@@ -10,7 +10,8 @@ public class KickTrigger : MonoBehaviour
         if (other == null) return;
         if (hitMaskKick.HasLayer(other.gameObject.layer))
         {
-            other.gameObject.GetComponent<Kickable>().Kick();
+            Kickable kickable = other.gameObject.GetComponent<Kickable>();
+            if (kickable != null) kickable.Kick();
         }
     }
 }

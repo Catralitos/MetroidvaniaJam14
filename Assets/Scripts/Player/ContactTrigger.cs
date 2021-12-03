@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 /*
 Can detect when a capsule or box around a gameObject begins an interception with a layer(e.g. floor or wall)
 Good for detection jumping on top of enemies, landings and wall slides.
@@ -22,50 +23,53 @@ public enum CastType
     box,
     capsule
 }
+
 public class ContactTrigger : MonoBehaviour
 {
     public event UnityAction StartedContactEvent;
     public event UnityAction StoppedContactEvent;
-    [Header("General")]
-    [Tooltip("Determines what layers to check for")]
+
+    [Header("General")] [Tooltip("Determines what layers to check for")]
     public LayerMask contactLayers;
+
     [Tooltip("How long after a change in contact happens should the event be triggered")]
     public float coyoteTime;
-    [Tooltip("Wont work for capsule mode")]
-    [SerializeField]private bool shouldDrawGizmo = true;
-    [Header("Cast Shape")]
-    public CastType castType;
+
+    [Tooltip("Wont work for capsule mode")] [SerializeField]
+    private bool shouldDrawGizmo = true;
+
+    [Header("Cast Shape")] public CastType castType;
     public Vector2 castDimensions;
     public Vector2 positionalOffset;
-    [Tooltip("for capsules only")]
-    public CapsuleDirection2D capsuleDirection2D;
-    [Header("Current State")]
-    public bool isInContact; //is true even if there is no contact but there is coyote time
-    private bool _isReallyInContact;//is only true if actually in contact
+    [Tooltip("for capsules only")] public CapsuleDirection2D capsuleDirection2D;
+    [Header("Current State")] public bool isInContact; //is true even if there is no contact but there is coyote time
+    private bool _isReallyInContact; //is only true if actually in contact
     private bool _isInCoyoteTime = false;
 
     private Coroutine _coyoteTimeRoutine;
 
-    private void Awake() {
+    private void Awake()
+    {
         isInContact = false;
     }
+
     private void FixedUpdate()
     {
         bool wasInContact = _isReallyInContact;
         _isReallyInContact = CheckContact();
 
-        if(wasInContact != _isReallyInContact)
+        if (wasInContact != _isReallyInContact)
         {
-            if(_isReallyInContact)
+            if (_isReallyInContact)
             {
                 SafeRaiseEvent(StartedContactEvent);
                 AbortCoyoteTime();
             }
             else
             {
-                if(coyoteTime <= 0)
+                if (coyoteTime <= 0)
                     SafeRaiseEvent(StoppedContactEvent);
-                else if(!_isInCoyoteTime)
+                else if (!_isInCoyoteTime)
                     StartCoyoteTime();
             }
         }
@@ -76,41 +80,42 @@ public class ContactTrigger : MonoBehaviour
     //Draw the BoxCast as a gizmo to show where it currently is testing. Click the Gizmos button to see this
     void OnDrawGizmos()
     {
-        if(!shouldDrawGizmo || castType == CastType.capsule)
+        if (!shouldDrawGizmo || castType == CastType.capsule)
             return;
 
-        if(isInContact)
+        if (isInContact)
             Gizmos.color = Color.red;
         else
             Gizmos.color = Color.green;
-     
-        Gizmos.DrawWireCube(transform.position + new Vector3(positionalOffset.x, positionalOffset.y,0), new Vector3(castDimensions.x,castDimensions.y,1));
-     
+
+        Gizmos.DrawWireCube(transform.position + new Vector3(positionalOffset.x, positionalOffset.y, 0),
+            new Vector3(castDimensions.x, castDimensions.y, 1));
     }
+
     private bool CheckContact()
     {
-        if(castType == CastType.box)
+        if (castType == CastType.box)
             return CheckContactBox();
-        else    
+        else
             return CheckContactCapsule();
     }
 
     private bool CheckContactCapsule()
     {
         Vector2 position = new Vector2(transform.position.x, transform.position.y) + positionalOffset;
-        return Physics2D.OverlapCapsule(position, castDimensions,capsuleDirection2D, contactLayers);
+        return Physics2D.OverlapCapsule(position, castDimensions, capsuleDirection2D, contactLayers);
     }
+
     private bool CheckContactBox()
     {
         Vector2 position = new Vector2(transform.position.x, transform.position.y) + positionalOffset;
         List<Collider2D> results = new List<Collider2D>();
-        return Physics2D.OverlapBox(position, castDimensions,0f, contactLayers);
-      
+        return Physics2D.OverlapBox(position, castDimensions, 0f, contactLayers);
     }
 
-    private void SafeRaiseEvent( UnityAction myEvent)
+    private void SafeRaiseEvent(UnityAction myEvent)
     {
-        if(myEvent!=null)
+        if (myEvent != null)
             myEvent.Invoke();
     }
 
@@ -120,10 +125,11 @@ public class ContactTrigger : MonoBehaviour
         _isInCoyoteTime = true;
         _coyoteTimeRoutine = StartCoroutine(CoyoteTimeRoutine());
     }
+
     private void AbortCoyoteTime()
     {
         _isInCoyoteTime = false;
-        if(_coyoteTimeRoutine != null)
+        if (_coyoteTimeRoutine != null)
             StopCoroutine(_coyoteTimeRoutine);
     }
 
@@ -133,6 +139,4 @@ public class ContactTrigger : MonoBehaviour
         AbortCoyoteTime();
         SafeRaiseEvent(StoppedContactEvent);
     }
-
-
 }

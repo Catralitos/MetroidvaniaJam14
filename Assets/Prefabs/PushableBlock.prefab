@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3476096858990664732}
   - component: {fileID: 3476096858990664720}
   - component: {fileID: 3476096858990664723}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: PushableBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!61 &3476096858990664732
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.95, y: 1}
+  m_Size: {x: 0.94, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &3476096858990664720
 MonoBehaviour:
@@ -145,9 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b470862a323918a4c853dbd800425073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  travelTime: 0.2
+  travelTime: 1
   velocityWhenKicked: 6
-  feetTrigger: {fileID: 3476096858990664723}
+  landingTrigger: {fileID: 3476096858990664723}
 --- !u!114 &3476096858990664723
 MonoBehaviour:
   m_ObjectHideFlags: 0

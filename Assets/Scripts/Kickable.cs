@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Kickable : MonoBehaviour
@@ -8,7 +5,7 @@ public class Kickable : MonoBehaviour
     public float travelTime;
     public float velocityWhenKicked;
 
-    public ContactTrigger feetTrigger;
+    public ContactTrigger landingTrigger;
 
     private float _travelTimeLeft;
 
@@ -19,24 +16,24 @@ public class Kickable : MonoBehaviour
 
     private void Awake()
     {
-        feetTrigger.StartedContactEvent += () =>
+        landingTrigger.StartedContactEvent += () =>
         {
-            if (_travelTimeLeft < 0)
+            /*if (_travelTimeLeft < 0)
             {
                 _rb.constraints = _initialCons;
-            }
+            }*/
         };
-        feetTrigger.StoppedContactEvent += () => { };
+        landingTrigger.StoppedContactEvent += () => { };
     }
 
     private void OnEnable()
     {
-        feetTrigger.enabled = true;
+        landingTrigger.enabled = true;
     }
 
     private void OnDisable()
     {
-        feetTrigger.enabled = false;
+        landingTrigger.enabled = false;
     }
 
     // Start is called before the first frame update
@@ -49,9 +46,16 @@ public class Kickable : MonoBehaviour
     private void FixedUpdate()
     {
         _travelTimeLeft -= Time.deltaTime;
-        if (_travelTimeLeft >= 0)
+        if (_travelTimeLeft > 0)
         {
             _rb.velocity = new Vector2(_direction * velocityWhenKicked, _rb.velocity.y);
+        }
+        else
+        {
+            if (landingTrigger.isInContact)
+            {
+                _rb.constraints = _initialCons;
+            }
         }
     }
 
