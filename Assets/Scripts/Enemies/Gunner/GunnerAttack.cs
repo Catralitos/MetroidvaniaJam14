@@ -44,7 +44,7 @@ public class GunnerAttack : GunnerState
 
     private void GoToNewState()
     {
-        if (CheckForPlayer())
+        if (target.CheckForPlayer())
         {
             //target.capsuleSprite.color = Color.green;
             SetState(GunnerChase.Create(target));

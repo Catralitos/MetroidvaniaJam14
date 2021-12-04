@@ -22,7 +22,8 @@ public class GunnerIdle : GunnerState
 
     public override void StateUpdate()
     {
-        if (CheckForPlayer())
+        base.StateUpdate();
+        if (target.CheckForPlayer())
         {
             SetState(GunnerChase.Create(target));
         }

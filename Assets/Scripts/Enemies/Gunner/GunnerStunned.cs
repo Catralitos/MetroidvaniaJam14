@@ -20,7 +20,7 @@ public class GunnerStunned : GunnerState
 
     private void StopStun()
     {
-        if (target.CheckIfFlip()) Flip();
+        if (target.CheckIfFlip()) target.Flip();
         //o player escapou
         if (!target.TouchingGround() || target.TouchingWall())
         {

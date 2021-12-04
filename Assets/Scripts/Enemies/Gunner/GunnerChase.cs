@@ -20,7 +20,7 @@ public class GunnerChase : GunnerState
     // Update is called once per frame
     public override void StateUpdate()
     {
-        if (target.CheckIfFlip()) Flip();
+        if (target.CheckIfFlip()) target.Flip();
         //o player escapou
         if (!target.TouchingGround() || target.TouchingWall())
         {
@@ -47,11 +47,11 @@ public class GunnerChase : GunnerState
                 //nao preciso de calculos complicados com o player, só tenho de ir para o patrol point mais perto
                 if (target.facingRight)
                 {
-                    MoveInDirection(Vector2.right);
+                    target.MoveInDirection(Vector2.right);
                 }
                 else
                 {
-                    MoveInDirection(Vector2.left);
+                    target.MoveInDirection(Vector2.left);
                 }
             }
         }
