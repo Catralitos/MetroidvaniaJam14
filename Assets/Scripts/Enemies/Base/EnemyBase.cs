@@ -87,6 +87,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (playerMask.HasLayer(other.gameObject.layer))
         {
+            PlayerEntity.Instance.Health.Hit(contactDamage);
             rb.velocity = Vector2.zero;
             rb.mass = 100000000000;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;

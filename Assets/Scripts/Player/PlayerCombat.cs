@@ -45,7 +45,7 @@ public class PlayerCombat : MonoBehaviour
         lineRenderer.SetPosition(1, armJoints[i].position + (Vector3)aimDirection * shotRange);
 
 
-        if (shoot && _shotTimer > shotCooldown)
+        if (!PlayerEntity.Instance.frozeControls && shoot && _shotTimer > shotCooldown)
         {
             LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
             RaycastHit2D hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);

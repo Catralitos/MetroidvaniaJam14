@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public float knockbackLength;
+    public float knockbackHorizontalStrength;
+    public float knockbackVerticalStrength;
+
+    private Rigidbody2D _rb;
+    private RigidbodyConstraints2D _initialCons;
+
+    private void Start()
     {
-        
+        _rb = GetComponent<Rigidbody2D>();
+        _initialCons = _rb.constraints;
+    }
+    
+    private void FixedUpdate()
+    {
+       
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Hit(int damage)
     {
-        
+        //fazer dano
+        PlayerEntity.Instance.frozeControls = true;
+        _rb.velocity = Vector2.zero;
+        int direction = PlayerEntity.Instance.facingRight ? -1 : 1;
+        _rb.velocity = new Vector2(direction * knockbackHorizontalStrength, knockbackVerticalStrength);
+        Invoke(nameof(RestoreControls), knockbackLength);
+    }
+
+    private void RestoreControls()
+    {
+        PlayerEntity.Instance.frozeControls = false;
+
     }
 }

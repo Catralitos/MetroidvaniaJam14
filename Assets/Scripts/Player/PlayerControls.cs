@@ -54,11 +54,8 @@ public class PlayerControls : MonoBehaviour
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.localPosition);
         
         _aimInput = ((Vector2)_mousePosition - (Vector2)screenPosition).normalized;
-        if (!PlayerEntity.Instance.frozeControls)
-        {
-            _playerCombat.Shoot(_shoot, _aimInput);
-            _playerCombat.Kick(_kick);
-        }
+        _playerCombat.Shoot(_shoot, _aimInput);
+        if (!PlayerEntity.Instance.frozeControls) _playerCombat.Kick(_kick);
     }
 
     private void FixedUpdate()
