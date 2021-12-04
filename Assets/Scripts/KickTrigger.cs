@@ -12,6 +12,10 @@ public class KickTrigger : MonoBehaviour
         {
             Kickable kickable = other.gameObject.GetComponent<Kickable>();
             if (kickable != null) kickable.Kick();
+            EnemyBase<Crawler> crawler = other.gameObject.GetComponent<EnemyBase<Crawler>>();
+            if (crawler != null) crawler.SetStunned();
+            EnemyBase<Gunner> gunner = other.gameObject.GetComponent<EnemyBase<Gunner>>();
+            if (gunner != null) gunner.SetStunned();
         }
     }
 }

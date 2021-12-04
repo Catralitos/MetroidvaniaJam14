@@ -22,11 +22,11 @@ public class CrawlerCrawling : CrawlerState
     public override void StateUpdate()
     {
         //se o pontapé lhe tirou as contraints (meio hacky mas deve dar)
-        if (target.rb.constraints == RigidbodyConstraints2D.FreezeRotation)
+        /*if (target.rb.constraints == RigidbodyConstraints2D.FreezeRotation)
         {
             SetState(CrawlerFalling.Create(target));
             return;
-        }
+        }*/
 
 
         if (!_hitFloor)

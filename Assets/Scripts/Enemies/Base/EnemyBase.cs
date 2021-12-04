@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Extensions;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,6 +16,9 @@ public abstract class EnemyBase : MonoBehaviour
         get => currentHealth > 0;
     }
 
+    public LayerMask groundMask;
+    public LayerMask playerMask;
+
     //public LayerMask playerAttacks;
 
     public int currentHealth;
@@ -27,6 +29,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected bool started = false;
 
     [HideInInspector] public Vector2 startPosition;
+    [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Quaternion startRotation;
 
     public float randomDropChance = 0.5f;
@@ -34,10 +37,16 @@ public abstract class EnemyBase : MonoBehaviour
 
     public GameObject explosionPrefab;
 
+    private float _initialMass;
+    private RigidbodyConstraints2D _initialConstraints;
+
     protected virtual void Start()
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
+        rb = GetComponent<Rigidbody2D>();
+        _initialMass = rb.mass;
+        _initialConstraints = rb.constraints;
     }
 
     protected virtual void OnEnable()
@@ -73,6 +82,25 @@ public abstract class EnemyBase : MonoBehaviour
 
         gameObject.SetActive(false);
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (playerMask.HasLayer(other.gameObject.layer))
+        {
+            rb.velocity = Vector2.zero;
+            rb.mass = 100000000000;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (playerMask.HasLayer(other.gameObject.layer))
+        {
+            rb.constraints = _initialConstraints;
+            rb.mass = _initialMass;
+        }
+    }
 }
 
 public abstract class EnemyBase<EnemyType> : EnemyBase where EnemyType : EnemyBase<EnemyType>
@@ -81,7 +109,13 @@ public abstract class EnemyBase<EnemyType> : EnemyBase where EnemyType : EnemyBa
 
     public void SetState(EnemyState<EnemyType> state)
     {
+        Destroy(this.state);
         this.state = state;
+    }
+
+    public virtual void SetStunned()
+    {
+        //Do nothing, each enemy will need a different one
     }
 
     public override void Hit(int damage)

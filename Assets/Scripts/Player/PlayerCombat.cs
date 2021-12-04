@@ -52,7 +52,7 @@ public class PlayerCombat : MonoBehaviour
             
             if (hitInfo)
             {
-                Debug.Log(hitInfo.transform.name);  
+                //Debug.Log(hitInfo.transform.name);  
             }
             
             _shotTimer = 0.0f;

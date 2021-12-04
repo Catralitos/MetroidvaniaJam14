@@ -6,14 +6,11 @@ public class Crawler : EnemyBase<Crawler>
     public float rayDistance = 0.1f;
 
     public ContactTrigger backTrigger;
-    public LayerMask groundMask;
     public Transform head;
     public Transform wallFinder;
 
     [HideInInspector] public bool lyingOnBack;
     [HideInInspector] public BoxCollider2D boxCollider;
-    [HideInInspector] public Rigidbody2D rb;
-
     private void Awake()
     {
         backTrigger.StartedContactEvent += () => { lyingOnBack = true; };
@@ -27,7 +24,6 @@ public class Crawler : EnemyBase<Crawler>
         {
             state = CrawlerCrawling.Create(this);
             boxCollider = GetComponent<BoxCollider2D>();
-            rb = GetComponent<Rigidbody2D>();
             started = true;
         }            
     }
@@ -43,5 +39,10 @@ public class Crawler : EnemyBase<Crawler>
     {
         backTrigger.enabled = false;
         base.OnDisable();
+    }
+
+    public override void SetStunned()
+    {
+        SetState(CrawlerFalling.Create(this));
     }
 }
