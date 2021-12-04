@@ -4,10 +4,14 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Run and Jump")] public float jumpForce;
+
+    [Header("Run and Jump")] public float normalJumpForce;
+    public float boostedJumpForce;
     public float jumpTime;
     public float moveSpeed;
     public int numberOfMidairJumps;
+    private float _currentJumpForce;
+    private float _currentJumpTimer;
 
     [Header("Dash")] public float dashCooldown;
     public float dashSpeed;
@@ -128,6 +132,17 @@ public class PlayerMovement : MonoBehaviour
         CheckLedgeClimb();
         _dashCooldownLeft -= Time.deltaTime;
         PlayerEntity.Instance.facingRight = _facingRight;
+
+        _currentJumpTimer -= Time.deltaTime;
+        if (_currentJumpTimer < 0)
+        {
+            _currentJumpForce = normalJumpForce;
+
+        }
+        else
+        {
+            _currentJumpForce = boostedJumpForce;
+        }
     }
 
     //This function is called every FixedUpdate on PlayerControls
@@ -255,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
                     _isSomersaulting = true;
                     _isJumping = true;
                     _jumpTimeCounter = jumpTime;
-                    _rb.velocity = Vector2.up * jumpForce;
+                    _rb.velocity = Vector2.up * _currentJumpForce;
                 }
                 else if ((_facingRight && xInput > 0) || (!_facingRight && xInput < 0))
                 {
@@ -293,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
                 _isJumping = true;
                 _jumpTimeCounter = jumpTime;
-                _rb.velocity = Vector2.up * jumpForce;
+                _rb.velocity = Vector2.up * _currentJumpForce;
             }
             //salto no ar
             else if ( PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
@@ -307,14 +322,14 @@ public class PlayerMovement : MonoBehaviour
                 _isJumping = true;
                 _jumpTimeCounter = jumpTime;
                 _rb.velocity = Vector2.zero;
-                _rb.velocity = Vector2.up * jumpForce;
+                _rb.velocity = Vector2.up * _currentJumpForce;
             }
             //fazer o salto mais alto conforme o input
             else if (_isJumping)
             {
                 if (_jumpTimeCounter > 0)
                 {
-                    _rb.velocity = Vector2.up * jumpForce;
+                    _rb.velocity = Vector2.up * _currentJumpForce;
                     _jumpTimeCounter -= Time.deltaTime;
                 }
                 else
@@ -531,5 +546,18 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         PlayerEntity.Instance.frozeControls = false;
+    }
+
+    public void IncreaseJumpTimer(float time)
+    {
+        if (_currentJumpTimer < 0)
+        {
+            _currentJumpTimer = 0;
+            
+        }
+
+        _currentJumpTimer += time;
+
+
     }
 }
