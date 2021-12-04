@@ -29,9 +29,9 @@ public class GunnerAttack : GunnerState
         _bulletCooldown -= Time.deltaTime;
         if (_bulletCooldown <= 0 && _shotsFired < target.numberOfShots)
         {
-            /*var bullet = Instantiate(target.bulletPrefab, target.bulletSpawn.position, Quaternion.identity)
+            var bullet = Instantiate(target.bulletPrefab, target.bulletSpawn.position, Quaternion.identity)
                 .GetComponent<Bullet>();
-            bullet.Init(direction);*/
+            bullet.Init(direction);
             _shotsFired++;
             _bulletCooldown = target.fireRate;
         }
