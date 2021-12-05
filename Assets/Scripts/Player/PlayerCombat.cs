@@ -7,11 +7,15 @@ public class PlayerCombat : MonoBehaviour
 {
     public float kickDuration;
     public float shotCooldown = 0.7f;
-    public float shotRange;    
+    public float shotRange;
+    public float normalShotDamage;
+    public float boostedShotDamage;
     public GameObject meleeGameObject;
     public LayerMask hitMaskNormal;
     public LayerMask hitMaskPiercing;
-     
+    private float _currentShotDamage;
+    private float _currentShotTimer;
+
     //First is standing, second is crouched
     public List<Transform> armJoints;
     //First is standing, second is crouched
@@ -31,6 +35,16 @@ public class PlayerCombat : MonoBehaviour
     public void Update()
     {
         _shotTimer += Time.deltaTime;
+        _currentShotTimer += Time.deltaTime;
+        if (_currentShotTimer < 0)
+        {
+            _currentShotDamage = normalShotDamage;
+            
+        }
+        else
+        {
+            _currentShotDamage = boostedShotDamage;
+        }
     }
 
     public void Shoot(bool shoot, Vector2 aimDirection)
@@ -103,5 +117,16 @@ public class PlayerCombat : MonoBehaviour
     private void DisableKick()
     {
         meleeGameObject.SetActive(false);
+    }
+    public void IncreaseShotTimer(float timer)
+    {
+
+        if (_currentShotTimer < 0)
+        {
+            _currentShotTimer = 0;
+            
+        }
+        _currentShotTimer += timer;
+        
     }
 }

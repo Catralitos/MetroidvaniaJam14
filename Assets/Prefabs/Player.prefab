@@ -1024,6 +1024,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de59be21ddf60714a80ca113a32e9d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackLength: 0
+  knockbackHorizontalStrength: 0
+  knockbackVerticalStrength: 0
+  maxHealth: 0
 --- !u!114 &6980801993563420553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1048,9 +1052,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60aacd65cf907014d89f9a8aaaabe13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 15
+  normalJumpForce: 15
+  boostedJumpForce: 25
   jumpTime: 0.15
-  moveSpeed: 10
+  normalMoveSpeed: 10
+  boostedMoveSpeed: 20
   numberOfMidairJumps: 1
   dashCooldown: 0.5
   dashSpeed: 50
@@ -1109,6 +1115,8 @@ MonoBehaviour:
   kickDuration: 0.2
   shotCooldown: 2
   shotRange: 10
+  normalShotDamage: 0
+  boostedShotdamage: 0
   meleeGameObject: {fileID: 7767253}
   hitMaskNormal:
     serializedVersion: 2

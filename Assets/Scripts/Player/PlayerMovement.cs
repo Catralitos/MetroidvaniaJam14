@@ -8,10 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Run and Jump")] public float normalJumpForce;
     public float boostedJumpForce;
     public float jumpTime;
-    public float moveSpeed;
+    public float normalMoveSpeed;
+    public float boostedMoveSpeed;
     public int numberOfMidairJumps;
     private float _currentJumpForce;
     private float _currentJumpTimer;
+    private float _currentMoveSpeed;
+    private float _currentMoveTimer;
 
     [Header("Dash")] public float dashCooldown;
     public float dashSpeed;
@@ -143,6 +146,18 @@ public class PlayerMovement : MonoBehaviour
         {
             _currentJumpForce = boostedJumpForce;
         }
+
+        _currentMoveTimer -= Time.deltaTime;
+        if (_currentMoveTimer < 0)
+        {
+            _currentMoveSpeed = normalMoveSpeed;
+
+        }
+        else
+        {
+            _currentMoveSpeed = boostedMoveSpeed;
+        }
+
     }
 
     //This function is called every FixedUpdate on PlayerControls
@@ -353,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
                 Uncrouch();
             }
 
-            _rb.velocity = new Vector2(moveSpeed * xInput, _rb.velocity.y);
+            _rb.velocity = new Vector2(_currentMoveSpeed * xInput, _rb.velocity.y);
         }
     }
 
@@ -557,6 +572,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _currentJumpTimer += time;
+    }
+
+    public void IncreaseMoveTimer(float timer)
+    {
+        if (_currentMoveTimer < 0)
+        {
+            _currentMoveTimer = 0;
+
+        }
+
+        _currentMoveTimer += timer;
 
 
     }
