@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMaskKick:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 320
 --- !u!212 &7767257
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -718,7 +718,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1556047129276783234
 Transform:
   m_ObjectHideFlags: 0
@@ -1024,10 +1024,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de59be21ddf60714a80ca113a32e9d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackLength: 0
-  knockbackHorizontalStrength: 0
-  knockbackVerticalStrength: 0
-  maxHealth: 0
+  knockbackLength: 0.3
+  knockbackHorizontalStrength: 10
+  knockbackVerticalStrength: 15
+  maxHealth: 10
 --- !u!114 &6980801993563420553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,7 +1116,7 @@ MonoBehaviour:
   shotCooldown: 2
   shotRange: 10
   normalShotDamage: 0
-  boostedShotdamage: 0
+  boostedShotDamage: 0
   meleeGameObject: {fileID: 7767253}
   hitMaskNormal:
     serializedVersion: 2

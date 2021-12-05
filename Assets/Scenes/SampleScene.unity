@@ -3086,33 +3086,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7767256, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: hitMaskKick.m_Bits
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 1398752681297475182, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420550, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: knockbackLength
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: knockbackStrength
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: knockbackVerticalStrength
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: knockbackHorizontalStrength
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420556, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_RootOrder
