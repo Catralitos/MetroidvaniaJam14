@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public bool countingDown;
     public float finalCountdownTime;
     private float _finalCountdown;
+
+    public EnemySpawner[] combatRooms;
     
     public Upgrade[] healthUpgrades;
     public Upgrade[] damageUpgrades;
@@ -48,6 +50,12 @@ public class LevelManager : MonoBehaviour
             PlayerEntity.Instance.Movement.currentJumpTimer = savedData.buffTimers[0];
             PlayerEntity.Instance.Movement.currentMoveTimer = savedData.buffTimers[1];
             PlayerEntity.Instance.Combat.currentShotTimer = savedData.buffTimers[2];
+            
+            for (int i = 0; i < savedData.combatRoomsBeaten.Length; i++)
+            {
+                PlayerEntity.Instance.combatRoomsBeaten[i] = savedData.combatRoomsBeaten[i];
+            }
+            
             for (int i = 0; i < savedData.damageUpgradesCollected.Length; i++)
             {
                 PlayerEntity.Instance.damageUpgradesCollected[i] = savedData.damageUpgradesCollected[i];
@@ -95,6 +103,14 @@ public class LevelManager : MonoBehaviour
             Destroy(tripleBeamUpgrade.gameObject);
         }
 
+        for (int i = 0; i < combatRooms.Length; i++)
+        {
+            if (combatRooms[i] != null && combatRooms[i])
+            {
+                Destroy(combatRooms[i].gameObject);
+            }
+        }
+        
         for (int i = 0; i < damageUpgrades.Length; i++)
         {
             if (damageUpgrades[i] != null && damageUpgrades[i])

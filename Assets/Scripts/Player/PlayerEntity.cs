@@ -39,6 +39,7 @@ public class PlayerEntity : MonoBehaviour
     public float underwaterGravity;
     public float underwaterMass;
 
+    public bool[] combatRoomsBeaten;
     public bool[] healthUpgradesCollected;
     public bool[] damageUpgradesCollected;
     

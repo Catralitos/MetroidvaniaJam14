@@ -4,6 +4,7 @@ public class PlayerData
     public int maxHealth;
     public int currentHealth;
     public float elapsedTime;
+    public bool[] combatRoomsBeaten;
     public bool[] healthUpgradesCollected;
     public bool[] damageUpgradesCollected;
     public bool[] unlockedPowers;
@@ -28,8 +29,13 @@ public class PlayerData
         buffTimers[0] = playerEntity.Movement.currentJumpTimer;
         buffTimers[1] = playerEntity.Movement.currentMoveTimer;
         buffTimers[2] = playerEntity.Combat.currentShotTimer;
+        combatRoomsBeaten = new bool[playerEntity.combatRoomsBeaten.Length];
         damageUpgradesCollected = new bool[playerEntity.damageUpgradesCollected.Length];
         healthUpgradesCollected = new bool[playerEntity.healthUpgradesCollected.Length];
+        for (int i = 0; i < combatRoomsBeaten.Length; i++)
+        {
+            combatRoomsBeaten[i] = playerEntity.combatRoomsBeaten[i];
+        }
         for (int i = 0; i < damageUpgradesCollected.Length; i++)
         {
             damageUpgradesCollected[i] = playerEntity.damageUpgradesCollected[i];
