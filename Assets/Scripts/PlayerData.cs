@@ -1,10 +1,11 @@
 [System.Serializable]
 public class PlayerData 
 {
-    public float currentHealth;
+    public int maxHealth;
+    public int currentHealth;
     public float elapsedTime;
-    public int extraHealthUnlocked;
-    public int extraDamageUnlocked;
+    public bool[] healthUpgradesCollected;
+    public bool[] damageUpgradesCollected;
     public bool[] unlockedPowers;
     public float[] buffTimers;
     public float[] playerPosition;
@@ -27,7 +28,15 @@ public class PlayerData
         buffTimers[0] = playerEntity.Movement.currentJumpTimer;
         buffTimers[1] = playerEntity.Movement.currentMoveTimer;
         buffTimers[2] = playerEntity.Combat.currentShotTimer;
-        extraDamageUnlocked = playerEntity.damageUpgradesCollected;
-        extraHealthUnlocked = playerEntity.damageUpgradesCollected;
+        damageUpgradesCollected = new bool[playerEntity.damageUpgradesCollected.Length];
+        healthUpgradesCollected = new bool[playerEntity.healthUpgradesCollected.Length];
+        for (int i = 0; i < damageUpgradesCollected.Length; i++)
+        {
+            damageUpgradesCollected[i] = playerEntity.damageUpgradesCollected[i];
+        }
+        for (int i = 0; i < healthUpgradesCollected.Length; i++)
+        {
+            healthUpgradesCollected[i] = playerEntity.healthUpgradesCollected[i];
+        }
     }
 }

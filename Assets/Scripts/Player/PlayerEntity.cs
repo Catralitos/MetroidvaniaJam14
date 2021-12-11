@@ -39,8 +39,8 @@ public class PlayerEntity : MonoBehaviour
     public float underwaterGravity;
     public float underwaterMass;
 
-    public int healthUpgradesCollected;
-    public int damageUpgradesCollected;
+    public bool[] healthUpgradesCollected;
+    public bool[] damageUpgradesCollected;
     
     public SpriteRenderer testCylinder;
 

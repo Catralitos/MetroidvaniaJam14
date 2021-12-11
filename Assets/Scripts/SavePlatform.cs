@@ -7,7 +7,7 @@ public class SavePlatform : MonoBehaviour
     
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (playerMask.HasLayer(other.gameObject.layer))
+        if (playerMask.HasLayer(other.gameObject.layer) && !LevelManager.Instance.countingDown)
         {
             SaveSystem.SavePlayer(PlayerEntity.Instance);
         }

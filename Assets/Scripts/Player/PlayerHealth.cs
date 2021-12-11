@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D _rb;
     private RigidbodyConstraints2D _initialCons;
 
-    public int currentHealth { get; private set; }
+    [HideInInspector] public int currentHealth;
     public int maxHealth;
     public int healthPerMaxIncrement;
     
@@ -39,8 +39,23 @@ public class PlayerHealth : MonoBehaviour
         _rb.velocity = new Vector2(direction * knockbackHorizontalStrength, knockbackVerticalStrength);
         Invoke(nameof(RestoreControls), knockbackLength);
         currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
+    public void Die()
+    {
+        PlayerEntity.Instance.frozeControls = true;
+        Invoke(nameof(ReloadLevel), 3f);
+    }
+
+    private void ReloadLevel()
+    {
+        //recarregar o nivel
+    }
+    
     private void RestoreControls()
     {
         PlayerEntity.Instance.frozeControls = false;
