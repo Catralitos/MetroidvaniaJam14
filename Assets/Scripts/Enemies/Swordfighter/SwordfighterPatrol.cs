@@ -1,51 +1,54 @@
 using System;
 using UnityEngine;
 
-public class SwordfighterPatrol : SwordfighterState
+namespace Enemies.Swordfighter
 {
-    private Vector2 _patrolLeftPoint;
-    private Vector2 _patrolRightPoint;
-
-    public static SwordfighterPatrol Create(Swordfighter target)
+    public class SwordfighterPatrol : SwordfighterState
     {
-        SwordfighterPatrol state = SwordfighterState.Create<SwordfighterPatrol>(target);
-        return state;
-    }
+        private Vector2 _patrolLeftPoint;
+        private Vector2 _patrolRightPoint;
 
-    public override void StateStart()
-    {
-        base.StateStart();
-        _patrolLeftPoint = (Vector2) target.currentPatrolAnchor + Vector2.left * target.horizontalRange;
-        _patrolRightPoint = (Vector2) target.currentPatrolAnchor + Vector2.right * target.horizontalRange;
-    }
-
-    public override void StateFixedUpdate()
-    {
-        base.StateFixedUpdate();
-        if (target.facingRight)
+        public static SwordfighterPatrol Create(Swordfighter target)
         {
-            target.MoveInDirection(Vector2.right);
-        }
-        else
-        {
-            target.MoveInDirection(Vector2.left);
+            SwordfighterPatrol state = SwordfighterState.Create<SwordfighterPatrol>(target);
+            return state;
         }
 
-        if (target.CheckForPlayer() && target.InAttackRange())
+        public override void StateStart()
         {
-            SetState(SwordfighterAttack.Create(target));
+            base.StateStart();
+            _patrolLeftPoint = (Vector2) target.currentPatrolAnchor + Vector2.left * target.horizontalRange;
+            _patrolRightPoint = (Vector2) target.currentPatrolAnchor + Vector2.right * target.horizontalRange;
         }
 
-        if (target.colisionDetected && (target.TouchingWall() || !target.TouchingGround() || TimeToChange()))
+        public override void StateFixedUpdate()
         {
-            SetState(SwordfighterIdle.Create(target));
-        }
-    }
+            base.StateFixedUpdate();
+            if (target.facingRight)
+            {
+                target.MoveInDirection(Vector2.right);
+            }
+            else
+            {
+                target.MoveInDirection(Vector2.left);
+            }
 
-    private bool TimeToChange()
-    {
-        if (!target.facingRight && Math.Abs(transform.position.x - _patrolLeftPoint.x) <= 0.05f) return true;
-        if (target.facingRight && Math.Abs(transform.position.x - _patrolRightPoint.x) <= 0.05f) return true;
-        return false;
+            if (target.CheckForPlayer() && target.InAttackRange())
+            {
+                SetState(SwordfighterAttack.Create(target));
+            }
+
+            if (target.colisionDetected && (target.TouchingWall() || !target.TouchingGround() || TimeToChange()))
+            {
+                SetState(SwordfighterIdle.Create(target));
+            }
+        }
+
+        private bool TimeToChange()
+        {
+            if (!target.facingRight && Math.Abs(transform.position.x - _patrolLeftPoint.x) <= 0.05f) return true;
+            if (target.facingRight && Math.Abs(transform.position.x - _patrolRightPoint.x) <= 0.05f) return true;
+            return false;
+        }
     }
 }
