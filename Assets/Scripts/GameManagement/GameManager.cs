@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool countingTime;
     [HideInInspector] public float timeElapsed;
+ 
+    public string savePath = Application.persistentDataPath + "/player.steve";
     
     public void Awake()
     {

@@ -7,8 +7,7 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public bool countingDown;
     public float finalCountdownTime;
     private float _finalCountdown;
-
-
+    
     public Upgrade[] healthUpgrades;
     public Upgrade[] damageUpgrades;
 
