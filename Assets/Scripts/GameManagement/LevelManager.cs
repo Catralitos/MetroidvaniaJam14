@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public bool countingDown;
     public float finalCountdownTime;
     private float _finalCountdown;
-    
-    
+
+
     public Upgrade[] healthUpgrades;
     public Upgrade[] damageUpgrades;
 
@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
     public Upgrade morphBallUpgrade;
     public Upgrade piercingBeamUpgrade;
     public Upgrade tripleBeamUpgrade;
-    
+
     public void Awake()
     {
         if (Instance == null)
@@ -95,7 +95,7 @@ public class LevelManager : MonoBehaviour
             tripleBeamUpgrade.upgradeWarning.SwitchSprite();
             Destroy(tripleBeamUpgrade.gameObject);
         }
-        
+
         for (int i = 0; i < damageUpgrades.Length; i++)
         {
             if (damageUpgrades[i] != null && damageUpgrades[i])
@@ -115,6 +115,7 @@ public class LevelManager : MonoBehaviour
         }
 
         _finalCountdown = finalCountdownTime;
+        GameManager.Instance.StartCountingTime();
     }
 
     public void Update()
@@ -136,12 +137,14 @@ public class LevelManager : MonoBehaviour
 
     public void StopFinalCountown()
     {
+        PlayerEntity.Instance.frozeControls = true;
         countingDown = false;
+        GameManager.Instance.StopCountingTime();
         Invoke(nameof(LoadCredits), 3f);
     }
 
     private void LoadCredits()
     {
-        //load credits
+        GameManager.Instance.LoadNextScene();
     }
 }
