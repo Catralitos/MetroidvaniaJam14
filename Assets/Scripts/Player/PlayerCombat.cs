@@ -14,7 +14,7 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask hitMaskNormal;
     public LayerMask hitMaskPiercing;
     private float _currentShotDamage;
-    private float _currentShotTimer;
+    [HideInInspector] public float currentShotTimer;
 
     //First is standing, second is crouched
     public List<Transform> armJoints;
@@ -35,8 +35,8 @@ public class PlayerCombat : MonoBehaviour
     public void Update()
     {
         _shotTimer += Time.deltaTime;
-        _currentShotTimer += Time.deltaTime;
-        if (_currentShotTimer < 0)
+        currentShotTimer += Time.deltaTime;
+        if (currentShotTimer < 0)
         {
             _currentShotDamage = normalShotDamage;
             
@@ -123,12 +123,12 @@ public class PlayerCombat : MonoBehaviour
     public void IncreaseShotTimer(float timer)
     {
 
-        if (_currentShotTimer < 0)
+        if (currentShotTimer < 0)
         {
-            _currentShotTimer = 0;
+            currentShotTimer = 0;
             
         }
-        _currentShotTimer += timer;
+        currentShotTimer += timer;
         
     }
 }

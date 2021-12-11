@@ -1,28 +1,39 @@
-public class SaveSystem 
+using System.IO;
+using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
+public static class SaveSystem
 {
-    public float currentHealth;
-    public float elapsedTime;
-    public int extraHealthUnlocked;
-    public int extraDamageUnlocked;
-    public bool[] unlockedPowers;
-    public float[] buffTimers;
-    public float[] playerPosition;
-
-    public SaveSystem(PlayerEntity playerEntity)
+    public static void SavePlayer(PlayerEntity playerEntity)
     {
-        currentHealth = playerEntity.Health.currentHealth;
-        unlockedPowers = new bool[6];
-        unlockedPowers[0] = playerEntity.unlockedDash;
-        unlockedPowers[1] = playerEntity.unlockedDoubleJump;
-        unlockedPowers[2] = playerEntity.unlockedGravitySuit;
-        unlockedPowers[3] = playerEntity.unlockedMorphBall;
-        unlockedPowers[4] = playerEntity.unlockedPiercingBeam;
-        unlockedPowers[5] = playerEntity.unlockedTripleBeam;
-        playerPosition = new float[3];
-        playerPosition[0] = playerEntity.gameObject.transform.position.x;
-        playerPosition[1] = playerEntity.gameObject.transform.position.y;
-        playerPosition[2] = playerEntity.gameObject.transform.position.z;
-        
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/player.steve";
+        FileStream stream = new FileStream(path, FileMode.Create);
 
+        PlayerData data = new PlayerData(playerEntity);
+        
+        formatter.Serialize(stream, data);
+        
+        stream.Close();
+        
+        Debug.Log("Save file created at " + path);
+    }
+    
+    public static PlayerData LoadPlayer()
+    {
+        string path = Application.persistentDataPath + "/player.steve";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            PlayerData data = formatter.Deserialize(stream) as PlayerData;
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            Debug.LogError("Save file not found at " + path);
+            return null;
+        }
+        
     }
 }

@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
 
     public int currentHealth { get; private set; }
     public int maxHealth;
-    
+    public int healthPerMaxIncrement;
     
     // Start is called before the first frame update
     private void Start()
@@ -44,6 +44,11 @@ public class PlayerHealth : MonoBehaviour
     private void RestoreControls()
     {
         PlayerEntity.Instance.frozeControls = false;
+    }
 
+    public void IncreaseMaxHealth()
+    {
+        maxHealth += healthPerMaxIncrement;
+        currentHealth += healthPerMaxIncrement;
     }
 }

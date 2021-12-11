@@ -9,15 +9,15 @@ public class PlayerEntity : MonoBehaviour
     [HideInInspector]public PlayerHealth Health { get; private set; }
     [HideInInspector]public PlayerControls Controller { get; private set; }
     [HideInInspector]public PlayerMovement Movement { get; private set; }
-
     [HideInInspector]public PlayerCombat Combat { get; private set; }
-
+    [HideInInspector]public PlayerUI UI { get; private set; }
     
     //1 - standing
     //2 - crouching
     //3 - morphed up
     public List<GameObject> states;
-    
+
+    public bool displayingTooltip;
     public bool frozeControls;
 
     public bool facingRight;
@@ -38,6 +38,9 @@ public class PlayerEntity : MonoBehaviour
     public float underwaterDrag;
     public float underwaterGravity;
     public float underwaterMass;
+
+    public int healthUpgradesCollected;
+    public int damageUpgradesCollected;
     
     public SpriteRenderer testCylinder;
 
@@ -57,6 +60,7 @@ public class PlayerEntity : MonoBehaviour
         Health = GetComponent<PlayerHealth>();
         Controller = GetComponent<PlayerControls>();
         Combat = GetComponent<PlayerCombat>();
+        UI = GetComponent<PlayerUI>();
     }
 
     private void OnDestroy()
