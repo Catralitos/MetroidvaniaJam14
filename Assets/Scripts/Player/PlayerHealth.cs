@@ -38,6 +38,7 @@ public class PlayerHealth : MonoBehaviour
         int direction = PlayerEntity.Instance.facingRight ? -1 : 1;
         _rb.velocity = new Vector2(direction * knockbackHorizontalStrength, knockbackVerticalStrength);
         Invoke(nameof(RestoreControls), knockbackLength);
+        currentHealth -= damage;
     }
 
     private void RestoreControls()
