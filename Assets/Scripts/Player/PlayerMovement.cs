@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public float boostedMoveSpeed;
     public int numberOfMidairJumps;
     private float _currentJumpForce;
-    private float _currentJumpTimer;
+    [HideInInspector] public float currentJumpTimer; 
     private float _currentMoveSpeed;
-    private float _currentMoveTimer;
+    [HideInInspector] public float currentMoveTimer;
 
     [Header("Dash")] public float dashCooldown;
     public float dashSpeed;
@@ -136,8 +136,8 @@ public class PlayerMovement : MonoBehaviour
         _dashCooldownLeft -= Time.deltaTime;
         PlayerEntity.Instance.facingRight = _facingRight;
 
-        _currentJumpTimer -= Time.deltaTime;
-        if (_currentJumpTimer < 0)
+        currentJumpTimer -= Time.deltaTime;
+        if (currentJumpTimer < 0)
         {
             _currentJumpForce = normalJumpForce;
 
@@ -147,8 +147,8 @@ public class PlayerMovement : MonoBehaviour
             _currentJumpForce = boostedJumpForce;
         }
 
-        _currentMoveTimer -= Time.deltaTime;
-        if (_currentMoveTimer < 0)
+        currentMoveTimer -= Time.deltaTime;
+        if (currentMoveTimer < 0)
         {
             _currentMoveSpeed = normalMoveSpeed;
 
@@ -565,24 +565,24 @@ public class PlayerMovement : MonoBehaviour
 
     public void IncreaseJumpTimer(float time)
     {
-        if (_currentJumpTimer < 0)
+        if (currentJumpTimer < 0)
         {
-            _currentJumpTimer = 0;
+            currentJumpTimer = 0;
             
         }
 
-        _currentJumpTimer += time;
+        currentJumpTimer += time;
     }
 
     public void IncreaseMoveTimer(float timer)
     {
-        if (_currentMoveTimer < 0)
+        if (currentMoveTimer < 0)
         {
-            _currentMoveTimer = 0;
+            currentMoveTimer = 0;
 
         }
 
-        _currentMoveTimer += timer;
+        currentMoveTimer += timer;
 
 
     }

@@ -49,7 +49,14 @@ public class PlayerControls : MonoBehaviour
     }
 
     private void Update()
-    {   _mousePosition = Mouse.current.position.ReadValue();
+    {
+
+        if (PlayerEntity.Instance.displayingTooltip && PlayerEntity.Instance.UI.canCancelTooltip && _shoot)
+        {
+            PlayerEntity.Instance.UI.CloseTooltip();
+        }
+        
+        _mousePosition = Mouse.current.position.ReadValue();
 
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.localPosition);
         
