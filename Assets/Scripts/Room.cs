@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public SpriteRenderer background;
+    //public SpriteRenderer background;
     public GameObject virtualCam;
 
-    public Sprite roomBg;
+    //public Sprite roomBg;
     public LayerMask enemyLayer;
 
     //private Collider2D _confiner;
     [SerializeField] private List<GameObject> _enemies;
-    [SerializeField] private List<GameObject> _platforms;
+    //[SerializeField] private List<GameObject> _platforms;
     private List<GameObject> _playerColliders;
     private bool _inRoom;
 
@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
 
             //nao meter isto numa variavel, quebra o jogo
             virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
-            background.sprite = roomBg;
+            //background.sprite = roomBg;
             if (!_inRoom)
             {
                 foreach (var e in _enemies)
@@ -41,13 +41,13 @@ public class Room : MonoBehaviour
                 }
             }
 
-            if (!_inRoom)
+            /*if (!_inRoom)
             {
                 foreach (var p in _platforms)
                 {
                     if (p!= null) p.SetActive(true);
                 }
-            }
+            }*/
 
             _inRoom = true;
         }
@@ -58,11 +58,11 @@ public class Room : MonoBehaviour
             if (!_inRoom) other.gameObject.SetActive(false);
         }
         
-        if (!_platforms.Contains(other.gameObject) && other.gameObject.CompareTag("Platform"))
+        /*if (!_platforms.Contains(other.gameObject) && other.gameObject.CompareTag("Platform"))
         {
             _platforms.Add(other.gameObject);
             if (!_inRoom) other.gameObject.SetActive(false);
-        }
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -80,9 +80,9 @@ public class Room : MonoBehaviour
         {
             if (e != null) e.SetActive(false);
         }
-        foreach (var p in _platforms)
+        /*foreach (var p in _platforms)
         {
             if (p != null) p.SetActive(false);
-        }
+        }*/
     }
 }
