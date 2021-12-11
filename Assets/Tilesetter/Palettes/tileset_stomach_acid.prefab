@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 1000000000000001}
   - component: {fileID: 1000000000000000000}
   m_Layer: 31
-  m_Name: tileset_acido
+  m_Name: tileset_stomach_acid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
