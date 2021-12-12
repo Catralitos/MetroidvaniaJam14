@@ -13,6 +13,7 @@ public class DoorWithLock : MonoBehaviour
     {
        if (playerMask.HasLayer(col.gameObject.layer) && PlayerEntity.Instance.collectedKey)
        {
+           PlayerEntity.Instance.destroyedDoor = true;
            Destroy(gameObject);
        }
     }

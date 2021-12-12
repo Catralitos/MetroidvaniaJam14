@@ -20,6 +20,7 @@ namespace Player
         [Header("Global Bools")]public bool displayingTooltip;
         public bool frozeControls;
         public bool collectedKey;
+        public bool destroyedDoor;
 
         [Header("Current State")]public bool facingRight;
         public bool isCrouched;
@@ -35,6 +36,7 @@ namespace Player
         public bool[] combatRoomsBeaten;
         public bool[] healthUpgradesCollected;
         public bool[] damageUpgradesCollected;
+        public bool[] threeButtonDoorsOpened;
         
         [Header("Normal/Underwater Movement")]public float defaultDrag;
         public float defaultGravity;

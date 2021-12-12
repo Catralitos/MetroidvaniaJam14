@@ -1,3 +1,6 @@
+using GameManagement;
+using Player;
+using UnityEditor;
 using UnityEngine;
 
 namespace Hazard
@@ -18,6 +21,8 @@ namespace Hazard
             if (button1.pressed && button2.pressed && button3.pressed)
             {
                 pressed = true;
+                PlayerEntity.Instance.threeButtonDoorsOpened[
+                    ArrayUtility.IndexOf(LevelManager.Instance.threeButtonDoors, this)] = true;
                 door.Open();
             }
         }
