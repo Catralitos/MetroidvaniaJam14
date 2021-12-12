@@ -19,6 +19,7 @@ namespace Player
 
         [Header("Global Bools")]public bool displayingTooltip;
         public bool frozeControls;
+        public bool collectedKey;
 
         [Header("Current State")]public bool facingRight;
         public bool isCrouched;
