@@ -1,8 +1,9 @@
 using System.IO;
+using GameManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameManagement
+namespace UI
 {
     public class TitleScreenManager : MonoBehaviour
     {
