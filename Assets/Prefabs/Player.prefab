@@ -1257,6 +1257,8 @@ MonoBehaviour:
   - {fileID: 1749416576}
   displayingTooltip: 0
   frozeControls: 0
+  collectedKey: 0
+  destroyedDoor: 0
   facingRight: 0
   isCrouched: 0
   isMorphed: 0
@@ -1270,6 +1272,7 @@ MonoBehaviour:
   combatRoomsBeaten: 
   healthUpgradesCollected: 
   damageUpgradesCollected: 
+  threeButtonDoorsOpened: 
   defaultDrag: 0
   defaultGravity: 8
   defaultMass: 1
@@ -1386,8 +1389,8 @@ MonoBehaviour:
   kickDuration: 0.2
   shotCooldown: 2
   shotRange: 10
-  normalShotDamage: 10
-  boostedShotDamage: 20
+  normalShotDamage: 20
+  boostedShotDamage: 30
   meleeGameObject: {fileID: 7767253}
   hitMaskNormal:
     serializedVersion: 2

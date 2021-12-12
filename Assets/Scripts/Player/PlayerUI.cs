@@ -30,9 +30,8 @@ namespace Player
 
             int mod = Mathf.RoundToInt(PlayerEntity.Instance.Health.currentHealth %
                                        PlayerEntity.Instance.Health.healthPerMaxIncrement);
-            Debug.Log("Mod = " + mod);
+
             healthBar.fillAmount = mod == 0 ? 1 : mod / 100f;
-            Debug.Log("Dividir por 100 = " + (mod/100f));
 
             for (int i = 0; i < healthPipsCollected; i++)
             {

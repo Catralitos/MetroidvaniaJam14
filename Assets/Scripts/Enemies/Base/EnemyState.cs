@@ -5,20 +5,7 @@ namespace Enemies.Base
     public abstract class EnemyState : MonoBehaviour
     {
         public bool Initialized { get; protected set; }
-
-        public virtual void StateStart()
-        {
-            Initialized = true;
-        }
-
-        public virtual void StateUpdate()
-        {
-        }
-
-        public virtual void StateFixedUpdate()
-        {
-        }
-
+        
         public virtual void OnGetHit()
         {
         }
@@ -36,8 +23,26 @@ namespace Enemies.Base
             return state;
         }
 
+        public virtual void StateStart()
+        {
+            if (!target.IsAlive) return;
+            Initialized = true;
+        }
+
+        public virtual void StateUpdate()
+        {
+            if (!target.IsAlive) return;
+
+        }
+
+        public virtual void StateFixedUpdate()
+        {
+            if (!target.IsAlive) return;
+        }
+        
         protected void SetState(EnemyState<EnemyType> state)
         {
+            if (!target.IsAlive) return;
             target.SetState(state);
             Destroy(this);
         }
