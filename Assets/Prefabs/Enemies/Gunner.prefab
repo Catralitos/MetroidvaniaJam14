@@ -255,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   playerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -356,20 +356,19 @@ MonoBehaviour:
   randomDropChance: 0.5
   pickUps: []
   explosionPrefab: {fileID: 0}
-  numberOfShots: 3
-  fireRate: 0.2
   moveSpeed: 20
-  sightDistance: 3
   movementSmoothing: 0.05
   holdPositionTime: 3
   horizontalRange: 6
+  sightDistance: 3
+  attackCooldown: 2
+  numberOfShots: 3
+  fireRate: 0.2
+  bulletPrefab: {fileID: 4844413433334714252, guid: 67d3b4fea8e917c4d8183c4bff77cc53, type: 3}
+  bulletSpawn: {fileID: 936799061}
   horizontalAttackRange: 6
   verticalAttackRange: 2
-  attackCooldown: 2
   facingRight: 1
-  bulletPrefab: {fileID: 4844413433334714252, guid: 67d3b4fea8e917c4d8183c4bff77cc53, type: 3}
-  capsuleSprite: {fileID: 0}
-  bulletSpawn: {fileID: 936799061}
   leftGroundTrigger: {fileID: 8973607182430717275}
   rightGroundTrigger: {fileID: 8973607182430717283}
   leftWallTrigger: {fileID: 8973607182430717276}

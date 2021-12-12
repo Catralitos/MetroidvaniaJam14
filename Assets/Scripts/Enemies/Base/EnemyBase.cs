@@ -69,6 +69,7 @@ namespace Enemies.Base
 
         public virtual void Hit(int damage)
         {
+            Debug.Log("Entrou no hit");
             if (!IsAlive) return;
             currentHealth = Mathf.Max(currentHealth - damage, 0);
             if (!IsAlive) Die();
@@ -78,9 +79,12 @@ namespace Enemies.Base
         {
             var spawnPos = transform.position;
             if (explosionPrefab != null) Instantiate(explosionPrefab, spawnPos, transform.rotation);
-            if (Random.Range(0.0f, 1.0f) <= randomDropChance)
+            if (pickUps.Count > 0)
             {
-                Instantiate(pickUps[Random.Range(0, pickUps.Count)], spawnPos, Quaternion.identity);
+                if (Random.Range(0.0f, 1.0f) <= randomDropChance)
+                {
+                    Instantiate(pickUps[Random.Range(0, pickUps.Count)], spawnPos, Quaternion.identity);
+                }
             }
 
             gameObject.SetActive(false);
@@ -126,7 +130,6 @@ namespace Enemies.Base
         {
             if (isAlive)
             {
-                if (!IsAlive) return;
                 currentHealth = Mathf.Max(currentHealth - damage, 0);
                 state.OnGetHit();
                 if (!IsAlive) Die();

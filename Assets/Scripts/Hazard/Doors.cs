@@ -10,21 +10,13 @@ namespace Hazard
         public LayerMask blockMask;
         private Vector3 startPosition;
         private BoxCollider2D _collider;
-
-        public bool hasLock = false;
-        public bool unlocked;
-
+        
         void Start()
         {
             startPosition = transform.position;
 
             _collider = GetComponent<BoxCollider2D>();
-
-            if (hasLock)
-            {
-                unlocked = false;
-            }
-
+            
             if (!startClosed)
             {
                 closed = false;

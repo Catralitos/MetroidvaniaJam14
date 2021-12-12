@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8768
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8768
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0

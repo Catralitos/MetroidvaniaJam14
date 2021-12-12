@@ -9,13 +9,18 @@ namespace Player
     public class PlayerCombat : MonoBehaviour
     {
         public float kickDuration;
+
         public float shotCooldown = 0.7f;
+        private float _shotTimer = 0.0f;
+
         public float shotRange;
         public int normalShotDamage;
         public int boostedShotDamage;
         public GameObject meleeGameObject;
         public LayerMask hitMaskNormal;
         public LayerMask hitMaskPiercing;
+        public float tripleShotAngle = 30f;
+
         private int _currentShotDamage;
         [HideInInspector] public float currentShotTimer;
 
@@ -26,13 +31,12 @@ namespace Player
         public List<Transform> shotOrigin;
 
         public LineRenderer lineRenderer;
-        private float _shotTimer = 0.0f;
+        public LineRenderer lineRendererUp;
+        public LineRenderer lineRendererDown;
 
         private int _pastKickFrames;
         public LayerMask enemies;
         public LayerMask buttons;
-        private RaycastHit2D _hitInfo2;
-        private RaycastHit2D _hitInfo3;
 
         public int damageIncreasePerUpgrade;
 
@@ -66,74 +70,82 @@ namespace Player
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);
 
+            RaycastHit2D hitInfo;
+            RaycastHit2D hitInfo2;
+            RaycastHit2D hitInfo3;
+            
+            Vector2 aimDirection2 = rotate(aimDirection, tripleShotAngle);
+            Vector2 aimDirection3 = rotate(aimDirection, -tripleShotAngle);
+
             lineRenderer.SetPosition(0, armJoints[i].position);
             lineRenderer.SetPosition(1, armJoints[i].position + (Vector3) aimDirection * shotRange);
 
+            if (PlayerEntity.Instance.unlockedTripleBeam)
+            {
+                lineRendererUp.SetPosition(0, armJoints[i].position);
+                lineRendererUp.SetPosition(1, armJoints[i].position + (Vector3) aimDirection2 * shotRange);
+                lineRendererDown.SetPosition(0, armJoints[i].position);
+                lineRendererDown.SetPosition(1, armJoints[i].position + (Vector3) aimDirection3 * shotRange);
+            }
+
+            if (!shoot) return;
             if (_shotTimer < shotCooldown) return;
             if (PlayerEntity.Instance.isMorphed) return;
 
-            if (!PlayerEntity.Instance.frozeControls && shoot)
+            if (!PlayerEntity.Instance.frozeControls)
             {
                 _shotTimer = 0.0f;
 
                 LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
-                RaycastHit2D hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
-
-                if (PlayerEntity.Instance.unlockedTripleBeam)
-                {
-                    Vector2 aimDirection2 = rotate(aimDirection, 45f);
-                    Vector2 aimDirection3 = rotate(aimDirection, -45f);
-
-                    _hitInfo2 = Physics2D.Raycast(armJoints[i].position, aimDirection2, shotRange, mask);
-                    _hitInfo3 = Physics2D.Raycast(armJoints[i].position, aimDirection3, shotRange, mask);
-                }
+                hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
 
                 if (hitInfo)
                 {
                     if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        //hitInfo.collider.gameObject.GetComponent<EnemyBase>.Hit(20);
                         hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                     }
 
                     if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        Debug.Log("Entrou no if botão");
-                        hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
+                        hitInfo.collider.gameObject.GetComponent<PressableButton>().Press();
                     }
 
-                    Debug.Log(hitInfo.transform.name);
+                    Debug.Log("Middle: " + hitInfo.transform.name);
                 }
 
                 if (PlayerEntity.Instance.unlockedTripleBeam)
                 {
-                    if (_hitInfo2)
+                    hitInfo2 = Physics2D.Raycast(armJoints[i].position, aimDirection2, shotRange, mask);
+                    hitInfo3 = Physics2D.Raycast(armJoints[i].position, aimDirection3, shotRange, mask);
+                    if (hitInfo2)
                     {
-                        if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
+                        if (enemies.HasLayer(hitInfo2.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                            hitInfo2.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                         }
 
-                        if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
+                        if (buttons.HasLayer(hitInfo2.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
+                            hitInfo2.collider.gameObject.GetComponent<PressableButton>().Press();
                         }
 
-                        Debug.Log(hitInfo.transform.name);
+                        Debug.Log("Top: " + hitInfo2.transform.name);
                     }
 
-                    if (_hitInfo3)
+                    if (hitInfo3)
                     {
-                        if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
+                        if (enemies.HasLayer(hitInfo3.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                            hitInfo3.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                         }
 
                         if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
-                            Debug.Log(hitInfo.transform.name);
-                        }
+                            hitInfo3.collider.gameObject.GetComponent<PressableButton>().Press();
+                        }                            
+                        Debug.Log("Bottom: " + hitInfo3.transform.name);
+
                     }
                 }
                 //rodar o braço de acordo com o aimDirection
@@ -203,12 +215,12 @@ namespace Player
             {
                 if (enemies.HasLayer(hitInfoExtra.collider.gameObject.layer))
                 {
-                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Press(_currentShotDamage);
                 }
 
                 if (buttons.HasLayer(hitInfoExtra.collider.gameObject.layer))
                 {
-                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Press(_currentShotDamage);
                 }
 
                 Debug.Log(hitInfoExtra.transform.name);

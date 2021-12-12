@@ -208,10 +208,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1119c1837dd48a348b68f079f790e332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
   currentHealth: 5
   maxHealth: 5
   contactDamage: 5
   startPosition: {x: 0, y: 0}
+  rb: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   randomDropChance: 0.5
   pickUps: []
@@ -219,14 +226,10 @@ MonoBehaviour:
   moveSpeed: 1
   rayDistance: 0.6
   backTrigger: {fileID: 4643622492123209662}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
   head: {fileID: 4643622491728409210}
   wallFinder: {fileID: 4643622491868969274}
   lyingOnBack: 0
   boxCollider: {fileID: 0}
-  rb: {fileID: 0}
 --- !u!114 &4643622492123209661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
