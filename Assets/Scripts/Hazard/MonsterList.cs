@@ -1,10 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class MonsterList 
+namespace Hazard
 {
-    [SerializeField] public List<GameObject> monsters;
+    [System.Serializable]
+    public class MonsterList 
+    {
+        [SerializeField] public List<GameObject> monsters;
     
+    }
 }

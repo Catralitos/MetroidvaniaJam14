@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Audio;
+using Enemies.Base;
 
-public class CrawlerState : EnemyState<Crawler>
+namespace Enemies.Crawler
 {
-    protected AudioManager audioManager;
-    
-    protected static new T Create<T>(Crawler target) where T : CrawlerState
+    public class CrawlerState : EnemyState<Crawler>
     {
-        var state = EnemyState<Crawler>.Create<T>(target);
-        state.audioManager = target.GetComponent<AudioManager>();
-        return state;
+        protected AudioManager audioManager;
+    
+        protected static new T Create<T>(Crawler target) where T : CrawlerState
+        {
+            var state = EnemyState<Crawler>.Create<T>(target);
+            state.audioManager = target.GetComponent<AudioManager>();
+            return state;
+        }
     }
 }

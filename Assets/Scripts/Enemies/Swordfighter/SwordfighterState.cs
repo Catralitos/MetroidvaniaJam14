@@ -1,15 +1,20 @@
+using Audio;
+using Enemies.Base;
 using UnityEngine;
 
-public class SwordfighterState : EnemyState<Swordfighter>
+namespace Enemies.Swordfighter
 {
-    protected Animator animator;
-    protected AudioManager audioManager;
-    
-    protected static new T Create<T>(Swordfighter target) where T : SwordfighterState
+    public class SwordfighterState : EnemyState<Swordfighter>
     {
-        var state = EnemyState<Swordfighter>.Create<T>(target);
-        state.animator = target.GetComponentInChildren<Animator>();
-        state.audioManager = target.GetComponent<AudioManager>();
-        return state;
+        protected Animator animator;
+        protected AudioManager audioManager;
+    
+        protected static new T Create<T>(Swordfighter target) where T : SwordfighterState
+        {
+            var state = EnemyState<Swordfighter>.Create<T>(target);
+            state.animator = target.GetComponentInChildren<Animator>();
+            state.audioManager = target.GetComponent<AudioManager>();
+            return state;
+        }
     }
 }

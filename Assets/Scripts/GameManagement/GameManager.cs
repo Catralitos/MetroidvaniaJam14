@@ -1,60 +1,63 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+namespace GameManagement
 {
+    public class GameManager : MonoBehaviour
+    {
 
-    [HideInInspector] public static GameManager Instance { get; private set; }
+        [HideInInspector] public static GameManager Instance { get; private set; }
 
-    [HideInInspector] public bool countingTime;
-    [HideInInspector] public float timeElapsed;
+        [HideInInspector] public bool countingTime;
+        [HideInInspector] public float timeElapsed;
  
-    [HideInInspector] public string savePath = Application.persistentDataPath + "/player.steve";
+        [HideInInspector] public string savePath = Application.persistentDataPath + "/player.steve";
     
-    public void Awake()
-    {
-        if (Instance == null)
+        public void Awake()
         {
-            Instance = this;
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Debug.LogWarning("Multiple game managers present in scene! Destroying...");
+                Destroy(gameObject);
+            }
+            DontDestroyOnLoad(gameObject);
         }
-        else
+
+        public void Update()
         {
-            Debug.LogWarning("Multiple game managers present in scene! Destroying...");
-            Destroy(gameObject);
+            if (countingTime)
+            {
+                timeElapsed += Time.deltaTime;
+            }
         }
-        DontDestroyOnLoad(gameObject);
-    }
 
-    public void Update()
-    {
-        if (countingTime)
+        public void StartCountingTime()
         {
-            timeElapsed += Time.deltaTime;
+            countingTime = true;
         }
-    }
 
-    public void StartCountingTime()
-    {
-        countingTime = true;
-    }
+        public void StopCountingTime()
+        {
+            countingTime = false;
+        }
 
-    public void StopCountingTime()
-    {
-        countingTime = false;
-    }
-
-    public void LoadTitleScreen()
-    {
-        SceneManager.LoadScene(0);
-    }
+        public void LoadTitleScreen()
+        {
+            SceneManager.LoadScene(0);
+        }
     
-    public void LoadNextScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+        public void LoadNextScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     
-    public void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        public void ReloadScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

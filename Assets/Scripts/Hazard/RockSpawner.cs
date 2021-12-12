@@ -1,32 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RockSpawner : MonoBehaviour
+namespace Hazard
 {
-    public float timeSpawn;
-    private float _currentTimer;
-    public GameObject rocks;
-    public Transform spawnTransform;
-
-    // Start is called before the first frame update
-    void Start()
+    public class RockSpawner : MonoBehaviour
     {
-        _currentTimer = timeSpawn;
+        public float timeSpawn;
+        private float _currentTimer;
+        public GameObject rocks;
+        public Transform spawnTransform;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        _currentTimer -= Time.deltaTime;
-        if (_currentTimer < 0)
+        // Start is called before the first frame update
+        void Start()
         {
-            Instantiate(rocks, spawnTransform.position, spawnTransform.rotation, gameObject.transform);
             _currentTimer = timeSpawn;
+
         }
 
+        // Update is called once per frame
+        void Update()
+        {
+            _currentTimer -= Time.deltaTime;
+            if (_currentTimer < 0)
+            {
+                Instantiate(rocks, spawnTransform.position, spawnTransform.rotation, gameObject.transform);
+                _currentTimer = timeSpawn;
+            }
+
+        }
+
+
     }
-
-
 }

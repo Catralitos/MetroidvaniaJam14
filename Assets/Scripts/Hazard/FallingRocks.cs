@@ -1,31 +1,32 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Extensions;
+using Player;
 using UnityEngine;
 
-public class FallingRocks : MonoBehaviour
+namespace Hazard
 {
-    public LayerMask destroyMask;
-    public LayerMask hitMask;
-    public int damageRock;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class FallingRocks : MonoBehaviour
     {
-        if (destroyMask.HasLayer(other.gameObject.layer))
+        public LayerMask destroyMask;
+        public LayerMask hitMask;
+        public int damageRock;
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            Destroy(gameObject);
-        }
+            if (destroyMask.HasLayer(other.gameObject.layer))
+            {
+                Destroy(gameObject);
+            }
         
-        if (hitMask.HasLayer(other.gameObject.layer))
-        {
-            PlayerEntity.Instance.Health.Hit(damageRock);
-            Destroy(gameObject);
+            if (hitMask.HasLayer(other.gameObject.layer))
+            {
+                PlayerEntity.Instance.Health.Hit(damageRock);
+                Destroy(gameObject);
+            }
         }
+        protected virtual void Hit(GameObject target) { }
+
+
+
     }
-    protected virtual void Hit(GameObject target) { }
-
-
-
 }
 

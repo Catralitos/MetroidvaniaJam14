@@ -1,50 +1,51 @@
-using UnityEngine.Audio;
+using System;
 using UnityEngine;
 
-using System;
-
-public class AudioManager : MonoBehaviour
+namespace Audio
 {
-    public Sound[] sounds;
+    public class AudioManager : MonoBehaviour
+    {
+        public Sound[] sounds;
     
-    void Awake()
-    {
-        foreach (Sound s in sounds)
+        void Awake()
         {
-            s.SetSource(gameObject.AddComponent<AudioSource>());
+            foreach (Sound s in sounds)
+            {
+                s.SetSource(gameObject.AddComponent<AudioSource>());
+            }
         }
-    }
     
-    public void Play(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        public void Play(string name)
         {
-            Debug.LogWarning("Sound " + name + " not found!");
-            return;
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null || s.source == null)
+            {
+                Debug.LogWarning("Sound " + name + " not found!");
+                return;
+            }
+            if (!isPlaying(s.name)) s.Play();
         }
-        if (!isPlaying(s.name)) s.Play();
-    }
 
-    public void Stop(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null || s.source == null)
+        public void Stop(string name)
         {
-            Debug.LogWarning("Sound " + name + " not found!");
-            return;
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null || s.source == null)
+            {
+                Debug.LogWarning("Sound " + name + " not found!");
+                return;
+            }
+            if (isPlaying(s.name)) s.Stop();
         }
-        if (isPlaying(s.name)) s.Stop();
-    }
 
-    public bool isPlaying(String name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
+        public bool isPlaying(String name)
         {
-            Debug.LogWarning("Sound " + name + " not found!");
-            return false;
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+            {
+                Debug.LogWarning("Sound " + name + " not found!");
+                return false;
+            }
+            return s.IsPlaying();
         }
-        return s.IsPlaying();
     }
 }

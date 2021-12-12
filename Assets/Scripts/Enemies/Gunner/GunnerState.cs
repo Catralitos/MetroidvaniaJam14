@@ -1,16 +1,18 @@
-using System;
-using Extensions;
+using Enemies.Base;
 using UnityEngine;
 
-public class GunnerState : EnemyState<Gunner>
+namespace Enemies.Gunner
 {
-    protected Animator animator;
-
-    protected static new T Create<T>(Gunner target) where T : GunnerState
+    public class GunnerState : EnemyState<Gunner>
     {
-        var state = EnemyState<Gunner>.Create<T>(target);
-        state.animator = target.GetComponentInChildren<Animator>();
-        return state;
-    }
+        protected Animator animator;
+
+        protected static new T Create<T>(Gunner target) where T : GunnerState
+        {
+            var state = EnemyState<Gunner>.Create<T>(target);
+            state.animator = target.GetComponentInChildren<Animator>();
+            return state;
+        }
     
+    }
 }
