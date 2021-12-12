@@ -59,6 +59,7 @@ namespace Player
 
         private void Update()
         {
+            if (PlayerEntity.Instance.dying) return;
             if (!LevelManager.Instance.gameIsPaused)
             {
                 _unpausedFrames++;
@@ -89,12 +90,13 @@ namespace Player
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.localPosition);
 
             _aimInput = ((Vector2) _mousePosition - (Vector2) screenPosition).normalized;
-            _playerCombat.Shoot(_shoot, _aimInput);
+            if (!PlayerEntity.Instance.frozeControls) _playerCombat.Shoot(_shoot, _aimInput);
             if (!PlayerEntity.Instance.frozeControls) _playerCombat.Kick(_kick);
         }
 
         private void FixedUpdate()
         {
+            if (PlayerEntity.Instance.dying) return;
             if (!PlayerEntity.Instance.unlockedDash) _dash = false;
             if (!PlayerEntity.Instance.frozeControls)
                 _playerMovement.Move(_directionInput.x, _directionInput.y, _jump, _dash);

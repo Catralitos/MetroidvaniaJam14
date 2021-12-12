@@ -16,8 +16,11 @@ using UnityEngine;
 
 public class DissolveEffect : MonoBehaviour {
 
-    [SerializeField] private Material material;
+    public Material material;
+    private Material _material;
 
+    private SpriteRenderer[] _spriteRenderers;
+    
     private float dissolveAmount;
     private float dissolveSpeed;
     private bool isDissolving;
@@ -26,27 +29,37 @@ public class DissolveEffect : MonoBehaviour {
         if (material == null) {
             material = transform.Find("Body").GetComponent<MeshRenderer>().material;
         }
+
+        _material = new Material(material);
+        _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (var sprite in _spriteRenderers)
+        {
+            sprite.material = _material;
+        }
+
     }
 
     private void Update() {
         if (isDissolving) {
             dissolveAmount = Mathf.Clamp01(dissolveAmount + dissolveSpeed * Time.deltaTime);
-            material.SetFloat("_DissolveAmount", dissolveAmount);
+            _material.SetFloat("_DissolveAmount", dissolveAmount);
         } else {
             dissolveAmount = Mathf.Clamp01(dissolveAmount - dissolveSpeed * Time.deltaTime);
-            material.SetFloat("_DissolveAmount", dissolveAmount);
+            _material.SetFloat("_DissolveAmount", dissolveAmount);
         }
     }
 
     public void StartDissolve(float dissolveSpeed, Color dissolveColor) {
+        Debug.Log(gameObject.name + " started dissolving");
         isDissolving = true;
-        material.SetColor("_DissolveColor", dissolveColor);
+        _material.SetColor("_DissolveColor", dissolveColor);
         this.dissolveSpeed = dissolveSpeed;
     }
 
     public void StopDissolve(float dissolveSpeed, Color dissolveColor) {
+        Debug.Log(gameObject.name + " stopped dissolving");
         isDissolving = false;
-        material.SetColor("_DissolveColor", dissolveColor);
+        _material.SetColor("_DissolveColor", dissolveColor);
         this.dissolveSpeed = dissolveSpeed;
     }
 

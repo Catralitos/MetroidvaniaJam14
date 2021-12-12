@@ -93,7 +93,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,7 +177,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -571,7 +571,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -670,7 +670,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1158,7 +1158,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1209,6 +1209,7 @@ GameObject:
   - component: {fileID: 792532264}
   - component: {fileID: 792532265}
   - component: {fileID: 2123994783618295201}
+  - component: {fileID: 601116179}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1257,19 +1258,23 @@ MonoBehaviour:
   - {fileID: 1749416576}
   displayingTooltip: 0
   frozeControls: 0
+  collectedKey: 0
+  destroyedDoor: 0
   facingRight: 0
   isCrouched: 0
   isMorphed: 0
   isUnderwater: 0
+  dying: 0
   unlockedDash: 1
   unlockedDoubleJump: 1
   unlockedGravitySuit: 0
   unlockedMorphBall: 1
   unlockedTripleBeam: 1
-  unlockedPiercingBeam: 0
+  unlockedPiercingBeam: 1
   combatRoomsBeaten: 
   healthUpgradesCollected: 
   damageUpgradesCollected: 
+  threeButtonDoorsOpened: 
   defaultDrag: 0
   defaultGravity: 8
   defaultMass: 1
@@ -1297,6 +1302,9 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   healthPerMaxIncrement: 100
+  dissolveSpeed: 0.5
+  startDissolveColor: {r: 0.011171341, g: 0, b: 1, a: 1}
+  stopDissolveColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &6980801993563420553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1386,8 +1394,8 @@ MonoBehaviour:
   kickDuration: 0.2
   shotCooldown: 2
   shotRange: 10
-  normalShotDamage: 10
-  boostedShotDamage: 20
+  normalShotDamage: 20
+  boostedShotDamage: 30
   meleeGameObject: {fileID: 7767253}
   hitMaskNormal:
     serializedVersion: 2
@@ -1506,3 +1514,16 @@ MonoBehaviour:
   movementTooltip: {fileID: 0}
   saveTooltip: {fileID: 0}
   canCancelTooltip: 0
+--- !u!114 &601116179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980801993563420550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4731f2b07922ec54b8b45305d86188e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}

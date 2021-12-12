@@ -12,9 +12,7 @@ public class Room : MonoBehaviour
     //public Sprite roomBg;
     public LayerMask enemyLayer;
 
-    //private Collider2D _confiner;
     [SerializeField] private List<GameObject> _enemies;
-    //[SerializeField] private List<GameObject> _platforms;
     private List<GameObject> _playerColliders;
     private bool _inRoom;
 
@@ -42,14 +40,6 @@ public class Room : MonoBehaviour
                 }
             }
 
-            /*if (!_inRoom)
-            {
-                foreach (var p in _platforms)
-                {
-                    if (p!= null) p.SetActive(true);
-                }
-            }*/
-
             _inRoom = true;
         }
 
@@ -58,19 +48,13 @@ public class Room : MonoBehaviour
             _enemies.Add(other.gameObject);
             if (!_inRoom) other.gameObject.SetActive(false);
         }
-        
-        /*if (!_platforms.Contains(other.gameObject) && other.gameObject.CompareTag("Platform"))
-        {
-            _platforms.Add(other.gameObject);
-            if (!_inRoom) other.gameObject.SetActive(false);
-        }*/
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (_playerColliders.Contains(other.gameObject) && !other.isTrigger)
         {
-            Invoke(nameof(LeaveRoom), 0.1f);
+            Invoke(nameof(LeaveRoom), 3.1f);
         }
     }
 
@@ -81,9 +65,6 @@ public class Room : MonoBehaviour
         {
             if (e != null) e.SetActive(false);
         }
-        /*foreach (var p in _platforms)
-        {
-            if (p != null) p.SetActive(false);
-        }*/
+
     }
 }

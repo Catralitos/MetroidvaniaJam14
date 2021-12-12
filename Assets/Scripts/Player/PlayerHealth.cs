@@ -1,3 +1,4 @@
+using GameManagement;
 using UnityEngine;
 
 namespace Player
@@ -16,10 +17,20 @@ namespace Player
         public int maxHealth;
         public int healthPerMaxIncrement;
     
+        private DissolveEffect _dissolve;
+
+        public float dissolveSpeed;
+        [ColorUsageAttribute(true, true)] [SerializeField]
+        private Color startDissolveColor;
+
+        [ColorUsageAttribute(true, true)] [SerializeField]
+        private Color stopDissolveColor;
+        
         // Start is called before the first frame update
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _dissolve = GetComponent<DissolveEffect>();
             _initialCons = _rb.constraints;
             currentHealth = maxHealth;
         }
@@ -32,6 +43,7 @@ namespace Player
     
         public void Hit(int damage)
         {
+            if (PlayerEntity.Instance.dying) return;
             //fazer dano
             PlayerEntity.Instance.frozeControls = true;
             _rb.velocity = Vector2.zero;
@@ -47,13 +59,18 @@ namespace Player
 
         public void Die()
         {
+            PlayerEntity.Instance.DisableAllCollisions();
+            PlayerEntity.Instance.dying = true;
             PlayerEntity.Instance.frozeControls = true;
+            _rb.bodyType = RigidbodyType2D.Static;
+            _dissolve.StartDissolve(dissolveSpeed, startDissolveColor);
             Invoke(nameof(ReloadLevel), 3f);
         }
 
         private void ReloadLevel()
         {
-            //recarregar o nivel
+            _dissolve.StopDissolve(dissolveSpeed, stopDissolveColor);        
+            GameManager.Instance.ReloadScene();
         }
     
         private void RestoreControls()

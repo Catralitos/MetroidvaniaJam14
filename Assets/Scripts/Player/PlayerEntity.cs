@@ -20,12 +20,14 @@ namespace Player
         [Header("Global Bools")]public bool displayingTooltip;
         public bool frozeControls;
         public bool collectedKey;
+        public bool destroyedDoor;
 
         [Header("Current State")]public bool facingRight;
         public bool isCrouched;
         public bool isMorphed;
         public bool isUnderwater;
-
+        public bool dying;
+        
         [Header("Unlocks")]public bool unlockedDash;
         public bool unlockedDoubleJump;
         public bool unlockedGravitySuit;
@@ -35,6 +37,7 @@ namespace Player
         public bool[] combatRoomsBeaten;
         public bool[] healthUpgradesCollected;
         public bool[] damageUpgradesCollected;
+        public bool[] threeButtonDoorsOpened;
         
         [Header("Normal/Underwater Movement")]public float defaultDrag;
         public float defaultGravity;
@@ -48,7 +51,8 @@ namespace Player
         public float maxJumpBuffTime;
         
         private Rigidbody2D _rb;
-        void Awake()
+        
+        private void Awake()
         {
             if (Instance == null)
             {
@@ -110,6 +114,16 @@ namespace Player
                 states[0].SetActive(false);
                 states[1].SetActive(false);
                 states[2].SetActive(true);
+            }
+        }
+
+        public void DisableAllCollisions()
+        {
+            Collider2D[] collidersObj = gameObject.GetComponentsInChildren<Collider2D>();
+            for (var index = 0; index < collidersObj.Length; index++)
+            {
+                var colliderItem = collidersObj[index];
+                colliderItem.enabled = false;
             }
         }
     }

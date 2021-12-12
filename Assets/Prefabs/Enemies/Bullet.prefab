@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4844413433334714250}
   - component: {fileID: 4844413433334714249}
   - component: {fileID: 4844413433334714253}
+  - component: {fileID: -6256135589028248576}
   m_Layer: 11
   m_Name: Bullet
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,4 +152,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 960
   Speed: 10
-  bulletDamage: 1
+  bulletDamage: 20
+  dissolveSpeed: 0.5
+  startDissolveColor: {r: 0, g: 1, b: 0.4692471, a: 1}
+  stopDissolveColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &-6256135589028248576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4844413433334714252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4731f2b07922ec54b8b45305d86188e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}

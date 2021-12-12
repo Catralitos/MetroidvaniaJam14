@@ -18,6 +18,8 @@ namespace GameManagement
 
         public bool gameIsPaused;
 
+        public TripleButton[] threeButtonDoors;
+        
         public EnemySpawner[] combatRooms;
 
         public Upgrade[] healthUpgrades;
@@ -48,6 +50,7 @@ namespace GameManagement
             PlayerEntity.Instance.combatRoomsBeaten = new bool[combatRooms.Length];
             PlayerEntity.Instance.damageUpgradesCollected = new bool[damageUpgrades.Length];
             PlayerEntity.Instance.healthUpgradesCollected = new bool[healthUpgrades.Length];
+            PlayerEntity.Instance.threeButtonDoorsOpened = new bool[threeButtonDoors.Length];
             
             PlayerData savedData = SaveSystem.LoadPlayer();
             if (savedData != null)
@@ -78,6 +81,11 @@ namespace GameManagement
                 for (int i = 0; i < savedData.healthUpgradesCollected.Length; i++)
                 {
                     PlayerEntity.Instance.healthUpgradesCollected[i] = savedData.healthUpgradesCollected[i];
+                }
+                
+                for (int i = 0; i < savedData.threeButtonDoorsOpened.Length; i++)
+                {
+                    PlayerEntity.Instance.threeButtonDoorsOpened[i] = savedData.threeButtonDoorsOpened[i];
                 }
             }
 
@@ -140,6 +148,14 @@ namespace GameManagement
                 {
                     healthUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(healthUpgrades[i].gameObject);
+                }
+            }
+            
+            for (int i = 0; i < threeButtonDoors.Length; i++)
+            {
+                if (threeButtonDoors[i] != null && PlayerEntity.Instance.threeButtonDoorsOpened[i])
+                {
+                    threeButtonDoors[i].pressed = true;
                 }
             }
 

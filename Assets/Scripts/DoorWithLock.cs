@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Extensions;
 using Player;
 using UnityEngine;
-using Extensions;
+
 
 public class DoorWithLock : MonoBehaviour
 {
@@ -13,6 +11,7 @@ public class DoorWithLock : MonoBehaviour
     {
        if (playerMask.HasLayer(col.gameObject.layer) && PlayerEntity.Instance.collectedKey)
        {
+           PlayerEntity.Instance.destroyedDoor = true;
            Destroy(gameObject);
        }
     }
