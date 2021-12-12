@@ -26,7 +26,8 @@ namespace Player
         public bool isCrouched;
         public bool isMorphed;
         public bool isUnderwater;
-
+        public bool dying;
+        
         [Header("Unlocks")]public bool unlockedDash;
         public bool unlockedDoubleJump;
         public bool unlockedGravitySuit;
@@ -50,7 +51,8 @@ namespace Player
         public float maxJumpBuffTime;
         
         private Rigidbody2D _rb;
-        void Awake()
+        
+        private void Awake()
         {
             if (Instance == null)
             {
@@ -112,6 +114,16 @@ namespace Player
                 states[0].SetActive(false);
                 states[1].SetActive(false);
                 states[2].SetActive(true);
+            }
+        }
+
+        public void DisableAllCollisions()
+        {
+            Collider2D[] collidersObj = gameObject.GetComponentsInChildren<Collider2D>();
+            for (var index = 0; index < collidersObj.Length; index++)
+            {
+                var colliderItem = collidersObj[index];
+                colliderItem.enabled = false;
             }
         }
     }

@@ -327,6 +327,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 88250731, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
+    - target: {fileID: 1749416579, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
     - target: {fileID: 2123994783618295201, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: jumpBuff
       value: 
@@ -367,9 +375,49 @@ PrefabInstance:
       propertyPath: healthPips.Array.data[5]
       value: 
       objectReference: {fileID: 2001872449}
+    - target: {fileID: 6980801993283995932, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
     - target: {fileID: 6980801993563420550, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: dissolveSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: stopDissolveColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: stopDissolveColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: stopDissolveColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: stopDissolveColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: startDissolveColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: startDissolveColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: startDissolveColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980801993563420554, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: startDissolveColor.r
+      value: 0.011171341
       objectReference: {fileID: 0}
     - target: {fileID: 6980801993563420555, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: unlockedPiercingBeam
@@ -780,7 +828,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5455294407224361448, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
+      propertyPath: currentHealth
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
@@ -1762,6 +1818,24 @@ Sprite:
   m_PhysicsShape: []
   m_Bones: []
   m_SpriteID: 
+--- !u!1 &601116178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6980801993563420550, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+  m_PrefabInstance: {fileID: 66080015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &601116179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601116178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4731f2b07922ec54b8b45305d86188e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
 --- !u!1 &747394155
 GameObject:
   m_ObjectHideFlags: 0
