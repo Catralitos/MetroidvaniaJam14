@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Extensions;
 using Player;
 using UnityEngine;
-using Extensions;
+
 
 public class DoorWithLock : MonoBehaviour
 {
