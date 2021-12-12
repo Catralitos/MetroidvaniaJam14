@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class PiercingBeamUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class PiercingBeamUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedPiercingBeam = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedPiercingBeam = true;
+        }
     }
 }

@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class DoubleJumpUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class DoubleJumpUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedDoubleJump = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedDoubleJump = true;
+        }
     }
 }

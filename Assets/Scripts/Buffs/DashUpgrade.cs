@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class DashUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class DashUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedDash = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedDash = true;
+        }
     }
 }

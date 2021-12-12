@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using Enemies.Base;
+using Hazard;
 
 namespace Player
 {
@@ -38,7 +39,6 @@ namespace Player
         public void Start()
         {
             _shotTimer = shotCooldown;
-
         }
 
         public void IncreaseMaxDamage()
@@ -49,27 +49,19 @@ namespace Player
         public void Update()
         {
             _shotTimer += Time.deltaTime;
-            currentShotTimer += Time.deltaTime;
+            currentShotTimer -= Time.deltaTime;
             if (currentShotTimer < 0)
             {
-                _shotTimer += Time.deltaTime;
-                currentShotTimer += Time.deltaTime;
-                if (currentShotTimer < 0)
-                {
-                    _currentShotDamage = normalShotDamage;
-
-                }
-                else
-                {
-                    _currentShotDamage = boostedShotDamage;
-                }
+                _currentShotDamage = normalShotDamage;
+            }
+            else
+            {
+                _currentShotDamage = boostedShotDamage;
             }
         }
 
         public void Shoot(bool shoot, Vector2 aimDirection)
         {
-            if (PlayerEntity.Instance.isMorphed) return;
-
             int i = PlayerEntity.Instance.isCrouched ? 1 : 0;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);
@@ -77,22 +69,13 @@ namespace Player
             lineRenderer.SetPosition(0, armJoints[i].position);
             lineRenderer.SetPosition(1, armJoints[i].position + (Vector3) aimDirection * shotRange);
 
+            if (_shotTimer < shotCooldown) return;
+            if (PlayerEntity.Instance.isMorphed) return;
 
-            if (!PlayerEntity.Instance.frozeControls && shoot && _shotTimer > shotCooldown)
+            if (!PlayerEntity.Instance.frozeControls && shoot)
             {
-                LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
-                RaycastHit2D hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
-
-                if (hitInfo)
-                {
-                    //Debug.Log(hitInfo.transform.name);  
-                }
-
                 _shotTimer = 0.0f;
-            }
 
-            if (shoot && _shotTimer > shotCooldown)
-            {
                 LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
                 RaycastHit2D hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
 
@@ -115,7 +98,8 @@ namespace Player
 
                     if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                        Debug.Log("Entrou no if botão");
+                        hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
                     }
 
                     Debug.Log(hitInfo.transform.name);
@@ -132,7 +116,7 @@ namespace Player
 
                         if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                            hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
                         }
 
                         Debug.Log(hitInfo.transform.name);
@@ -147,14 +131,11 @@ namespace Player
 
                         if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                         {
-                            hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                            hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
                             Debug.Log(hitInfo.transform.name);
                         }
                     }
-
-                    _shotTimer = 0.0f;
                 }
-
                 //rodar o braço de acordo com o aimDirection
                 //ver se ja passou cooldown para dar tiro
                 //ver as bools de unlocks no player instance, procurar pelas camadas apropriadas
@@ -189,15 +170,12 @@ namespace Player
 
         public void IncreaseShotTimer(float timer)
         {
-
             if (currentShotTimer < 0)
             {
                 currentShotTimer = 0;
-
             }
 
             currentShotTimer += timer;
-
         }
 
 
@@ -215,34 +193,31 @@ namespace Player
         }
 
 
+        /* private void pierceShot(Vector2 posInicial, Vector2 direcao, float rangeSum, int layerMask)   
+    {
+            if (rangeSum < shotRange && rangeSum > 0)
+            {
+            RaycastHit2D hitInfoExtra = Physics2D.Raycast(posInicial, direcao, rangeSum, layerMask);
 
-        
-            /* private void pierceShot(Vector2 posInicial, Vector2 direcao, float rangeSum, int layerMask)   
-        {
-                if (rangeSum < shotRange && rangeSum > 0)
+            if (hitInfoExtra)
+            {
+                if (enemies.HasLayer(hitInfoExtra.collider.gameObject.layer))
                 {
-                RaycastHit2D hitInfoExtra = Physics2D.Raycast(posInicial, direcao, rangeSum, layerMask);
-    
-                if (hitInfoExtra)
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                }
+
+                if (buttons.HasLayer(hitInfoExtra.collider.gameObject.layer))
                 {
-                    if (enemies.HasLayer(hitInfoExtra.collider.gameObject.layer))
-                    {
-                            hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
-                    }
-    
-                    if (buttons.HasLayer(hitInfoExtra.collider.gameObject.layer))
-                    {
-                            hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
-                    }
-    
-                    Debug.Log(hitInfoExtra.transform.name);
-                    
-                    rangeSum += hitInfoExtra.magnitude;
-                    
-                    return pierceShot(posInicial + direcao.normalized * hitInfoExtra.magnitude, direcao, rangeSum - hitInfoExtra.magnitude, layerMask);
-                  } 
-            } 
-        } */
-           
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                }
+
+                Debug.Log(hitInfoExtra.transform.name);
+                
+                rangeSum += hitInfoExtra.magnitude;
+                
+                return pierceShot(posInicial + direcao.normalized * hitInfoExtra.magnitude, direcao, rangeSum - hitInfoExtra.magnitude, layerMask);
+              } 
+        } 
+    } */
     }
 }

@@ -1,52 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonBehavior : MonoBehaviour
+namespace Hazard
 {
-    public Sprite beforeHitting;
-    public Sprite afterHitting;
-    public bool pressed;
-    public float pressedCooldown = 4f;
-    private float _timer = 0f;
-
-    private SpriteRenderer _sprite;
-
-    void Start()
+    public class ButtonBehavior : MonoBehaviour
     {
-        _timer = pressedCooldown;
-        _sprite = GetComponent<SpriteRenderer>();
-        _sprite.sprite = beforeHitting;
-    }
+        public Sprite beforeHitting;
+        public Sprite afterHitting;
+        public bool pressed;
+        public float pressedCooldown = 4f;
+        private float _timer = 0f;
 
-    void Update()
-    {
-        if (pressed)
+        [SerializeField] public Openable toOpen;
+        
+        private SpriteRenderer _sprite;
+
+        void Start()
         {
-            _timer -= Time.deltaTime;
+            _timer = pressedCooldown;
+            _sprite = GetComponent<SpriteRenderer>();
+            _sprite.sprite = beforeHitting;
         }
 
-        if (_timer <= 0)
+        void Update()
         {
-            NormalSprite();
+            if (pressed)
+            {
+                _timer -= Time.deltaTime;
+            }
+
+            if (_timer <= 0)
+            {
+                NormalSprite();
+            }
         }
-    }
 
-    private void HitSprite()
-    {
-        _sprite.sprite = afterHitting;
-        pressed = true;
-    }
+        private void HitSprite()
+        {
+            _sprite.sprite = afterHitting;
+            pressed = true;
+            toOpen.Open();
+        }
 
-    private void NormalSprite()
-    {
-        _sprite.sprite = beforeHitting;
-        pressed = false;
-    }
+        private void NormalSprite()
+        {
+            _sprite.sprite = beforeHitting;
+            pressed = false;
+            toOpen.Close();
+        }
 
-    public void Hit()
-    {
-        _timer = pressedCooldown;
-        HitSprite();
+        public void Hit()
+        {
+            Debug.Log("entrou no hit");
+            _timer = pressedCooldown;
+            HitSprite();
+        }
     }
 }

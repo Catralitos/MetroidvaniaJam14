@@ -1012,8 +1012,9 @@ MonoBehaviour:
   underwaterDrag: 100
   underwaterGravity: 16
   underwaterMass: 1
-  healthUpgradesCollected: 0
-  damageUpgradesCollected: 0
+  combatRoomsBeaten: 
+  healthUpgradesCollected: 
+  damageUpgradesCollected: 
   testCylinder: {fileID: 6980801993283995932}
 --- !u!114 &6980801993563420554
 MonoBehaviour:
@@ -1030,6 +1031,7 @@ MonoBehaviour:
   knockbackLength: 0.3
   knockbackHorizontalStrength: 10
   knockbackVerticalStrength: 15
+  currentHealth: 0
   maxHealth: 10
   healthPerMaxIncrement: 0
 --- !u!114 &6980801993563420553
@@ -1138,6 +1140,13 @@ MonoBehaviour:
   - {fileID: 1117747247}
   - {fileID: 1619397654}
   lineRenderer: {fileID: 8326858336223561363}
+  enemies:
+    serializedVersion: 2
+    m_Bits: 256
+  buttons:
+    serializedVersion: 2
+    m_Bits: 16384
+  damageIncreasePerUpgrade: 20
 --- !u!114 &792532263
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class MorphBallUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class MorphBallUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedMorphBall = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedMorphBall = true;
+        }
     }
 }   

@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class TripleBeamUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class TripleBeamUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedTripleBeam = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedTripleBeam = true;
+        }
     }
 }

@@ -1,10 +1,12 @@
-using Buffs;
 using Player;
 
-public class GravitySuitUpgrade : Upgrade
+namespace Buffs
 {
-    protected override void SetUpgrade()
+    public class GravitySuitUpgrade : Upgrade
     {
-        PlayerEntity.Instance.unlockedGravitySuit = true;
+        protected override void SetUpgrade()
+        {
+            PlayerEntity.Instance.unlockedGravitySuit = true;
+        }
     }
 }
