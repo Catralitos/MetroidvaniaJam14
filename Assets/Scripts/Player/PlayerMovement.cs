@@ -572,10 +572,10 @@ namespace Player
             
             }
 
-            currentJumpTimer += time;
+            currentJumpTimer = Mathf.Clamp(currentMoveTimer + time, 0, PlayerEntity.Instance.maxJumpBuffTime);
         }
 
-        public void IncreaseMoveTimer(float timer)
+        public void IncreaseMoveTimer(float time)
         {
             if (currentMoveTimer < 0)
             {
@@ -583,7 +583,7 @@ namespace Player
 
             }
 
-            currentMoveTimer += timer;
+            currentMoveTimer = Mathf.Clamp(currentMoveTimer + time, 0, PlayerEntity.Instance.maxSpeedBuffTime);
 
 
         }

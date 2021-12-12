@@ -15,36 +15,40 @@ namespace Player
         //1 - standing
         //2 - crouching
         //3 - morphed up
-        public List<GameObject> states;
+        [Header("Positions")]public List<GameObject> states;
 
-        public bool displayingTooltip;
+        [Header("Global Bools")]public bool displayingTooltip;
         public bool frozeControls;
+        public bool collectedKey;
+        public bool destroyedDoor;
 
-        public bool facingRight;
+        [Header("Current State")]public bool facingRight;
         public bool isCrouched;
         public bool isMorphed;
         public bool isUnderwater;
 
-        public bool unlockedDash;
+        [Header("Unlocks")]public bool unlockedDash;
         public bool unlockedDoubleJump;
         public bool unlockedGravitySuit;
         public bool unlockedMorphBall;
         public bool unlockedTripleBeam;
         public bool unlockedPiercingBeam;
-
-        public float defaultDrag;
+        public bool[] combatRoomsBeaten;
+        public bool[] healthUpgradesCollected;
+        public bool[] damageUpgradesCollected;
+        public bool[] threeButtonDoorsOpened;
+        
+        [Header("Normal/Underwater Movement")]public float defaultDrag;
         public float defaultGravity;
         public float defaultMass;
         public float underwaterDrag;
         public float underwaterGravity;
         public float underwaterMass;
 
-        public bool[] combatRoomsBeaten;
-        public bool[] healthUpgradesCollected;
-        public bool[] damageUpgradesCollected;
-    
-        public SpriteRenderer testCylinder;
-
+        [Header("Timer Caps")] public float maxDamageBuffTime;
+        public float maxSpeedBuffTime;
+        public float maxJumpBuffTime;
+        
         private Rigidbody2D _rb;
         void Awake()
         {

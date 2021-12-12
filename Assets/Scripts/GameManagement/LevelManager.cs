@@ -1,6 +1,7 @@
 using Buffs;
 using Hazard;
 using Player;
+using UI;
 using UnityEngine;
 
 namespace GameManagement
@@ -13,8 +14,14 @@ namespace GameManagement
         public float finalCountdownTime;
         private float _finalCountdown;
 
+        public PauseScreenManager pauseScreen;
+
+        public bool gameIsPaused;
+
+        public TripleButton[] threeButtonDoors;
+        
         public EnemySpawner[] combatRooms;
-    
+
         public Upgrade[] healthUpgrades;
         public Upgrade[] damageUpgrades;
 
@@ -40,6 +47,11 @@ namespace GameManagement
 
         public void Start()
         {
+            PlayerEntity.Instance.combatRoomsBeaten = new bool[combatRooms.Length];
+            PlayerEntity.Instance.damageUpgradesCollected = new bool[damageUpgrades.Length];
+            PlayerEntity.Instance.healthUpgradesCollected = new bool[healthUpgrades.Length];
+            PlayerEntity.Instance.threeButtonDoorsOpened = new bool[threeButtonDoors.Length];
+            
             PlayerData savedData = SaveSystem.LoadPlayer();
             if (savedData != null)
             {
@@ -55,12 +67,12 @@ namespace GameManagement
                 PlayerEntity.Instance.Movement.currentJumpTimer = savedData.buffTimers[0];
                 PlayerEntity.Instance.Movement.currentMoveTimer = savedData.buffTimers[1];
                 PlayerEntity.Instance.Combat.currentShotTimer = savedData.buffTimers[2];
-            
+                
                 for (int i = 0; i < savedData.combatRoomsBeaten.Length; i++)
                 {
                     PlayerEntity.Instance.combatRoomsBeaten[i] = savedData.combatRoomsBeaten[i];
                 }
-            
+
                 for (int i = 0; i < savedData.damageUpgradesCollected.Length; i++)
                 {
                     PlayerEntity.Instance.damageUpgradesCollected[i] = savedData.damageUpgradesCollected[i];
@@ -70,39 +82,44 @@ namespace GameManagement
                 {
                     PlayerEntity.Instance.healthUpgradesCollected[i] = savedData.healthUpgradesCollected[i];
                 }
+                
+                for (int i = 0; i < savedData.threeButtonDoorsOpened.Length; i++)
+                {
+                    PlayerEntity.Instance.threeButtonDoorsOpened[i] = savedData.threeButtonDoorsOpened[i];
+                }
             }
 
-            if (PlayerEntity.Instance.unlockedDash)
+            if (PlayerEntity.Instance.unlockedDash && dashUpgrade != null)
             {
                 dashUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(dashUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedDoubleJump)
+            if (PlayerEntity.Instance.unlockedDoubleJump && doubleJumpUpgrade != null)
             {
                 doubleJumpUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(doubleJumpUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedGravitySuit)
+            if (PlayerEntity.Instance.unlockedGravitySuit && gravitySuitUpgrade != null)
             {
                 gravitySuitUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedMorphBall)
+            if (PlayerEntity.Instance.unlockedMorphBall && morphBallUpgrade != null)
             {
                 morphBallUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedPiercingBeam)
+            if (PlayerEntity.Instance.unlockedPiercingBeam && piercingBeamUpgrade != null)
             {
                 piercingBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(piercingBeamUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedTripleBeam)
+            if (PlayerEntity.Instance.unlockedTripleBeam && tripleBeamUpgrade != null)
             {
                 tripleBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(tripleBeamUpgrade.gameObject);
@@ -110,15 +127,15 @@ namespace GameManagement
 
             for (int i = 0; i < combatRooms.Length; i++)
             {
-                if (combatRooms[i] != null && combatRooms[i])
+                if (combatRooms[i] != null && PlayerEntity.Instance.combatRoomsBeaten[i])
                 {
                     Destroy(combatRooms[i].gameObject);
                 }
             }
-        
+
             for (int i = 0; i < damageUpgrades.Length; i++)
             {
-                if (damageUpgrades[i] != null && damageUpgrades[i])
+                if (damageUpgrades[i] != null && PlayerEntity.Instance.damageUpgradesCollected[i])
                 {
                     damageUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(damageUpgrades[i].gameObject);
@@ -127,10 +144,18 @@ namespace GameManagement
 
             for (int i = 0; i < healthUpgrades.Length; i++)
             {
-                if (healthUpgrades[i] != null && healthUpgrades[i])
+                if (healthUpgrades[i] != null && PlayerEntity.Instance.healthUpgradesCollected[i])
                 {
                     healthUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(healthUpgrades[i].gameObject);
+                }
+            }
+            
+            for (int i = 0; i < threeButtonDoors.Length; i++)
+            {
+                if (threeButtonDoors[i] != null && PlayerEntity.Instance.threeButtonDoorsOpened[i])
+                {
+                    threeButtonDoors[i].pressed = true;
                 }
             }
 
@@ -140,7 +165,16 @@ namespace GameManagement
 
         public void Update()
         {
-            if (countingDown)
+            if (gameIsPaused)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+
+            if (countingDown && !gameIsPaused)
             {
                 _finalCountdown -= Time.deltaTime;
                 if (_finalCountdown <= 0)
@@ -148,6 +182,28 @@ namespace GameManagement
                     PlayerEntity.Instance.Health.Die();
                 }
             }
+        }
+
+        public void PauseGame()
+        {
+            PlayerEntity.Instance.frozeControls = true;
+            pauseScreen.gameObject.SetActive(true);   
+            pauseScreen.pauseMenu.SetActive(true);
+            pauseScreen.mapMenu.SetActive(false);
+            pauseScreen.upgradesMenu.SetActive(false);
+            pauseScreen.CheckIfLoad();
+            gameIsPaused = true;
+        }
+
+        public void UnpauseGame()
+        {
+            pauseScreen.pauseMenu.SetActive(true);
+            pauseScreen.mapMenu.SetActive(false);
+            pauseScreen.upgradesMenu.SetActive(false);
+            pauseScreen.gameObject.SetActive(false);
+            gameIsPaused = false;
+            PlayerEntity.Instance.frozeControls = false;
+
         }
 
         public void StartFinalCountdown()

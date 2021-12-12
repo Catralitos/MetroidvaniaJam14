@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 8973607182430717276}
   - component: {fileID: 8973607182430717277}
   - component: {fileID: 8973607182430717274}
+  - component: {fileID: 267333617}
   m_Layer: 8
   m_Name: Gunner
   m_TagString: Untagged
@@ -172,7 +173,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -277,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -299,7 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -321,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
@@ -343,33 +344,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8256
   playerMask:
     serializedVersion: 2
     m_Bits: 128
-  currentHealth: 5
-  maxHealth: 5
-  contactDamage: 1
+  currentHealth: 60
+  maxHealth: 60
+  contactDamage: 30
   startPosition: {x: 0, y: 0}
   rb: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   randomDropChance: 0.5
   pickUps: []
-  explosionPrefab: {fileID: 0}
-  numberOfShots: 3
-  fireRate: 0.2
+  dissolveSpeed: 0.5
+  startDissolveColor: {r: 1, g: 0.8836638, b: 0, a: 1}
+  stopDissolveColor: {r: 1, g: 1, b: 1, a: 1}
   moveSpeed: 20
-  sightDistance: 3
   movementSmoothing: 0.05
   holdPositionTime: 3
   horizontalRange: 6
+  sightDistance: 3
+  attackCooldown: 2
+  numberOfShots: 3
+  fireRate: 0.2
+  bulletPrefab: {fileID: 4844413433334714252, guid: 67d3b4fea8e917c4d8183c4bff77cc53, type: 3}
+  bulletSpawn: {fileID: 936799061}
   horizontalAttackRange: 6
   verticalAttackRange: 2
-  attackCooldown: 2
   facingRight: 1
-  bulletPrefab: {fileID: 4844413433334714252, guid: 67d3b4fea8e917c4d8183c4bff77cc53, type: 3}
-  capsuleSprite: {fileID: 0}
-  bulletSpawn: {fileID: 936799061}
   leftGroundTrigger: {fileID: 8973607182430717275}
   rightGroundTrigger: {fileID: 8973607182430717283}
   leftWallTrigger: {fileID: 8973607182430717276}
@@ -391,3 +393,16 @@ MonoBehaviour:
   travelTime: 1
   velocityWhenKicked: 6
   landingTrigger: {fileID: 8973607182430717275}
+--- !u!114 &267333617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973607182430717284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4731f2b07922ec54b8b45305d86188e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}

@@ -1,8 +1,9 @@
 using System.IO;
+using GameManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameManagement
+namespace UI
 {
     public class TitleScreenManager : MonoBehaviour
     {
@@ -12,13 +13,11 @@ namespace GameManagement
 
         [Header("OptionsScreen")] public Button backButton;
     
-        private GameManager _gameManager;
         //private AudioManager _audioManager;
     
         private void Start()
         {
             //_audioManager = GetComponent<AudioManager>();
-            _gameManager = GameManager.Instance;
             newGameButton.onClick.AddListener(StartGame);
             if (File.Exists(GameManager.Instance.savePath)){
                 loadGameButton.onClick.AddListener(LoadGame);
@@ -35,12 +34,12 @@ namespace GameManagement
         private void StartGame()
         {
             SaveSystem.DeletePlayer();
-            _gameManager.LoadNextScene();
+            GameManager.Instance.LoadNextScene();
         }
     
         private void LoadGame()
         {
-            _gameManager.LoadNextScene();
+            GameManager.Instance.LoadNextScene();
         }
 
         private void ShowOptions()

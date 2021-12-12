@@ -26,7 +26,7 @@ namespace Enemies.Swordfighter
             // Damage enemies and unlock doors
             foreach (Collider2D hit in hits)
             {
-                if (target.playerMask.HasLayer(hit.gameObject.layer)) // Hit enemy
+                if (target.playerMask.HasLayer(hit.gameObject.layer)) // Press enemy
                     PlayerEntity.Instance.Health.Hit(target.attackDamage);
             }
 

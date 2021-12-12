@@ -11,13 +11,14 @@ namespace GameManagement
         [HideInInspector] public bool countingTime;
         [HideInInspector] public float timeElapsed;
  
-        [HideInInspector] public string savePath = Application.persistentDataPath + "/player.steve";
+        [HideInInspector] public string savePath;
     
         public void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
+                savePath = Application.persistentDataPath + "/player.steve";
             }
             else
             {

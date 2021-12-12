@@ -5,6 +5,7 @@ namespace GameManagement
     [System.Serializable]
     public class PlayerData 
     {
+        public int healthPipsCollected;
         public int maxHealth;
         public int currentHealth;
         public float elapsedTime;
@@ -14,10 +15,15 @@ namespace GameManagement
         public bool[] unlockedPowers;
         public float[] buffTimers;
         public float[] playerPosition;
-
+        public bool collectedKey;
+        public bool destroyedDoor;
+        public bool[] threeButtonDoorsOpened;
+        
         public PlayerData(PlayerEntity playerEntity)
         {
             currentHealth = playerEntity.Health.currentHealth;
+            maxHealth = playerEntity.Health.maxHealth;
+            healthPipsCollected = playerEntity.UI.healthPipsCollected;
             unlockedPowers = new bool[6];
             unlockedPowers[0] = playerEntity.unlockedDash;
             unlockedPowers[1] = playerEntity.unlockedDoubleJump;
@@ -48,6 +54,14 @@ namespace GameManagement
             {
                 healthUpgradesCollected[i] = playerEntity.healthUpgradesCollected[i];
             }
+            
+            for (int i = 0; i < threeButtonDoorsOpened.Length; i++)
+            {
+                threeButtonDoorsOpened[i] = playerEntity.threeButtonDoorsOpened[i];
+            }
+
+            collectedKey = playerEntity.collectedKey;
+            destroyedDoor = playerEntity.destroyedDoor;
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Extensions;
 using Player;
@@ -38,10 +37,16 @@ namespace Enemies.Base
         public float randomDropChance = 0.5f;
         public List<GameObject> pickUps;
 
-        public GameObject explosionPrefab;
-
         private float _initialMass;
         private RigidbodyConstraints2D _initialConstraints;
+        private DissolveEffect _dissolve;
+
+        public float dissolveSpeed;
+        [ColorUsageAttribute(true, true)] [SerializeField]
+        private Color startDissolveColor;
+
+        [ColorUsageAttribute(true, true)] [SerializeField]
+        private Color stopDissolveColor;
 
         protected virtual void Start()
         {
@@ -50,6 +55,7 @@ namespace Enemies.Base
             rb = GetComponent<Rigidbody2D>();
             _initialMass = rb.mass;
             _initialConstraints = rb.constraints;
+            _dissolve = GetComponent<DissolveEffect>();
         }
 
         protected virtual void OnEnable()
@@ -77,13 +83,29 @@ namespace Enemies.Base
         protected virtual void Die()
         {
             var spawnPos = transform.position;
-            if (explosionPrefab != null) Instantiate(explosionPrefab, spawnPos, transform.rotation);
-            if (Random.Range(0.0f, 1.0f) <= randomDropChance)
+            if (pickUps.Count > 0)
             {
-                Instantiate(pickUps[Random.Range(0, pickUps.Count)], spawnPos, Quaternion.identity);
+                if (Random.Range(0.0f, 1.0f) <= randomDropChance)
+                {
+                    Instantiate(pickUps[Random.Range(0, pickUps.Count)], spawnPos, Quaternion.identity);
+                }
             }
 
+            rb.bodyType = RigidbodyType2D.Static;
+            //rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            _dissolve.StartDissolve(dissolveSpeed, startDissolveColor);
+            Invoke(nameof(DisableUponDeath), 3f);
+        }
+
+        private void DisableUponDeath()
+        {
+            _dissolve.StartDissolve(dissolveSpeed, stopDissolveColor);
             gameObject.SetActive(false);
+            //rb.constraints = _initialConstraints;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            gameObject.GetComponent<Collider2D>().enabled = true;
+
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -126,7 +148,6 @@ namespace Enemies.Base
         {
             if (isAlive)
             {
-                if (!IsAlive) return;
                 currentHealth = Mathf.Max(currentHealth - damage, 0);
                 state.OnGetHit();
                 if (!IsAlive) Die();

@@ -12,7 +12,7 @@ namespace Player
         private Rigidbody2D _rb;
         private RigidbodyConstraints2D _initialCons;
 
-        [HideInInspector] public int currentHealth;
+        public int currentHealth;
         public int maxHealth;
         public int healthPerMaxIncrement;
     
@@ -38,7 +38,7 @@ namespace Player
             int direction = PlayerEntity.Instance.facingRight ? -1 : 1;
             _rb.velocity = new Vector2(direction * knockbackHorizontalStrength, knockbackVerticalStrength);
             Invoke(nameof(RestoreControls), knockbackLength);
-            currentHealth -= damage;
+            currentHealth = Mathf.RoundToInt(Mathf.Clamp(currentHealth - damage, 0, maxHealth));
             if (currentHealth <= 0)
             {
                 Die();
