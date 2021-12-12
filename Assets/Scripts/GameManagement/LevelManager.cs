@@ -45,6 +45,10 @@ namespace GameManagement
 
         public void Start()
         {
+            PlayerEntity.Instance.combatRoomsBeaten = new bool[combatRooms.Length];
+            PlayerEntity.Instance.damageUpgradesCollected = new bool[damageUpgrades.Length];
+            PlayerEntity.Instance.healthUpgradesCollected = new bool[healthUpgrades.Length];
+            
             PlayerData savedData = SaveSystem.LoadPlayer();
             if (savedData != null)
             {
@@ -60,7 +64,7 @@ namespace GameManagement
                 PlayerEntity.Instance.Movement.currentJumpTimer = savedData.buffTimers[0];
                 PlayerEntity.Instance.Movement.currentMoveTimer = savedData.buffTimers[1];
                 PlayerEntity.Instance.Combat.currentShotTimer = savedData.buffTimers[2];
-
+                
                 for (int i = 0; i < savedData.combatRoomsBeaten.Length; i++)
                 {
                     PlayerEntity.Instance.combatRoomsBeaten[i] = savedData.combatRoomsBeaten[i];
@@ -115,7 +119,7 @@ namespace GameManagement
 
             for (int i = 0; i < combatRooms.Length; i++)
             {
-                if (combatRooms[i] != null && combatRooms[i])
+                if (combatRooms[i] != null && PlayerEntity.Instance.combatRoomsBeaten[i])
                 {
                     Destroy(combatRooms[i].gameObject);
                 }
@@ -123,7 +127,7 @@ namespace GameManagement
 
             for (int i = 0; i < damageUpgrades.Length; i++)
             {
-                if (damageUpgrades[i] != null && damageUpgrades[i])
+                if (damageUpgrades[i] != null && PlayerEntity.Instance.damageUpgradesCollected[i])
                 {
                     damageUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(damageUpgrades[i].gameObject);
@@ -132,7 +136,7 @@ namespace GameManagement
 
             for (int i = 0; i < healthUpgrades.Length; i++)
             {
-                if (healthUpgrades[i] != null && healthUpgrades[i])
+                if (healthUpgrades[i] != null && PlayerEntity.Instance.healthUpgradesCollected[i])
                 {
                     healthUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(healthUpgrades[i].gameObject);

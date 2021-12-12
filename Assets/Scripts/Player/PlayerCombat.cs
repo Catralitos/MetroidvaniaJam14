@@ -9,13 +9,17 @@ namespace Player
     public class PlayerCombat : MonoBehaviour
     {
         public float kickDuration;
-        public float shotCooldown = 0.7f;
+        
+        public float shotCooldown = 0.7f;        
+        private float _shotTimer = 0.0f;
+
         public float shotRange;
         public int normalShotDamage;
         public int boostedShotDamage;
         public GameObject meleeGameObject;
         public LayerMask hitMaskNormal;
         public LayerMask hitMaskPiercing;
+        
         private int _currentShotDamage;
         [HideInInspector] public float currentShotTimer;
 
@@ -26,7 +30,6 @@ namespace Player
         public List<Transform> shotOrigin;
 
         public LineRenderer lineRenderer;
-        private float _shotTimer = 0.0f;
 
         private int _pastKickFrames;
         public LayerMask enemies;
@@ -92,13 +95,11 @@ namespace Player
                 {
                     if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        //hitInfo.collider.gameObject.GetComponent<EnemyBase>.Hit(20);
                         hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                     }
 
                     if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        Debug.Log("Entrou no if botão");
                         hitInfo.collider.gameObject.GetComponent<ButtonBehavior>().Hit();
                     }
 

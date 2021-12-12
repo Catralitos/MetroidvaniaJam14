@@ -9,6 +9,9 @@ namespace Hazard
 {
     public class EnemySpawner : MonoBehaviour
     {
+        [SerializeField] public Openable leftDoor;
+        public Openable rightDoor;
+
         public float timeBetweenSpawns;
         private float _spawnTimer;
 
@@ -21,7 +24,6 @@ namespace Hazard
         private List<GameObject> _spawnedMonsters;
 
         private bool _allSpawned;
-        private bool _allKilled;
 
         private int _numCycles;
         private int _c = 0;
@@ -29,6 +31,12 @@ namespace Hazard
         // Start is called before the first frame update
         private void Start()
         {
+            if (spawnPoints.Count != monsterLists.Count)
+            {
+                Debug.LogError("There must be a list for each spawn point");
+                return;
+            }
+
             for (int i = 0; i < monsterLists.Count - 1; i++)
             {
                 if (monsterLists[i].monsters.Count != monsterLists[i + 1].monsters.Count)
@@ -38,20 +46,31 @@ namespace Hazard
                 }
             }
 
+            _spawnedMonsters = new List<GameObject>();
             _numCycles = monsterLists[0].monsters.Count;
         }
 
         private void Update()
         {
-            if (!_spawning && _allKilled)
+            if (_allSpawned)
             {
                 bool allNull = true;
                 foreach (GameObject monster in _spawnedMonsters)
                 {
-                    if (monster != null) allNull = false;
+                    if (monster != null && monster.activeSelf)
+                    {
+                        allNull = false;
+                        break;
+                    }
                 }
 
-                if (allNull) OpenDoor();
+                if (allNull)
+                {
+                    {
+                        OpenDoor();
+                        return;
+                    }
+                }
             }
 
             if (_c >= _numCycles)
@@ -62,13 +81,16 @@ namespace Hazard
 
             if (!_spawning) return;
 
+            _spawnTimer -= Time.deltaTime;
+
             if (_spawnTimer <= 0)
             {
                 foreach (Transform t in spawnPoints)
                 {
                     GameObject toSpawn = monsterLists[spawnPoints.IndexOf(t)].monsters[_c];
                     if (toSpawn == null) break;
-                    Instantiate(toSpawn, t.position, t.rotation, t);
+                    GameObject spawned = Instantiate(toSpawn, t.position, t.rotation, t);
+                    if (spawned != null) _spawnedMonsters.Add(spawned);
                 }
 
                 _spawnTimer = timeBetweenSpawns;
@@ -76,9 +98,12 @@ namespace Hazard
             }
         }
 
-        public void OpenDoor()
+        private void OpenDoor()
         {
-            PlayerEntity.Instance.combatRoomsBeaten[ArrayUtility.IndexOf(LevelManager.Instance.combatRooms, this)] = true;
+            PlayerEntity.Instance.combatRoomsBeaten[ArrayUtility.IndexOf(LevelManager.Instance.combatRooms, this)] =
+                true;
+            leftDoor.Open();
+            rightDoor.Open();
             Destroy(gameObject);
         }
 
@@ -86,7 +111,12 @@ namespace Hazard
         {
             if (playerMask.HasLayer(other.gameObject.layer))
             {
-                if (!(_c >= _numCycles)) _spawning = true;
+                if (!(_c >= _numCycles))
+                {
+                    leftDoor.Close();
+                    rightDoor.Close();
+                    _spawning = true;
+                }
             }
         }
     }
