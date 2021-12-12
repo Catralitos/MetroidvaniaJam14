@@ -19,6 +19,7 @@ namespace Player
 
         public bool displayingTooltip;
         public bool frozeControls;
+        public bool collectedKey;
 
         public bool facingRight;
         public bool isCrouched;
