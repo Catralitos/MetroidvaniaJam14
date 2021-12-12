@@ -1,19 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class JumpBuff : Buff
+namespace Buffs
 {
-    public float timerBoost;
-
-    protected override void Pickup()
+    public class JumpBuff : Buff
     {
-        PlayerEntity.Instance.Movement.IncreaseJumpTimer(timerBoost);
+        public float timerBoost;
 
-        Destroy(gameObject);
+        protected override void Pickup()
+        {
+            PlayerEntity.Instance.Movement.IncreaseJumpTimer(timerBoost);
+
+            Destroy(gameObject);
 
 
 
-    }
+        }
     
+    }
 }

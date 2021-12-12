@@ -1,4 +1,5 @@
 using Extensions;
+using Player;
 using UnityEngine;
 
 namespace Enemies.Swordfighter

@@ -3,26 +3,28 @@ using UnityEngine;
 using Extensions;
 using Enemies.Base;
 
-public class PlayerCombat : MonoBehaviour
+namespace Player
 {
-    public float kickDuration;
-    public float shotCooldown = 0.7f;
-    public float shotRange;
-    public int normalShotDamage;
-    public int boostedShotDamage;
-    public GameObject meleeGameObject;
-    public LayerMask hitMaskNormal;
-    public LayerMask hitMaskPiercing;
-    private int _currentShotDamage;
-    [HideInInspector] public float currentShotTimer;
+    public class PlayerCombat : MonoBehaviour
+    {
+        public float kickDuration;
+        public float shotCooldown = 0.7f;
+        public float shotRange;
+        public float normalShotDamage;
+        public float boostedShotDamage;
+        public GameObject meleeGameObject;
+        public LayerMask hitMaskNormal;
+        public LayerMask hitMaskPiercing;
+        private float _currentShotDamage;
+        [HideInInspector] public float currentShotTimer;
 
-    //First is standing, second is crouched
-    public List<Transform> armJoints;
-    //First is standing, second is crouched
-    public List<Transform> shotOrigin;
+        //First is standing, second is crouched
+        public List<Transform> armJoints;
+        //First is standing, second is crouched
+        public List<Transform> shotOrigin;
     
-    public LineRenderer lineRenderer;
-    private float _shotTimer = 0.0f;
+        public LineRenderer lineRenderer;
+        private float _shotTimer = 0.0f;
 
     private int _pastKickFrames;
     public LayerMask enemies;
@@ -32,11 +34,11 @@ public class PlayerCombat : MonoBehaviour
 
     public int damageIncreasePerUpgrade;
     
-    public void Start()
-    {
-        _shotTimer = shotCooldown;
+        public void Start()
+        {
+            _shotTimer = shotCooldown;
 
-    }
+        }
 
     public void IncreaseMaxDamage()
     {
@@ -49,10 +51,20 @@ public class PlayerCombat : MonoBehaviour
         currentShotTimer += Time.deltaTime;
         if (currentShotTimer < 0)
         {
-            _currentShotDamage = normalShotDamage;
+            _shotTimer += Time.deltaTime;
+            currentShotTimer += Time.deltaTime;
+            if (currentShotTimer < 0)
+            {
+                _currentShotDamage = normalShotDamage;
             
+            }
+            else
+            {
+                _currentShotDamage = boostedShotDamage;
+            }
         }
-        else
+
+        public void Shoot(bool shoot, Vector2 aimDirection)
         {
             _currentShotDamage = boostedShotDamage;
         }
@@ -83,9 +95,7 @@ public class PlayerCombat : MonoBehaviour
             _shotTimer = 0.0f;
         }
 
-        // fazer um if extra para parar de adicionar tempo quando _shotTimer > shootCooldown ?
-
-        if (shoot && _shotTimer > shotCooldown)
+       if (shoot && _shotTimer > shotCooldown)
         {
             LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
             RaycastHit2D hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
@@ -159,38 +169,39 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    public void Kick(bool kick)
-    {
-        if (kick)
+        public void Kick(bool kick)
         {
-            if (!meleeGameObject.activeSelf)
+            if (kick)
             {
-                meleeGameObject.SetActive(true);
-                Invoke(nameof(DisableKick), kickDuration);
+                if (!meleeGameObject.activeSelf)
+                {
+                    meleeGameObject.SetActive(true);
+                    Invoke(nameof(DisableKick), kickDuration);
+                }
+            }
+            else
+            {
+                _pastKickFrames++;
             }
         }
-        else
+
+        private void DisableKick()
         {
-            _pastKickFrames++;
+            meleeGameObject.SetActive(false);
         }
-    }
-
-    private void DisableKick()
-    {
-        meleeGameObject.SetActive(false);
-    }
     
     
-    public void IncreaseShotTimer(float timer)
-    {
-
-        if (currentShotTimer < 0)
+        public void IncreaseShotTimer(float timer)
         {
-            currentShotTimer = 0;
+
+            if (currentShotTimer < 0)
+            {
+                currentShotTimer = 0;
             
-        }
-        currentShotTimer += timer;
+            }
+            currentShotTimer += timer;
         
+        }
     }
     
     private Vector2 rotate(Vector2 vector, float degrees)

@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class DamageBuff : Buff
+namespace Buffs
 {
-   public float timeShotBuff;
-
-   protected override void Pickup()
+   public class DamageBuff : Buff
    {
-      PlayerEntity.Instance.Combat.IncreaseShotTimer(timeShotBuff);
+      public float timeShotBuff;
+
+      protected override void Pickup()
+      {
+         PlayerEntity.Instance.Combat.IncreaseShotTimer(timeShotBuff);
       
-      Destroy(gameObject);
+         Destroy(gameObject);
+      }
    }
 }

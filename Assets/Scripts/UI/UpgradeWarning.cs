@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class UpgradeWarning : MonoBehaviour
+namespace UI
 {
-
-    public Sprite beforeFinding;
-    public Sprite afterFinding;
-    
-    private SpriteRenderer _sprite;
-    
-    // Start is called before the first frame update
-    private void Start()
+    public class UpgradeWarning : MonoBehaviour
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _sprite.sprite = beforeFinding;
-    }
 
-    public void SwitchSprite()
-    {
-        _sprite.sprite = afterFinding;
+        public Sprite beforeFinding;
+        public Sprite afterFinding;
+    
+        private SpriteRenderer _sprite;
+    
+        // Start is called before the first frame update
+        private void Start()
+        {
+            _sprite = GetComponent<SpriteRenderer>();
+            _sprite.sprite = beforeFinding;
+        }
+
+        public void SwitchSprite()
+        {
+            _sprite.sprite = afterFinding;
+        }
     }
 }

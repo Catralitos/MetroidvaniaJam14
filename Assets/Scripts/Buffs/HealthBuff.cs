@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class HealthBuff : Buff
+namespace Buffs
 {
-    public int healthToRecover;
-
-    protected override void Pickup()
+    public class HealthBuff : Buff
     {
-        PlayerHealth health = PlayerEntity.Instance.Health;
-        if (health.currentHealth == health.maxHealth)
+        public int healthToRecover;
+
+        protected override void Pickup()
         {
-            health.RecoverHealth(healthToRecover);
-            Destroy(gameObject);
+            PlayerHealth health = PlayerEntity.Instance.Health;
+            if (health.currentHealth == health.maxHealth)
+            {
+                health.RecoverHealth(healthToRecover);
+                Destroy(gameObject);
+            }
         }
     }
 }

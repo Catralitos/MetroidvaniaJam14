@@ -1,3 +1,5 @@
+using Audio;
+using Player;
 using UnityEngine;
 
 namespace Enemies.Gunner

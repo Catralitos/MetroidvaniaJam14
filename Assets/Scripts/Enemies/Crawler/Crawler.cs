@@ -1,4 +1,5 @@
 using Enemies.Base;
+using Player;
 using UnityEngine;
 
 namespace Enemies.Crawler

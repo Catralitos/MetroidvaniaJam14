@@ -1,50 +1,52 @@
-using UnityEngine.Audio;
 using UnityEngine;
 
-[System.Serializable]
-public class Sound
+namespace Audio
 {
-    public string name;
-    public AudioClip clip;
-
-    [Range(0f, 1f)]
-    public float volume = 1f;
-    [Range(0.1f, 3f)]
-    public float pitch = 1f;
-    public bool loop;
-
-    [HideInInspector]
-    public AudioSource source;
-
-    public void SetSource(AudioSource source)
+    [System.Serializable]
+    public class Sound
     {
-        source.clip = clip;
+        public string name;
+        public AudioClip clip;
 
-        source.volume = volume;
-        source.pitch = pitch ;
-        source.loop = loop;
-        this.source = source;
-    }
+        [Range(0f, 1f)]
+        public float volume = 1f;
+        [Range(0.1f, 3f)]
+        public float pitch = 1f;
+        public bool loop;
 
-    public void Play()
-    {
-        //Debug.Log(source.clip);
-        source.Play();
-    }
+        [HideInInspector]
+        public AudioSource source;
 
-    public void PlayScheduled(double time)
-    {
-        source.PlayScheduled(time);
-    }
+        public void SetSource(AudioSource source)
+        {
+            source.clip = clip;
 
-    public void Stop()
-    {
-        source.Stop();
-    }
+            source.volume = volume;
+            source.pitch = pitch ;
+            source.loop = loop;
+            this.source = source;
+        }
 
-    public bool IsPlaying()
-    {
-        return source.isPlaying;
+        public void Play()
+        {
+            //Debug.Log(source.clip);
+            source.Play();
+        }
+
+        public void PlayScheduled(double time)
+        {
+            source.PlayScheduled(time);
+        }
+
+        public void Stop()
+        {
+            source.Stop();
+        }
+
+        public bool IsPlaying()
+        {
+            return source.isPlaying;
+        }
     }
 }
 

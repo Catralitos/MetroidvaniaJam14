@@ -1,3 +1,4 @@
+using Hazard;
 using UnityEngine;
 
 namespace Enemies.Gunner
