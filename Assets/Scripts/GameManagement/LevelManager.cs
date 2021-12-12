@@ -77,37 +77,37 @@ namespace GameManagement
                 }
             }
 
-            if (PlayerEntity.Instance.unlockedDash)
+            if (PlayerEntity.Instance.unlockedDash && dashUpgrade != null)
             {
                 dashUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(dashUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedDoubleJump)
+            if (PlayerEntity.Instance.unlockedDoubleJump && doubleJumpUpgrade != null)
             {
                 doubleJumpUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(doubleJumpUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedGravitySuit)
+            if (PlayerEntity.Instance.unlockedGravitySuit && gravitySuitUpgrade != null)
             {
                 gravitySuitUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedMorphBall)
+            if (PlayerEntity.Instance.unlockedMorphBall && morphBallUpgrade != null)
             {
                 morphBallUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedPiercingBeam)
+            if (PlayerEntity.Instance.unlockedPiercingBeam && piercingBeamUpgrade != null)
             {
                 piercingBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(piercingBeamUpgrade.gameObject);
             }
 
-            if (PlayerEntity.Instance.unlockedTripleBeam)
+            if (PlayerEntity.Instance.unlockedTripleBeam && tripleBeamUpgrade != null)
             {
                 tripleBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(tripleBeamUpgrade.gameObject);
@@ -167,7 +167,11 @@ namespace GameManagement
         public void PauseGame()
         {
             PlayerEntity.Instance.frozeControls = true;
-            pauseScreen.gameObject.SetActive(true);
+            pauseScreen.gameObject.SetActive(true);   
+            pauseScreen.pauseMenu.SetActive(true);
+            pauseScreen.mapMenu.SetActive(false);
+            pauseScreen.upgradesMenu.SetActive(false);
+            pauseScreen.CheckIfLoad();
             gameIsPaused = true;
         }
 

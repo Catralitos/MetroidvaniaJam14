@@ -8,8 +8,6 @@ namespace UI
 {
     public class PauseScreenManager : MonoBehaviour
     {
-        private GameManager _gameManager;
-
         [Header("Screens")] public GameObject pauseMenu;
         public GameObject mapMenu;
         public GameObject upgradesMenu;
@@ -37,7 +35,6 @@ namespace UI
 
         public void Start()
         {
-            _gameManager = GameManager.Instance;
             pauseMenu.SetActive(true);
             mapMenu.SetActive(false);
             upgradesMenu.SetActive(false);
@@ -61,9 +58,22 @@ namespace UI
             backButton1.onClick.AddListener(LoadPause);
 
             //UPGRADES SCREEN
+            backButton2.onClick.AddListener(LoadPause);
             //eventualmente se tivermos tempo, metemos eventos nos botões para dar display de uma tooltip
             //portanto eventos metemos no start
             //mas o display é só quando carregarmos o upgrade screen
+        }
+
+        public void CheckIfLoad()
+        {
+            if (File.Exists(GameManager.Instance.savePath))
+            {
+                loadGameButton.onClick.AddListener(LoadGame);
+            }
+            else
+            {
+                loadGameButton.GetComponent<Image>().color = Color.gray;
+            }
         }
 
         private void UnpauseGame()
@@ -73,12 +83,12 @@ namespace UI
 
         private void LoadGame()
         {
-            _gameManager.ReloadScene();
+            GameManager.Instance.ReloadScene();
         }
 
         private void LoadTitle()
         {
-            _gameManager.LoadTitleScreen();
+            GameManager.Instance.LoadTitleScreen();
         }
 
         private void LoadPause()

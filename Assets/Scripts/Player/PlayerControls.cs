@@ -1,3 +1,5 @@
+using Cinemachine;
+using GameManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +11,10 @@ namespace Player
         private bool _jump = false;
         private bool _kick = false;
         private bool _shoot = false;
+        private bool _pause = false;
+
+        private int _unpausedFrames;
+        private int _pausedFrames;
 
         private Vector2 _aimInput;
         private Vector2 _directionInput;
@@ -29,9 +35,10 @@ namespace Player
             _controls.Player.Dash.canceled += _ => { _dash = false; };
             _controls.Player.Melee.performed += _ => { _kick = true; };
             _controls.Player.Melee.canceled += _ => { _kick = false; };
-
             _controls.Player.Shoot.performed += ctx => { _shoot = true; };
             _controls.Player.Shoot.canceled += _ => { _shoot = false; };
+            _controls.Player.Pause.performed += _ => { _pause = true; };
+            _controls.Player.Pause.canceled += _ => { _pause = false; };
         }
 
         private void OnEnable()
@@ -52,17 +59,36 @@ namespace Player
 
         private void Update()
         {
+            if (!LevelManager.Instance.gameIsPaused)
+            {
+                _unpausedFrames++;
+            }
+            if (_pause && LevelManager.Instance.gameIsPaused && _pausedFrames > 0)
+            {
+                LevelManager.Instance.UnpauseGame();
+                _pausedFrames = 0;
+            }
+            else if (_pause && !LevelManager.Instance.gameIsPaused && _unpausedFrames > 20)
+            {
+                LevelManager.Instance.PauseGame();
+                _unpausedFrames = 0;
+            }
+            else if (!_pause && LevelManager.Instance.gameIsPaused)
+            {
+                _pausedFrames++;
+            }
+       
 
             if (PlayerEntity.Instance.displayingTooltip && PlayerEntity.Instance.UI.canCancelTooltip && _shoot)
             {
                 PlayerEntity.Instance.UI.CloseTooltip();
             }
-        
+
             _mousePosition = Mouse.current.position.ReadValue();
 
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.localPosition);
-        
-            _aimInput = ((Vector2)_mousePosition - (Vector2)screenPosition).normalized;
+
+            _aimInput = ((Vector2) _mousePosition - (Vector2) screenPosition).normalized;
             _playerCombat.Shoot(_shoot, _aimInput);
             if (!PlayerEntity.Instance.frozeControls) _playerCombat.Kick(_kick);
         }

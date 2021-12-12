@@ -2985,7 +2985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2592470105595206273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3549,7 +3549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2592470105723742663
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3973,7 +3973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2592470105868175639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4026,7 +4026,7 @@ MonoBehaviour:
   tentacleButton: {fileID: 2592470104288629851}
   dashButton: {fileID: 2592470105831228134}
   tripleButton: {fileID: 2592470105300326731}
-  doubleJumpButton: {fileID: 0}
+  doubleJumpButton: {fileID: 2592470105518740134}
   morphButton: {fileID: 2592470106144569498}
   piercingButton: {fileID: 2592470106281669897}
   gravityButton: {fileID: 2592470105632776018}
