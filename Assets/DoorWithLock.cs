@@ -1,20 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class Doors : MonoBehaviour
+public class DoorWithLock : MonoBehaviour
 {
+    /*
+    public bool unlocked = false;
+    public bool closed;
     public bool startClosed = true;
-    private bool closed;
     public float closeSpeed;
     public LayerMask blockMask;
     private Vector3 startPosition;
     private BoxCollider2D _collider;
-
-    public bool hasLock = false;
-    public bool unlocked;
     
     void Start()
     {
@@ -22,11 +19,6 @@ public class Doors : MonoBehaviour
 
         _collider = GetComponent<BoxCollider2D>();
 
-        if (hasLock)
-        {
-            unlocked = false;
-        }
-        
         if (!startClosed)
         {
             closed = false;
@@ -38,7 +30,6 @@ public class Doors : MonoBehaviour
             closed = true;
             _collider.enabled = true;
         }
-
     }
 
     public void Update()
@@ -50,13 +41,21 @@ public class Doors : MonoBehaviour
                 return;
             }
             _collider.enabled = true;
-            closed= false;
+            closed= false;  
         }
         else
         {
-            _collider.enabled = false;
-            closed= true;
+            if (unlocked && o player tiver a colidir)
+            {
+                closed = true;
+
+            }
+            _collider.enabled = true;
+            
         }
+        
+        
+        
     }
     
     private void FixedUpdate()
@@ -70,7 +69,9 @@ public class Doors : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, startPosition, closeSpeed);
         }
     }
-
+    
+    
+    
     public void OpenDoor()
     {
         closed = false;
@@ -80,4 +81,10 @@ public class Doors : MonoBehaviour
     {
         closed = true;
     }
+
+    public void UnlockDoor()
+    {
+        unlocked = true;
+    }
+    */
 }
