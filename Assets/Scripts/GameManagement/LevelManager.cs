@@ -1,6 +1,7 @@
 using Buffs;
 using Hazard;
 using Player;
+using TMPro;
 using UI;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace GameManagement
         public float finalCountdownTime;
         private float _finalCountdown;
 
+        public GameObject hud;
         public PauseScreenManager pauseScreen;
 
         public bool gameIsPaused;
@@ -187,6 +189,7 @@ namespace GameManagement
         public void PauseGame()
         {
             PlayerEntity.Instance.frozeControls = true;
+            hud.SetActive(false);
             pauseScreen.gameObject.SetActive(true);   
             pauseScreen.pauseMenu.SetActive(true);
             pauseScreen.mapMenu.SetActive(false);
@@ -203,6 +206,7 @@ namespace GameManagement
             pauseScreen.gameObject.SetActive(false);
             gameIsPaused = false;
             PlayerEntity.Instance.frozeControls = false;
+            hud.SetActive(true);
 
         }
 

@@ -20,6 +20,7 @@ namespace Hazard
         {
             if (playerMask.HasLayer(other.gameObject.layer))
             {
+                Debug.Log("Saiu do trigger");
                 PlayerEntity.Instance.isUnderwater = false;
             }
         }
