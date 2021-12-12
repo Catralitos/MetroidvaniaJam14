@@ -111,7 +111,7 @@ namespace Player
                         hitInfo.collider.gameObject.GetComponent<PressableButton>().Press();
                     }
 
-                    Debug.Log("Middle: " + hitInfo.transform.name);
+                   // Debug.Log("Middle: " + hitInfo.transform.name);
                 }
 
                 if (PlayerEntity.Instance.unlockedTripleBeam)
@@ -130,7 +130,7 @@ namespace Player
                             hitInfo2.collider.gameObject.GetComponent<PressableButton>().Press();
                         }
 
-                        Debug.Log("Top: " + hitInfo2.transform.name);
+                        //Debug.Log("Top: " + hitInfo2.transform.name);
                     }
 
                     if (hitInfo3)
@@ -144,7 +144,7 @@ namespace Player
                         {
                             hitInfo3.collider.gameObject.GetComponent<PressableButton>().Press();
                         }                            
-                        Debug.Log("Bottom: " + hitInfo3.transform.name);
+                        //Debug.Log("Bottom: " + hitInfo3.transform.name);
 
                     }
                 }
@@ -180,14 +180,14 @@ namespace Player
         }
 
 
-        public void IncreaseShotTimer(float timer)
+        public void IncreaseShotTimer(float time)
         {
             if (currentShotTimer < 0)
             {
                 currentShotTimer = 0;
             }
 
-            currentShotTimer += timer;
+            currentShotTimer = Mathf.Clamp(currentShotTimer + time, 0, PlayerEntity.Instance.maxDamageBuffTime);
         }
 
 

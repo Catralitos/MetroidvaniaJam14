@@ -8,6 +8,7 @@ namespace Buffs
     {
         protected override void SetUpgrade()
         {
+            PlayerEntity.Instance.UI.healthPipsCollected++;
             PlayerEntity.Instance.healthUpgradesCollected[ArrayUtility.IndexOf(LevelManager.Instance.healthUpgrades, this)] =
                 true;
             PlayerEntity.Instance.Health.IncreaseMaxHealth();

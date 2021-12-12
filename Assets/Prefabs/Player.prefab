@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 792532263}
   - component: {fileID: 792532264}
   - component: {fileID: 792532265}
+  - component: {fileID: 2123994783618295201}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1264,18 +1265,20 @@ MonoBehaviour:
   unlockedDoubleJump: 1
   unlockedGravitySuit: 0
   unlockedMorphBall: 1
-  unlockedTripleBeam: 0
+  unlockedTripleBeam: 1
   unlockedPiercingBeam: 0
+  combatRoomsBeaten: 
+  healthUpgradesCollected: 
+  damageUpgradesCollected: 
   defaultDrag: 0
   defaultGravity: 8
   defaultMass: 1
   underwaterDrag: 100
   underwaterGravity: 16
   underwaterMass: 1
-  combatRoomsBeaten: 
-  healthUpgradesCollected: 
-  damageUpgradesCollected: 
-  testCylinder: {fileID: 6980801993283995932}
+  maxDamageBuffTime: 120
+  maxSpeedBuffTime: 120
+  maxJumpBuffTime: 120
 --- !u!114 &6980801993563420554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,9 +1294,9 @@ MonoBehaviour:
   knockbackLength: 0.3
   knockbackHorizontalStrength: 10
   knockbackVerticalStrength: 15
-  currentHealth: 0
-  maxHealth: 10
-  healthPerMaxIncrement: 0
+  currentHealth: 100
+  maxHealth: 100
+  healthPerMaxIncrement: 100
 --- !u!114 &6980801993563420553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1476,3 +1479,30 @@ MonoBehaviour:
   positionalOffset: {x: -0.5, y: 0}
   capsuleDirection2D: 0
   isInContact: 0
+--- !u!114 &2123994783618295201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980801993563420550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531e8153ddf819c42bf2f8d86ff00f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPipsCollected: 0
+  healthBar: {fileID: 0}
+  healthPips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  damageBuff: {fileID: 0}
+  jumpBuff: {fileID: 0}
+  speedBuff: {fileID: 0}
+  movementTooltip: {fileID: 0}
+  saveTooltip: {fileID: 0}
+  canCancelTooltip: 0
