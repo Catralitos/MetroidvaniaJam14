@@ -2,27 +2,27 @@ using UnityEngine;
 
 namespace Hazard
 {
-    public class ButtonBehavior : MonoBehaviour
+    public class ThirdOfButton : PressableButton
     {
+        public TripleButton parent;
+    
         public Sprite beforeHitting;
         public Sprite afterHitting;
         public bool pressed;
-        public float pressedCooldown = 4f;
         private float _timer = 0f;
 
-        [SerializeField] public Openable toOpen;
-        
         private SpriteRenderer _sprite;
 
-        void Start()
+        private void Start()
         {
-            _timer = pressedCooldown;
+            _timer = parent.hitTimeframe;
             _sprite = GetComponent<SpriteRenderer>();
             _sprite.sprite = beforeHitting;
         }
 
-        void Update()
+        private void Update()
         {
+            if (parent.pressed) return;
             if (pressed)
             {
                 _timer -= Time.deltaTime;
@@ -38,21 +38,25 @@ namespace Hazard
         {
             _sprite.sprite = afterHitting;
             pressed = true;
-            toOpen.Open();
         }
 
         private void NormalSprite()
         {
+            if (parent.pressed) return;
             _sprite.sprite = beforeHitting;
             pressed = false;
-            toOpen.Close();
         }
 
-        public void Hit()
+        public override void Press()
         {
-            Debug.Log("entrou no hit");
-            _timer = pressedCooldown;
+            _timer = parent.hitTimeframe;
             HitSprite();
+        }
+
+        public override void UnPress()
+        {
+            _timer = 0;
+            NormalSprite();
         }
     }
 }
