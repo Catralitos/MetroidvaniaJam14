@@ -8,12 +8,12 @@ public class PlayerCombat : MonoBehaviour
     public float kickDuration;
     public float shotCooldown = 0.7f;
     public float shotRange;
-    public float normalShotDamage;
-    public float boostedShotDamage;
+    public int normalShotDamage;
+    public int boostedShotDamage;
     public GameObject meleeGameObject;
     public LayerMask hitMaskNormal;
     public LayerMask hitMaskPiercing;
-    private float _currentShotDamage;
+    private int _currentShotDamage;
     [HideInInspector] public float currentShotTimer;
 
     //First is standing, second is crouched
@@ -29,6 +29,8 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask buttons;
     private RaycastHit2D hitInfo2;
     private RaycastHit2D hitInfo3;
+
+    public int damageIncreasePerUpgrade;
     
     public void Start()
     {
@@ -36,6 +38,11 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
+    public void IncreaseMaxDamage()
+    {
+        normalShotDamage += damageIncreasePerUpgrade;
+    }
+    
     public void Update()
     {
         _shotTimer += Time.deltaTime;
@@ -97,12 +104,12 @@ public class PlayerCombat : MonoBehaviour
                 if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
                 {
                     //hitInfo.collider.gameObject.GetComponent<EnemyBase>.Hit(20);
-                    hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                    hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                 }
 
                 if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                 {
-                    hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                    hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                 }
 
                 Debug.Log(hitInfo.transform.name);
@@ -114,12 +121,12 @@ public class PlayerCombat : MonoBehaviour
                 {
                     if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                     }
 
                     if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                     }
 
                     Debug.Log(hitInfo.transform.name);
@@ -129,12 +136,12 @@ public class PlayerCombat : MonoBehaviour
                 {
                     if (enemies.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                     }
 
                     if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                     {
-                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(20);
+                        hitInfo.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
                         Debug.Log(hitInfo.transform.name);
                     }
                 }
@@ -198,4 +205,37 @@ public class PlayerCombat : MonoBehaviour
 
         return new Vector2(newX, newY);
     }
+    
+    
+    
+    /*
+       private void pierceShot(Vector2 posInicial, Vector2 direcao, float range, float rangeSum, int layerMask)   
+    {
+        if (rangeSum < shotRange)
+        {
+            RaycastHit2D hitInfoExtra = Physics2D.Raycast(posInicial, direcao, shotRange - rangeSum, layerMask);
+
+            if (hitInfoExtra)
+            {
+                if (enemies.HasLayer(hitInfoExtra.collider.gameObject.layer))
+                {
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                }
+
+                if (buttons.HasLayer(hitInfoExtra.collider.gameObject.layer))
+                {
+                        hitInfoExtra.collider.gameObject.GetComponent<EnemyBase>().Hit(_currentShotDamage);
+                }
+
+                Debug.Log(hitInfoExtra.transform.name);
+                
+                rangeSum += hitInfoExtra.distance;
+            }
+            
+            return pierceShot(posInicial + direcao.normalized * distance, direcao, shotRange - rangeSum, layerMask);
+        }
+    }
+    
+       */
+       
 }
