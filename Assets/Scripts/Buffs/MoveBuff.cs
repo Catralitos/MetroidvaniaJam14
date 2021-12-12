@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class MoveBuff : Buff
-
+namespace Buffs
 {
-    public float moveTimer;
+    public class MoveBuff : Buff
 
-    protected override void Pickup()
     {
-        PlayerEntity.Instance.Movement.IncreaseMoveTimer(moveTimer);
-        Destroy(gameObject);
+        public float moveTimer;
+
+        protected override void Pickup()
+        {
+            PlayerEntity.Instance.Movement.IncreaseMoveTimer(moveTimer);
+            Destroy(gameObject);
+        }
     }
 }

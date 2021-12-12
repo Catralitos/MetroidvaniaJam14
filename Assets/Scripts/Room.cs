@@ -1,6 +1,7 @@
 using Extensions;
 using System.Collections.Generic;
 using Cinemachine;
+using Player;
 using UnityEngine;
 
 public class Room : MonoBehaviour

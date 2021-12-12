@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class CrawlerStruggling : CrawlerState
+namespace Enemies.Crawler
 {
-    public static CrawlerStruggling Create(Crawler target)
+    public class CrawlerStruggling : CrawlerState
     {
-        return CrawlerState.Create<CrawlerStruggling>(target);
-    }
+        public static CrawlerStruggling Create(Crawler target)
+        {
+            return CrawlerState.Create<CrawlerStruggling>(target);
+        }
 
-    public override void StateStart()
-    {
-        base.StateStart();
-        target.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        public override void StateStart()
+        {
+            base.StateStart();
+            target.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 }

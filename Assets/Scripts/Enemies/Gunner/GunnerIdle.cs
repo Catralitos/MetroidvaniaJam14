@@ -1,37 +1,40 @@
 using UnityEngine;
 
-public class GunnerIdle : GunnerState
+namespace Enemies.Gunner
 {
-    private float _cooldownLeft;
-
-    public static GunnerIdle Create(Gunner target)
+    public class GunnerIdle : GunnerState
     {
-        GunnerIdle state = GunnerState.Create<GunnerIdle>(target);
-        return state;
-    }
+        private float _cooldownLeft;
 
-    public override void StateStart()
-    {
-        base.StateStart();
-        _cooldownLeft = target.holdPositionTime;
-        target.rb.velocity = Vector2.zero;
-        //animator.SetBool("Stopped", true);
-        //animator.SetBool("Patrolling", false);
-        //animator.SetBool("Chasing", false);
-    }
-
-    public override void StateUpdate()
-    {
-        base.StateUpdate();
-        if (target.CheckForPlayer())
+        public static GunnerIdle Create(Gunner target)
         {
-            SetState(GunnerChase.Create(target));
+            GunnerIdle state = GunnerState.Create<GunnerIdle>(target);
+            return state;
         }
 
-        _cooldownLeft -= Time.deltaTime;
-        if (_cooldownLeft <= 0)
+        public override void StateStart()
         {
-            SetState(GunnerPatrol.Create(target));
+            base.StateStart();
+            _cooldownLeft = target.holdPositionTime;
+            target.rb.velocity = Vector2.zero;
+            //animator.SetBool("Stopped", true);
+            //animator.SetBool("Patrolling", false);
+            //animator.SetBool("Chasing", false);
+        }
+
+        public override void StateUpdate()
+        {
+            base.StateUpdate();
+            if (target.CheckForPlayer())
+            {
+                SetState(GunnerChase.Create(target));
+            }
+
+            _cooldownLeft -= Time.deltaTime;
+            if (_cooldownLeft <= 0)
+            {
+                SetState(GunnerPatrol.Create(target));
+            }
         }
     }
 }
