@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
 
             //nao meter isto numa variavel, quebra o jogo
             //virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
-            background.sprite = roomBg;
+          
             if (!_inRoom)
             {
                 foreach (var e in _enemies)
@@ -54,7 +54,10 @@ public class Room : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (_playerColliders.Contains(other.gameObject) && !other.isTrigger)
+        {
             virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
+            background.sprite = roomBg;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
