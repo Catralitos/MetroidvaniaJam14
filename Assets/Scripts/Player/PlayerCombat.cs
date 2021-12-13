@@ -66,6 +66,20 @@ namespace Player
 
         public void Shoot(bool shoot, Vector2 aimDirection)
         {
+            if (PlayerEntity.Instance.isMorphed)
+            {
+                lineRenderer.enabled = false;
+                lineRendererUp.enabled = false;
+                lineRendererDown.enabled = false;
+                return;
+            }
+            else
+            {
+                lineRenderer.enabled = true;
+                lineRendererUp.enabled = true;
+                lineRendererDown.enabled = true;
+            }
+            
             int i = PlayerEntity.Instance.isCrouched ? 1 : 0;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);
