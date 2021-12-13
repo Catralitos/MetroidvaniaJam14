@@ -373,6 +373,11 @@ namespace Player
             }
         }
 
+        public void KillMomentum()
+        {
+            _rb.velocity = Vector2.zero;
+        }
+        
         private void Crouch()
         {
             PlayerEntity.Instance.isCrouched = true;
