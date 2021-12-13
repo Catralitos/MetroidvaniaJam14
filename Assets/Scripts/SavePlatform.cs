@@ -12,6 +12,7 @@ public class SavePlatform : MonoBehaviour
         if (playerMask.HasLayer(other.gameObject.layer) && !LevelManager.Instance.countingDown)
         {
             SaveSystem.SavePlayer(PlayerEntity.Instance);
+            PlayerEntity.Instance.UI.DisplaySaveTooltip();
         }
     }
 }

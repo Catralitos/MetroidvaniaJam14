@@ -55,20 +55,24 @@ namespace Player
                 : PlayerEntity.Instance.Movement.currentMoveTimer / PlayerEntity.Instance.maxSpeedBuffTime;
         }
 
+        
+        //para fazer mais tooltips só copiar este método e manter tudo excepto a terceira linha
+        //em vez de saveTooltip, meter a tooltip certa;
         public void DisplaySaveTooltip()
         {
             PlayerEntity.Instance.frozeControls = true;
             PlayerEntity.Instance.displayingTooltip = true;
             saveTooltip.SetActive(true);
-            Invoke(nameof(SetCancel), 5f);
+            Invoke(nameof(SetCancel), 3f);
         }
 
+        //ADICIONAR AQUI TOOLTIPS NOVAS
         public void CloseTooltip()
         {
             PlayerEntity.Instance.frozeControls = false;
             PlayerEntity.Instance.displayingTooltip = false;
-            movementTooltip.SetActive(false);
-            saveTooltip.SetActive(false);
+            if (movementTooltip != null) movementTooltip.SetActive(false);
+            if (saveTooltip != null) saveTooltip.SetActive(false);
             canCancelTooltip = false;
         }
 

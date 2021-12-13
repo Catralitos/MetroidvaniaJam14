@@ -42,6 +42,7 @@ namespace GameManagement
             combatRoomsBeaten = new bool[playerEntity.combatRoomsBeaten.Length];
             damageUpgradesCollected = new bool[playerEntity.damageUpgradesCollected.Length];
             healthUpgradesCollected = new bool[playerEntity.healthUpgradesCollected.Length];
+            threeButtonDoorsOpened = new bool[playerEntity.threeButtonDoorsOpened.Length];
             for (int i = 0; i < combatRoomsBeaten.Length; i++)
             {
                 combatRoomsBeaten[i] = playerEntity.combatRoomsBeaten[i];
