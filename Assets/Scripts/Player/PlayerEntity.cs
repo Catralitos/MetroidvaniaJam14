@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Extensions;
 using UnityEngine;
 
 namespace Player
@@ -45,7 +46,8 @@ namespace Player
         public float underwaterDrag;
         public float underwaterGravity;
         public float underwaterMass;
-
+        public LayerMask acidMask;
+        
         [Header("Timer Caps")] public float maxDamageBuffTime;
         public float maxSpeedBuffTime;
         public float maxJumpBuffTime;
@@ -85,6 +87,20 @@ namespace Player
 
         private void Update()
         {
+            
+            RaycastHit2D up = Physics2D.Raycast(transform.position, Vector2.up, 1f, acidMask);
+            RaycastHit2D down = Physics2D.Raycast(transform.position, Vector2.down, 1f, acidMask);
+            RaycastHit2D left = Physics2D.Raycast(transform.position, Vector2.left, 1f, acidMask);
+            RaycastHit2D right = Physics2D.Raycast(transform.position, Vector2.right, 1f, acidMask);
+
+            bool x = Physics2D.OverlapBox(transform.position, new Vector2(1, 1), 90, acidMask);
+            
+            isUnderwater = (up && acidMask.HasLayer(up.collider.gameObject.layer)) ||
+                           (down && acidMask.HasLayer(down.collider.gameObject.layer)) ||
+                           (left && acidMask.HasLayer(left.collider.gameObject.layer)) ||
+                           (right && acidMask.HasLayer(right.collider.gameObject.layer)) ||
+                           x;
+
             if (isUnderwater && !unlockedGravitySuit)
             {
                 _rb.drag = underwaterDrag;
