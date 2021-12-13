@@ -36,7 +36,7 @@ namespace Player
             for (int i = 0; i < healthPipsCollected; i++)
             {
                 healthPips[i].gameObject.SetActive(true);
-                healthPips[i].color = i <= numberOfColoredPips ? Color.gray : Color.red;
+                healthPips[i].color = i <= numberOfColoredPips ? Color.red : Color.gray;
             }
 
             for (int i = healthPipsCollected; i < healthPips.Count; i++)
