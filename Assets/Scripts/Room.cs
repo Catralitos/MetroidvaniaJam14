@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    //public SpriteRenderer background;
+    public SpriteRenderer background;
     public GameObject virtualCam;
-
-    //public Sprite roomBg;
     public LayerMask enemyLayer;
 
     [SerializeField] private List<GameObject> _enemies;
     private List<GameObject> _playerColliders;
     private bool _inRoom;
 
+    public Sprite roomBg;
+    
     public void Start()
     {
         _playerColliders = PlayerEntity.Instance.states;
@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
 
             //nao meter isto numa variavel, quebra o jogo
             //virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
-            //background.sprite = roomBg;
+            background.sprite = roomBg;
             if (!_inRoom)
             {
                 foreach (var e in _enemies)
