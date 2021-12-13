@@ -1,3 +1,4 @@
+using System;
 using Extensions;
 using System.Collections.Generic;
 using Cinemachine;
@@ -30,13 +31,13 @@ public class Room : MonoBehaviour
             CancelInvoke(nameof(LeaveRoom));
 
             //nao meter isto numa variavel, quebra o jogo
-            virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
+            //virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
             //background.sprite = roomBg;
             if (!_inRoom)
             {
                 foreach (var e in _enemies)
                 {
-                    if (e!= null) e.SetActive(true);
+                    if (e != null) e.SetActive(true);
                 }
             }
 
@@ -48,6 +49,12 @@ public class Room : MonoBehaviour
             _enemies.Add(other.gameObject);
             if (!_inRoom) other.gameObject.SetActive(false);
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (_playerColliders.Contains(other.gameObject) && !other.isTrigger)
+            virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -65,6 +72,5 @@ public class Room : MonoBehaviour
         {
             if (e != null) e.SetActive(false);
         }
-
     }
 }

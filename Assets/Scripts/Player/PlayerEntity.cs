@@ -87,6 +87,11 @@ namespace Player
 
         private void Update()
         {
+
+            if (frozeControls)
+            {
+                Instance.Movement.KillMomentum();
+            }
             
             RaycastHit2D up = Physics2D.Raycast(transform.position, Vector2.up, 1f, acidMask);
             RaycastHit2D down = Physics2D.Raycast(transform.position, Vector2.down, 1f, acidMask);
