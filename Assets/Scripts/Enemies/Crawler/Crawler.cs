@@ -9,6 +9,8 @@ namespace Enemies.Crawler
         public float moveSpeed;
         public float rayDistance = 0.1f;
 
+        public bool movingRight = true;
+        
         public ContactTrigger backTrigger;
         public Transform head;
         public Transform wallFinder;
@@ -26,6 +28,8 @@ namespace Enemies.Crawler
             base.Start();
             if (!started)
             {
+                if (!movingRight) transform.localScale = transform.localScale * -1;Debug.DrawRay(transform.position, Vector3.left, Color.black, 1f);
+                                                                                               Debug.DrawRay(transform.position, Vector3.right, Color.black, 1f);
                 state = CrawlerCrawling.Create(this);
                 boxCollider = GetComponent<BoxCollider2D>();
                 started = true;

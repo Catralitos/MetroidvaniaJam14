@@ -118,7 +118,7 @@ namespace Enemies.Crawler
                 _direction = new Vector2(Mathf.Sign(_direction.x), 0);
                 RaycastHit2D hit = Physics2D.Raycast(target.head.position, -transform.up, target.rayDistance,
                     target.groundMask);
-                Vector3 newPos = hit.point + hit.normal * _colliderSize;
+                Vector3 newPos = (hit.point + hit.normal * _colliderSize);
                 transform.position = newPos;
             }
         }
