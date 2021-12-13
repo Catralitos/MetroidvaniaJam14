@@ -13,7 +13,7 @@ namespace Buffs
         {
             if (playerMask.HasLayer(other.gameObject.layer))
             {
-                upgradeWarning.SwitchSprite();
+                if(upgradeWarning != null) upgradeWarning.SwitchSprite();
                 SetUpgrade();
                 Destroy(gameObject);
             }
