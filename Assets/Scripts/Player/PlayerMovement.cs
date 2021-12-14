@@ -5,7 +5,6 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-
         [Header("Run and Jump")] public float normalJumpForce;
         public float boostedJumpForce;
         public float jumpTime;
@@ -13,7 +12,7 @@ namespace Player
         public float boostedMoveSpeed;
         public int numberOfMidairJumps;
         private float _currentJumpForce;
-        [HideInInspector] public float currentJumpTimer; 
+        [HideInInspector] public float currentJumpTimer;
         private float _currentMoveSpeed;
         [HideInInspector] public float currentMoveTimer;
 
@@ -39,7 +38,8 @@ namespace Player
         public float ledgeDropWindow;
         public float ledgeFreezeControlsWindow;
         public float midAirMorphWindow;
-    
+        public float climbDuration;
+
         private bool _canClimbLedge;
         private bool _canClimbLedgeMorph;
         private bool _canDetectLedge;
@@ -50,6 +50,7 @@ namespace Player
         private bool _detectedLedgeBottom;
         private bool _detectedLedgeTop;
         private bool _facingRight;
+        private bool _isClimbing;
         private bool _isGrounded;
         private bool _isHuggingWallLeft;
         private bool _isHuggingWallRight;
@@ -58,6 +59,7 @@ namespace Player
         private bool _fakeMidairCrouch;
         private bool _ledgeDetected;
         private bool _ledgeDetectedMorph;
+
 
         private float _dashCooldownLeft;
         private float _dashTime;
@@ -141,7 +143,6 @@ namespace Player
             if (currentJumpTimer < 0)
             {
                 _currentJumpForce = normalJumpForce;
-
             }
             else
             {
@@ -152,13 +153,14 @@ namespace Player
             if (currentMoveTimer < 0)
             {
                 _currentMoveSpeed = normalMoveSpeed;
-
             }
             else
             {
                 _currentMoveSpeed = boostedMoveSpeed;
             }
 
+            PlayerEntity.Instance.animators[0]
+                .SetBool("GrabbingLedge", !_isClimbing && (_canClimbLedge || _canClimbLedgeMorph));
         }
 
         //This function is called every FixedUpdate on PlayerControls
@@ -290,7 +292,10 @@ namespace Player
                     }
                     else if ((_facingRight && xInput > 0) || (!_facingRight && xInput < 0))
                     {
-                        FinishLedgeClimb();
+                        _isClimbing = true;
+                        if (_canClimbLedgeMorph) PlayerEntity.Instance.animators[0].SetTrigger("ClimbLedgeMorph");
+                        if (_canClimbLedge) PlayerEntity.Instance.animators[0].SetTrigger("ClimbLedge");
+                        Invoke(nameof(FinishLedgeClimb), climbDuration);
                     }
                     else
                     {
@@ -305,6 +310,7 @@ namespace Player
                         _jumpTimeCounter = 0;
                         _rb.velocity = Vector2.zero;
                     }
+
                     _previousJumpFrames++;
                     return;
                 }
@@ -327,7 +333,7 @@ namespace Player
                     _rb.velocity = Vector2.up * _currentJumpForce;
                 }
                 //salto no ar
-                else if ( PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
+                else if (PlayerEntity.Instance.unlockedDoubleJump && _midairJumps > 0 && _previousJumpFrames == 0)
                 {
                     if (Math.Abs(xInput) >= 0.1)
                     {
@@ -354,6 +360,7 @@ namespace Player
                         _isSomersaulting = false;
                     }
                 }
+
                 _previousJumpFrames++;
             }
             else
@@ -377,7 +384,7 @@ namespace Player
         {
             _rb.velocity = Vector2.zero;
         }
-        
+
         private void Crouch()
         {
             PlayerEntity.Instance.isCrouched = true;
@@ -412,9 +419,12 @@ namespace Player
                 Morph();
             }
 
+            if (_canClimbLedgeMorph) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedgeMorph");
+            if (_canClimbLedge) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedge");
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             PlayerEntity.Instance.frozeControls = true;
             transform.position = _ledgePos2;
+            _isClimbing = false;
             _canClimbLedge = false;
             _canClimbLedgeMorph = false;
             _ledgeDetected = false;
@@ -475,7 +485,8 @@ namespace Player
 
         private void CheckSurroundings()
         {
-            if (!_canDetectLedge || HangingToLedge() || PlayerEntity.Instance.isCrouched || PlayerEntity.Instance.isMorphed)
+            if (!_canDetectLedge || HangingToLedge() || PlayerEntity.Instance.isCrouched ||
+                PlayerEntity.Instance.isMorphed)
             {
                 _detectedWall = false;
                 _detectedLedgeBottom = false;
@@ -574,7 +585,6 @@ namespace Player
             if (currentJumpTimer < 0)
             {
                 currentJumpTimer = 0;
-            
             }
 
             currentJumpTimer = Mathf.Clamp(currentMoveTimer + time, 0, PlayerEntity.Instance.maxJumpBuffTime);
@@ -585,12 +595,9 @@ namespace Player
             if (currentMoveTimer < 0)
             {
                 currentMoveTimer = 0;
-
             }
 
             currentMoveTimer = Mathf.Clamp(currentMoveTimer + time, 0, PlayerEntity.Instance.maxSpeedBuffTime);
-
-
         }
     }
 }

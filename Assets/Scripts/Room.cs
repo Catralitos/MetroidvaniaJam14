@@ -56,7 +56,7 @@ public class Room : MonoBehaviour
         if (_playerColliders.Contains(other.gameObject) && !other.isTrigger)
         {
             virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = GetComponent<PolygonCollider2D>();
-            background.sprite = roomBg;
+            if (background!= null && roomBg != null) background.sprite = roomBg;
         }
     }
 
