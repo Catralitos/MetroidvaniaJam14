@@ -349,7 +349,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   currentHealth: 60
-  maxHealth: 60
+  maxHealth: 40
   contactDamage: 30
   startPosition: {x: 0, y: 0}
   rb: {fileID: 0}
