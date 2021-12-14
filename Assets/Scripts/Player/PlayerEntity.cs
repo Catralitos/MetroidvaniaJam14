@@ -17,6 +17,7 @@ namespace Player
         //2 - crouching
         //3 - morphed up
         [Header("Positions")] public List<GameObject> states;
+        public List<GameObject> arms;
         public List<Animator> animators;
 
         [Header("Global Bools")] public bool displayingTooltip;
@@ -94,6 +95,20 @@ namespace Player
                 Instance.Movement.KillMomentum();
             }
 
+            if (Movement.isClimbing)
+            {
+                foreach (GameObject arm in arms)
+                {
+                    arm.SetActive(false);
+                }
+            } else
+            {
+                foreach (GameObject arm in arms)
+                {
+                    arm.SetActive(true);
+                } 
+            }
+            
             RaycastHit2D up = Physics2D.Raycast(transform.position, Vector2.up, 1f, acidMask);
             RaycastHit2D down = Physics2D.Raycast(transform.position, Vector2.down, 1f, acidMask);
             RaycastHit2D left = Physics2D.Raycast(transform.position, Vector2.left, 1f, acidMask);

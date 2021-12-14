@@ -235,6 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445971888}
   - component: {fileID: 445971889}
+  - component: {fileID: 984589738}
   m_Layer: 7
   m_Name: Arm
   m_TagString: Untagged
@@ -249,14 +250,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445971887}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.42261827, w: 0.9063079}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1619397654}
   m_Father: {fileID: 1320940433}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50}
 --- !u!212 &445971889
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -297,8 +298,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 7482667652216324306, guid: 4e7eae1ecc1795e4fa18bda7fc95d6af, type: 3}
-  m_Color: {r: 0.27038836, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4d3a5c7459c4b83499b89bf78a9720a3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -308,6 +309,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &984589738
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445971887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ba203d1963e14d43b4ebb5d4190be5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &600008146
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +473,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117747246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.55, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1791830220}
@@ -483,7 +503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320940432}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 445971888}
@@ -649,6 +669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1791830220}
   - component: {fileID: 1791830221}
+  - component: {fileID: 578028066}
   m_Layer: 7
   m_Name: Arm
   m_TagString: Untagged
@@ -663,14 +684,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791830219}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.42261827, w: 0.9063079}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1117747247}
   m_Father: {fileID: 600008147}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50}
 --- !u!212 &1791830221
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -711,8 +732,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 7482667652216324306, guid: 4e7eae1ecc1795e4fa18bda7fc95d6af, type: 3}
-  m_Color: {r: 0.27038836, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c9ca0a19bac80c14a926a9bb2dc523fc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -722,6 +743,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &578028066
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791830219}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ba203d1963e14d43b4ebb5d4190be5a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1398752681297475182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,7 +1388,14 @@ MonoBehaviour:
   - {fileID: 6980801993283995929}
   - {fileID: 88250728}
   - {fileID: 1749416576}
-  animators: []
+  arms:
+  - {fileID: 1791830219}
+  - {fileID: 445971887}
+  animators:
+  - {fileID: 9055699814939957412}
+  - {fileID: 7571962400479458755}
+  - {fileID: 578028066}
+  - {fileID: 984589738}
   displayingTooltip: 0
   frozeControls: 0
   collectedKey: 0
@@ -1359,7 +1406,7 @@ MonoBehaviour:
   isUnderwater: 0
   dying: 0
   unlockedDash: 1
-  unlockedDoubleJump: 1
+  unlockedDoubleJump: 0
   unlockedGravitySuit: 0
   unlockedMorphBall: 1
   unlockedTripleBeam: 1
@@ -1431,6 +1478,7 @@ MonoBehaviour:
   normalMoveSpeed: 10
   boostedMoveSpeed: 20
   numberOfMidairJumps: 1
+  somersaultThreshold: 10
   currentJumpTimer: 0
   currentMoveTimer: 0
   dashCooldown: 0.5
@@ -1452,9 +1500,9 @@ MonoBehaviour:
   bottomLedgeRayOrigin: {fileID: 754811374}
   topLedgeRayOrigin: {fileID: 647352047}
   ledgeDropWindow: 1
-  ledgeFreezeControlsWindow: 0.2
+  ledgeFreezeControlsWindow: 0.25
   midAirMorphWindow: 1
-  climbDuration: 0
+  climbDuration: 0.25
   isClimbing: 0
 --- !u!50 &6980801993563420551
 Rigidbody2D:
@@ -1534,7 +1582,7 @@ MonoBehaviour:
   contactLayers:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0.1
+  coyoteTime: 0.2
   shouldDrawGizmo: 1
   castType: 0
   castDimensions: {x: 0.5, y: 0.25}
@@ -1556,7 +1604,7 @@ MonoBehaviour:
   contactLayers:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0.5
+  coyoteTime: 0.2
   shouldDrawGizmo: 1
   castType: 0
   castDimensions: {x: 0.25, y: 1}
@@ -1578,7 +1626,7 @@ MonoBehaviour:
   contactLayers:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0.5
+  coyoteTime: 0.4
   shouldDrawGizmo: 1
   castType: 0
   castDimensions: {x: 0.25, y: 1}
