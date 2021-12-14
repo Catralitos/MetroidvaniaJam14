@@ -11,6 +11,7 @@ namespace Player
         public float normalMoveSpeed;
         public float boostedMoveSpeed;
         public int numberOfMidairJumps;
+        public float somersaultThreshold;
         private float _currentJumpForce;
         [HideInInspector] public float currentJumpTimer;
         private float _currentMoveSpeed;
@@ -158,13 +159,15 @@ namespace Player
             {
                 _currentMoveSpeed = boostedMoveSpeed;
             }
+            
+            _isSomersaulting = !_isGrounded && Math.Abs(_rb.velocity.x) >= somersaultThreshold;
 
             PlayerEntity.Instance.animators[0].SetBool("Dashing", _dashingLeft || _dashingRight);
 
             PlayerEntity.Instance.animators[0].SetBool("Jumping", _rb.velocity.y > 0.1f );
             PlayerEntity.Instance.animators[0].SetBool("Falling", _rb.velocity.y < -0.1f && !_isGrounded);
             PlayerEntity.Instance.animators[0].SetBool("Sommersaulting", _isSomersaulting);
-            PlayerEntity.Instance.animators[0].SetBool("HuggingWall", _canWallJump);
+            PlayerEntity.Instance.animators[0].SetBool("HuggingWall", ReadyToWallJump());
 
             PlayerEntity.Instance.animators[0]
                 .SetBool("GrabbingLedge", !isClimbing && (_canClimbLedge || _canClimbLedgeMorph));
@@ -296,7 +299,7 @@ namespace Player
                         _canClimbLedgeMorph = false;
                         _ledgeDetected = false;
                         _ledgeDetectedMorph = false;
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                         _isJumping = true;
                         _jumpTimeCounter = jumpTime;
                         _rb.velocity = Vector2.up * _currentJumpForce;
@@ -317,7 +320,7 @@ namespace Player
                         _canClimbLedgeMorph = false;
                         _ledgeDetected = false;
                         _ledgeDetectedMorph = false;
-                        _isSomersaulting = false;
+                        //_isSomersaulting = false;
                         _isJumping = true;
                         _jumpTimeCounter = 0;
                         _rb.velocity = Vector2.zero;
@@ -337,7 +340,7 @@ namespace Player
 
                     if (Math.Abs(xInput) >= 0.1)
                     {
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                     }
 
                     _isJumping = true;
@@ -349,7 +352,7 @@ namespace Player
                 {
                     if (Math.Abs(xInput) >= 0.1)
                     {
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                     }
 
                     _midairJumps--;
@@ -369,7 +372,7 @@ namespace Player
                     else
                     {
                         _isJumping = false;
-                        _isSomersaulting = false;
+                        //_isSomersaulting = false;
                     }
                 }
 
