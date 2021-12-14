@@ -95,7 +95,7 @@ namespace Player
                 Instance.Movement.KillMomentum();
             }
 
-            if (Movement.isClimbing)
+            if (Movement.isClimbing || animators[0].GetBool("Punching"))
             {
                 foreach (GameObject arm in arms)
                 {

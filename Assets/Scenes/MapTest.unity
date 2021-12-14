@@ -214,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33143972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2176621, y: 3.5, z: -10}
+  m_LocalPosition: {x: -0.21708703, y: 3.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 359975550}
@@ -327,6 +327,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7767257, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740281502861375746, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
+      propertyPath: kickDuration
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2123994783618295201, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: jumpBuff
       value: 

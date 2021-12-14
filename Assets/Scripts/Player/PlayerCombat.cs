@@ -203,6 +203,7 @@ namespace Player
             {
                 if (!meleeGameObject.activeSelf)
                 {
+                    PlayerEntity.Instance.animators[0].SetBool("Punching", true);
                     meleeGameObject.SetActive(true);
                     Invoke(nameof(DisableKick), kickDuration);
                 }
@@ -215,6 +216,7 @@ namespace Player
 
         private void DisableKick()
         {
+            PlayerEntity.Instance.animators[0].SetBool("Punching", false);
             meleeGameObject.SetActive(false);
         }
 
