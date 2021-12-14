@@ -69,6 +69,10 @@ namespace UI
             if (File.Exists(GameManager.Instance.savePath))
             {
                 loadGameButton.onClick.AddListener(LoadGame);
+                Color c; 
+                ColorUtility.TryParseHtmlString("#3B6DBB", out c);
+                if (c != null) loadGameButton.GetComponent<Image>().color = c;
+
             }
             else
             {

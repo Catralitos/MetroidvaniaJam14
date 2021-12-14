@@ -93,37 +93,37 @@ namespace GameManagement
 
             if (PlayerEntity.Instance.unlockedDash && dashUpgrade != null)
             {
-                dashUpgrade.upgradeWarning.SwitchSprite();
+                if (dashUpgrade.upgradeWarning != null) dashUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(dashUpgrade.gameObject);
             }
 
             if (PlayerEntity.Instance.unlockedDoubleJump && doubleJumpUpgrade != null)
             {
-                doubleJumpUpgrade.upgradeWarning.SwitchSprite();
+                if (doubleJumpUpgrade.upgradeWarning != null) doubleJumpUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(doubleJumpUpgrade.gameObject);
             }
 
             if (PlayerEntity.Instance.unlockedGravitySuit && gravitySuitUpgrade != null)
             {
-                gravitySuitUpgrade.upgradeWarning.SwitchSprite();
+                if (gravitySuitUpgrade.upgradeWarning != null) gravitySuitUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
             if (PlayerEntity.Instance.unlockedMorphBall && morphBallUpgrade != null)
             {
-                morphBallUpgrade.upgradeWarning.SwitchSprite();
+                if (morphBallUpgrade.upgradeWarning != null) morphBallUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(gravitySuitUpgrade.gameObject);
             }
 
             if (PlayerEntity.Instance.unlockedPiercingBeam && piercingBeamUpgrade != null)
             {
-                piercingBeamUpgrade.upgradeWarning.SwitchSprite();
+                if (piercingBeamUpgrade.upgradeWarning != null) piercingBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(piercingBeamUpgrade.gameObject);
             }
 
             if (PlayerEntity.Instance.unlockedTripleBeam && tripleBeamUpgrade != null)
             {
-                tripleBeamUpgrade.upgradeWarning.SwitchSprite();
+                if (tripleBeamUpgrade.upgradeWarning != null) tripleBeamUpgrade.upgradeWarning.SwitchSprite();
                 Destroy(tripleBeamUpgrade.gameObject);
             }
 
@@ -139,7 +139,7 @@ namespace GameManagement
             {
                 if (damageUpgrades[i] != null && PlayerEntity.Instance.damageUpgradesCollected[i])
                 {
-                    damageUpgrades[i].upgradeWarning.SwitchSprite();
+                    if (damageUpgrades[i].upgradeWarning != null) damageUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(damageUpgrades[i].gameObject);
                 }
             }
@@ -148,7 +148,7 @@ namespace GameManagement
             {
                 if (healthUpgrades[i] != null && PlayerEntity.Instance.healthUpgradesCollected[i])
                 {
-                    healthUpgrades[i].upgradeWarning.SwitchSprite();
+                    if (healthUpgrades[i].upgradeWarning != null) healthUpgrades[i].upgradeWarning.SwitchSprite();
                     Destroy(healthUpgrades[i].gameObject);
                 }
             }

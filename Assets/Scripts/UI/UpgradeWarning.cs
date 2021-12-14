@@ -4,12 +4,11 @@ namespace UI
 {
     public class UpgradeWarning : MonoBehaviour
     {
-
         public Sprite beforeFinding;
         public Sprite afterFinding;
-    
+
         private SpriteRenderer _sprite;
-    
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -19,7 +18,7 @@ namespace UI
 
         public void SwitchSprite()
         {
-            _sprite.sprite = afterFinding;
+            if (_sprite != null && _sprite.sprite != null && afterFinding != null) _sprite.sprite = afterFinding;
         }
     }
 }
