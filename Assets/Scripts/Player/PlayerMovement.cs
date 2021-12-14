@@ -11,6 +11,7 @@ namespace Player
         public float normalMoveSpeed;
         public float boostedMoveSpeed;
         public int numberOfMidairJumps;
+        public float somersaultThreshold;
         private float _currentJumpForce;
         [HideInInspector] public float currentJumpTimer;
         private float _currentMoveSpeed;
@@ -50,7 +51,7 @@ namespace Player
         private bool _detectedLedgeBottom;
         private bool _detectedLedgeTop;
         private bool _facingRight;
-        private bool _isClimbing;
+        public bool isClimbing;
         private bool _isGrounded;
         private bool _isHuggingWallLeft;
         private bool _isHuggingWallRight;
@@ -158,9 +159,22 @@ namespace Player
             {
                 _currentMoveSpeed = boostedMoveSpeed;
             }
+            
+            _isSomersaulting = !_isGrounded && Math.Abs(_rb.velocity.x) >= somersaultThreshold;
+
+            PlayerEntity.Instance.animators[0].SetBool("Dashing", _dashingLeft || _dashingRight);
+
+            PlayerEntity.Instance.animators[0].SetBool("Jumping", _rb.velocity.y > 0.1f );
+            PlayerEntity.Instance.animators[0].SetBool("Falling", _rb.velocity.y < -0.1f && !_isGrounded);
+            PlayerEntity.Instance.animators[0].SetBool("Sommersaulting", _isSomersaulting);
+            PlayerEntity.Instance.animators[0].SetBool("HuggingWall", ReadyToWallJump());
 
             PlayerEntity.Instance.animators[0]
-                .SetBool("GrabbingLedge", !_isClimbing && (_canClimbLedge || _canClimbLedgeMorph));
+                .SetBool("GrabbingLedge", !isClimbing && (_canClimbLedge || _canClimbLedgeMorph));
+            PlayerEntity.Instance.animators[0]
+                .SetBool("Grounded", _isGrounded);
+            PlayerEntity.Instance.animators[0]
+                .SetFloat("WalkSpeed", _rb.velocity.magnitude);
         }
 
         //This function is called every FixedUpdate on PlayerControls
@@ -285,14 +299,15 @@ namespace Player
                         _canClimbLedgeMorph = false;
                         _ledgeDetected = false;
                         _ledgeDetectedMorph = false;
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                         _isJumping = true;
                         _jumpTimeCounter = jumpTime;
                         _rb.velocity = Vector2.up * _currentJumpForce;
                     }
                     else if ((_facingRight && xInput > 0) || (!_facingRight && xInput < 0))
                     {
-                        _isClimbing = true;
+                        KillMomentum();
+                        isClimbing = true;
                         if (_canClimbLedgeMorph) PlayerEntity.Instance.animators[0].SetTrigger("ClimbLedgeMorph");
                         if (_canClimbLedge) PlayerEntity.Instance.animators[0].SetTrigger("ClimbLedge");
                         Invoke(nameof(FinishLedgeClimb), climbDuration);
@@ -305,7 +320,7 @@ namespace Player
                         _canClimbLedgeMorph = false;
                         _ledgeDetected = false;
                         _ledgeDetectedMorph = false;
-                        _isSomersaulting = false;
+                        //_isSomersaulting = false;
                         _isJumping = true;
                         _jumpTimeCounter = 0;
                         _rb.velocity = Vector2.zero;
@@ -325,7 +340,7 @@ namespace Player
 
                     if (Math.Abs(xInput) >= 0.1)
                     {
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                     }
 
                     _isJumping = true;
@@ -337,7 +352,7 @@ namespace Player
                 {
                     if (Math.Abs(xInput) >= 0.1)
                     {
-                        _isSomersaulting = true;
+                        //_isSomersaulting = true;
                     }
 
                     _midairJumps--;
@@ -357,7 +372,7 @@ namespace Player
                     else
                     {
                         _isJumping = false;
-                        _isSomersaulting = false;
+                        //_isSomersaulting = false;
                     }
                 }
 
@@ -419,12 +434,12 @@ namespace Player
                 Morph();
             }
 
-            if (_canClimbLedgeMorph) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedgeMorph");
-            if (_canClimbLedge) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedge");
+            KillMomentum();
+            //if (_canClimbLedgeMorph) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedgeMorph");
+            //if (_canClimbLedge) PlayerEntity.Instance.animators[0].ResetTrigger("ClimbLedge");
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             PlayerEntity.Instance.frozeControls = true;
             transform.position = _ledgePos2;
-            _isClimbing = false;
             _canClimbLedge = false;
             _canClimbLedgeMorph = false;
             _ledgeDetected = false;
@@ -576,6 +591,7 @@ namespace Player
 
         private void RegainControl()
         {
+            isClimbing = false;
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             PlayerEntity.Instance.frozeControls = false;
         }

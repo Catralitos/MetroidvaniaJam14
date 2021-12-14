@@ -1348,6 +1348,7 @@ MonoBehaviour:
   - {fileID: 6980801993283995929}
   - {fileID: 88250728}
   - {fileID: 1749416576}
+  animators: []
   displayingTooltip: 0
   frozeControls: 0
   collectedKey: 0
@@ -1453,6 +1454,8 @@ MonoBehaviour:
   ledgeDropWindow: 1
   ledgeFreezeControlsWindow: 0.2
   midAirMorphWindow: 1
+  climbDuration: 0
+  isClimbing: 0
 --- !u!50 &6980801993563420551
 Rigidbody2D:
   serializedVersion: 4

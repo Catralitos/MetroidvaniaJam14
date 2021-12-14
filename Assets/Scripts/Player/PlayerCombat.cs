@@ -66,7 +66,7 @@ namespace Player
 
         public void Shoot(bool shoot, Vector2 aimDirection)
         {
-            if (PlayerEntity.Instance.isMorphed)
+            if (PlayerEntity.Instance.isMorphed || PlayerEntity.Instance.Movement.isClimbing)
             {
                 lineRenderer.enabled = false;
                 lineRendererUp.enabled = false;
