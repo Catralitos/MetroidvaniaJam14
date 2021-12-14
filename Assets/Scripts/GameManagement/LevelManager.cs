@@ -167,14 +167,14 @@ namespace GameManagement
 
         public void Update()
         {
-            if (gameIsPaused)
+            /*if (gameIsPaused)
             {
                 Time.timeScale = 0;
             }
             else
             {
                 Time.timeScale = 1;
-            }
+            }*/
 
             if (countingDown && !gameIsPaused)
             {

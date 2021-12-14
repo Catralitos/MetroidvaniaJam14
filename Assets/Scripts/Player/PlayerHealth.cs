@@ -45,6 +45,7 @@ namespace Player
         {
             if (PlayerEntity.Instance.dying) return;
             //fazer dano
+            PlayerEntity.Instance.animators[0].SetBool("BeingHit", true);
             PlayerEntity.Instance.frozeControls = true;
             _rb.velocity = Vector2.zero;
             int direction = PlayerEntity.Instance.facingRight ? -1 : 1;
@@ -75,6 +76,7 @@ namespace Player
     
         private void RestoreControls()
         {
+            PlayerEntity.Instance.animators[0].SetBool("BeingHit", false);
             PlayerEntity.Instance.frozeControls = false;
         }
 
