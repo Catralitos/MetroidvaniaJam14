@@ -327,14 +327,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7767257, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 740281502861375746, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
-      propertyPath: kickDuration
-      value: 0.7
-      objectReference: {fileID: 0}
     - target: {fileID: 2123994783618295201, guid: d3bd6ef7f8968ca4fa213b683727458c, type: 3}
       propertyPath: jumpBuff
       value: 
