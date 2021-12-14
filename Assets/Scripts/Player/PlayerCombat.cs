@@ -40,9 +40,14 @@ namespace Player
 
         public int damageIncreasePerUpgrade;
 
+        private Material _material;
         public void Start()
         {
             _shotTimer = shotCooldown;
+            /*_material = new Material(Shader.Find("Unlit/Texture"));
+            lineRenderer.material = _material;
+            lineRendererUp.material = _material;
+            lineRendererDown.material = _material;*/
         }
 
         public void IncreaseMaxDamage()
@@ -62,11 +67,30 @@ namespace Player
             {
                 _currentShotDamage = boostedShotDamage;
             }
+            
+            if (_shotTimer < shotCooldown)
+            {
+                lineRenderer.startColor = Color.yellow;
+                lineRenderer.endColor = Color.yellow;
+                lineRendererUp.startColor = Color.yellow;
+                lineRendererUp.endColor = Color.yellow;
+                lineRendererDown.startColor = Color.yellow;
+                lineRendererDown.endColor = Color.yellow;
+            }
+            else
+            {
+                lineRenderer.startColor = Color.red;
+                lineRenderer.endColor = Color.red;
+                lineRendererUp.startColor = Color.red;
+                lineRendererUp.endColor = Color.red;
+                lineRendererDown.startColor = Color.red;
+                lineRendererDown.endColor = Color.red;
+            }
         }
 
         public void Shoot(bool shoot, Vector2 aimDirection)
         {
-            if (PlayerEntity.Instance.isMorphed)
+            if (PlayerEntity.Instance.isMorphed || PlayerEntity.Instance.Movement.isClimbing)
             {
                 lineRenderer.enabled = false;
                 lineRendererUp.enabled = false;
@@ -79,7 +103,7 @@ namespace Player
                 lineRendererUp.enabled = true;
                 lineRendererDown.enabled = true;
             }
-            
+
             int i = PlayerEntity.Instance.isCrouched ? 1 : 0;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);
@@ -87,19 +111,19 @@ namespace Player
             RaycastHit2D hitInfo;
             RaycastHit2D hitInfo2;
             RaycastHit2D hitInfo3;
-            
+
             Vector2 aimDirection2 = rotate(aimDirection, tripleShotAngle);
             Vector2 aimDirection3 = rotate(aimDirection, -tripleShotAngle);
 
-            lineRenderer.SetPosition(0, armJoints[i].position);
-            lineRenderer.SetPosition(1, armJoints[i].position + (Vector3) aimDirection * shotRange);
+            lineRenderer.SetPosition(0, shotOrigin[i].position);
+            lineRenderer.SetPosition(1, shotOrigin[i].position + (Vector3) aimDirection * shotRange);
 
             if (PlayerEntity.Instance.unlockedTripleBeam)
             {
-                lineRendererUp.SetPosition(0, armJoints[i].position);
-                lineRendererUp.SetPosition(1, armJoints[i].position + (Vector3) aimDirection2 * shotRange);
-                lineRendererDown.SetPosition(0, armJoints[i].position);
-                lineRendererDown.SetPosition(1, armJoints[i].position + (Vector3) aimDirection3 * shotRange);
+                lineRendererUp.SetPosition(0, shotOrigin[i].position);
+                lineRendererUp.SetPosition(1, shotOrigin[i].position + (Vector3) aimDirection2 * shotRange);
+                lineRendererDown.SetPosition(0, shotOrigin[i].position);
+                lineRendererDown.SetPosition(1, shotOrigin[i].position + (Vector3) aimDirection3 * shotRange);
             }
 
             if (!shoot) return;
@@ -111,7 +135,9 @@ namespace Player
                 _shotTimer = 0.0f;
 
                 LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
-                hitInfo = Physics2D.Raycast(armJoints[i].position, aimDirection, shotRange, mask);
+                hitInfo = Physics2D.Raycast(shotOrigin[i].position, aimDirection, shotRange, mask);
+                
+                PlayerEntity.Instance.animators[i + 2].SetTrigger("Shoot");
 
                 if (hitInfo)
                 {
@@ -125,13 +151,13 @@ namespace Player
                         hitInfo.collider.gameObject.GetComponent<PressableButton>().Press();
                     }
 
-                   // Debug.Log("Middle: " + hitInfo.transform.name);
+                    // Debug.Log("Middle: " + hitInfo.transform.name);
                 }
 
                 if (PlayerEntity.Instance.unlockedTripleBeam)
                 {
-                    hitInfo2 = Physics2D.Raycast(armJoints[i].position, aimDirection2, shotRange, mask);
-                    hitInfo3 = Physics2D.Raycast(armJoints[i].position, aimDirection3, shotRange, mask);
+                    hitInfo2 = Physics2D.Raycast(shotOrigin[i].position, aimDirection2, shotRange, mask);
+                    hitInfo3 = Physics2D.Raycast(shotOrigin[i].position, aimDirection3, shotRange, mask);
                     if (hitInfo2)
                     {
                         if (enemies.HasLayer(hitInfo2.collider.gameObject.layer))
@@ -157,9 +183,8 @@ namespace Player
                         if (buttons.HasLayer(hitInfo.collider.gameObject.layer))
                         {
                             hitInfo3.collider.gameObject.GetComponent<PressableButton>().Press();
-                        }                            
+                        }
                         //Debug.Log("Bottom: " + hitInfo3.transform.name);
-
                     }
                 }
                 //rodar o braço de acordo com o aimDirection
@@ -178,6 +203,7 @@ namespace Player
             {
                 if (!meleeGameObject.activeSelf)
                 {
+                    PlayerEntity.Instance.animators[0].SetBool("Punching", true);
                     meleeGameObject.SetActive(true);
                     Invoke(nameof(DisableKick), kickDuration);
                 }
@@ -190,6 +216,7 @@ namespace Player
 
         private void DisableKick()
         {
+            PlayerEntity.Instance.animators[0].SetBool("Punching", false);
             meleeGameObject.SetActive(false);
         }
 
