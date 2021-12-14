@@ -1,11 +1,12 @@
 using Extensions;
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DisplayTooltip : MonoBehaviour
 {
 
-    public string tooltipFunction;
+    [FormerlySerializedAs("tooltipFunction")] public string tooltipText;
 
     public LayerMask playerMask;
     
@@ -13,7 +14,7 @@ public class DisplayTooltip : MonoBehaviour
     {
         if (playerMask.HasLayer(other.gameObject.layer))
         {
-            PlayerEntity.Instance.UI.Invoke(tooltipFunction, 0f);
+            PlayerEntity.Instance.UI.DisplayTooltip(tooltipText);
             Destroy(gameObject);
         }
     }
