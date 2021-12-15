@@ -17,7 +17,9 @@ namespace Player
         public Image jumpBuff;
         public Image speedBuff;
 
-        [Header("Tooltips")] [FormerlySerializedAs("saveTooltip")] public TextMeshProUGUI tooltip;
+        [Header("Tooltips")] [FormerlySerializedAs("saveTooltip")]
+        public TextMeshProUGUI tooltip;
+        public GameObject tooltipObject;
 
         [HideInInspector] public bool canCancelTooltip;
 
@@ -28,7 +30,7 @@ namespace Player
                 ? 0
                 : Mathf.RoundToInt(Mathf.Floor(1.0f * PlayerEntity.Instance.Health.currentHealth /
                                                PlayerEntity.Instance.Health.healthPerMaxIncrement));
-
+            
             int mod = Mathf.RoundToInt(PlayerEntity.Instance.Health.currentHealth %
                                        PlayerEntity.Instance.Health.healthPerMaxIncrement);
 
@@ -44,7 +46,7 @@ namespace Player
             {
                 healthPips[i].gameObject.SetActive(false);
             }
-
+            
             damageBuff.fillAmount = PlayerEntity.Instance.Combat.currentShotTimer <= 0
                 ? 0f
                 : PlayerEntity.Instance.Combat.currentShotTimer / PlayerEntity.Instance.maxDamageBuffTime;
@@ -56,13 +58,13 @@ namespace Player
                 : PlayerEntity.Instance.Movement.currentMoveTimer / PlayerEntity.Instance.maxSpeedBuffTime;
         }
 
-        
+
         public void DisplayTooltip(string text)
         {
             PlayerEntity.Instance.frozeControls = true;
             PlayerEntity.Instance.displayingTooltip = true;
             tooltip.text = text;
-            tooltip.gameObject.SetActive(true);
+            tooltipObject.SetActive(true);
             Invoke(nameof(SetCancel), 3f);
         }
 
@@ -70,7 +72,7 @@ namespace Player
         {
             PlayerEntity.Instance.frozeControls = false;
             PlayerEntity.Instance.displayingTooltip = false;
-            tooltip.gameObject.SetActive(false);
+            tooltipObject.SetActive(false);
             canCancelTooltip = false;
         }
 

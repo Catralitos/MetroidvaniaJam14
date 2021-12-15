@@ -7,6 +7,8 @@ namespace Enemies.Gunner
         private int _shotsFired;
         private float _bulletCooldown;
 
+        private Animator _animator;
+
         public static GunnerAttack Create(Gunner target)
         {
             GunnerAttack state = GunnerState.Create<GunnerAttack>(target);
@@ -18,10 +20,10 @@ namespace Enemies.Gunner
             base.StateStart();
             _bulletCooldown = target.fireRate;
             target.rb.velocity = Vector2.zero;
-            //target.capsuleSprite.color = Color.magenta;
-            //animator.SetBool("Stopped", true);
-            //animator.SetBool("Patrolling", false);
-            //animator.SetBool("Chasing", false);
+            _animator = GetComponent<Animator>();
+           _animator.SetBool("Idle", false);
+           _animator.SetBool("Walking", false);
+           _animator.SetBool("Shooting", true);
         }
 
         public override void StateUpdate()

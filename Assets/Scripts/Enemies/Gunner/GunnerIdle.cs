@@ -6,6 +6,8 @@ namespace Enemies.Gunner
     {
         private float _cooldownLeft;
 
+        private Animator _animator;
+        
         public static GunnerIdle Create(Gunner target)
         {
             GunnerIdle state = GunnerState.Create<GunnerIdle>(target);
@@ -17,9 +19,11 @@ namespace Enemies.Gunner
             base.StateStart();
             _cooldownLeft = target.holdPositionTime;
             target.rb.velocity = Vector2.zero;
-            //animator.SetBool("Stopped", true);
-            //animator.SetBool("Patrolling", false);
-            //animator.SetBool("Chasing", false);
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("Shooting", false);
+            _animator.SetBool("Walking", false);
+            _animator.SetBool("Idle", true);
+
         }
 
         public override void StateUpdate()

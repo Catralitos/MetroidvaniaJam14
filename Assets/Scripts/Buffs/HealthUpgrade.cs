@@ -8,8 +8,12 @@ namespace Buffs
     {
         protected override void SetUpgrade()
         {
+            PlayerEntity.Instance.UI.DisplayTooltip(
+                "You have collected a health upgrade. Your health has been extended.");
+
             PlayerEntity.Instance.UI.healthPipsCollected++;
-            PlayerEntity.Instance.healthUpgradesCollected[ArrayUtility.IndexOf(LevelManager.Instance.healthUpgrades, this)] =
+            PlayerEntity.Instance.healthUpgradesCollected[
+                    ArrayUtility.IndexOf(LevelManager.Instance.healthUpgrades, this)] =
                 true;
             PlayerEntity.Instance.Health.IncreaseMaxHealth();
             Destroy(gameObject);

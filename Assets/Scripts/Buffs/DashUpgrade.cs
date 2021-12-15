@@ -6,6 +6,8 @@ namespace Buffs
     {
         protected override void SetUpgrade()
         {
+            PlayerEntity.Instance.UI.DisplayTooltip(
+                "You have collected the dash upgrade. You can now dash in midair or on the ground using Left-Shift.");
             PlayerEntity.Instance.unlockedDash = true;
         }
     }

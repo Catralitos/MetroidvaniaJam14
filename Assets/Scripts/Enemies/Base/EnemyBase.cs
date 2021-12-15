@@ -34,7 +34,7 @@ namespace Enemies.Base
         [HideInInspector] public Rigidbody2D rb;
         [HideInInspector] public Quaternion startRotation;
 
-        public float randomDropChance = 0.5f;
+        //public float randomDropChance = 0.5f;
         public List<GameObject> pickUps;
 
         private float _initialMass;
@@ -42,6 +42,7 @@ namespace Enemies.Base
         private DissolveEffect _dissolve;
 
         public float dissolveSpeed;
+
         [ColorUsageAttribute(true, true)] [SerializeField]
         private Color startDissolveColor;
 
@@ -63,6 +64,7 @@ namespace Enemies.Base
             currentHealth = maxHealth;
             if (started)
             {
+                _dissolve.ResetDissolve();
                 transform.position = startPosition;
                 transform.rotation = startRotation;
             }
@@ -85,10 +87,10 @@ namespace Enemies.Base
             var spawnPos = transform.position;
             if (pickUps.Count > 0)
             {
-                if (Random.Range(0.0f, 1.0f) <= randomDropChance)
-                {
-                    Instantiate(pickUps[Random.Range(0, pickUps.Count)], spawnPos, Quaternion.identity);
-                }
+                GameObject toInstantiate = pickUps[Random.Range(0, pickUps.Count)];
+                GameObject instantiated = null;
+                if (toInstantiate != null) instantiated = Instantiate(toInstantiate, spawnPos, Quaternion.identity);
+                Debug.Log("Instatiated " + instantiated);
             }
 
             rb.bodyType = RigidbodyType2D.Static;
@@ -100,12 +102,12 @@ namespace Enemies.Base
 
         private void DisableUponDeath()
         {
-            _dissolve.StartDissolve(dissolveSpeed, stopDissolveColor);
+            _dissolve.StopDissolve(dissolveSpeed, stopDissolveColor);
             gameObject.SetActive(false);
+            _dissolve.ResetDissolve();
             //rb.constraints = _initialConstraints;
             rb.bodyType = RigidbodyType2D.Dynamic;
             gameObject.GetComponent<Collider2D>().enabled = true;
-
         }
 
         private void OnCollisionEnter2D(Collision2D other)

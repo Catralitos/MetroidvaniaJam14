@@ -34,12 +34,12 @@ namespace UI
         private void StartGame()
         {
             SaveSystem.DeletePlayer();
-            GameManager.Instance.LoadNextScene();
+            GameManager.Instance.LoadMainScene();
         }
     
         private void LoadGame()
         {
-            GameManager.Instance.LoadNextScene();
+            GameManager.Instance.LoadMainScene();
         }
 
         private void ShowOptions()

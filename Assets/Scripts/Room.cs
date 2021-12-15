@@ -64,7 +64,7 @@ public class Room : MonoBehaviour
     {
         if (_playerColliders.Contains(other.gameObject) && !other.isTrigger)
         {
-            Invoke(nameof(LeaveRoom), 3.1f);
+            Invoke(nameof(LeaveRoom), 0.1f);
         }
     }
 

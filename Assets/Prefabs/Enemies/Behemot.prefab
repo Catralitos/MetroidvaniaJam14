@@ -200,7 +200,12 @@ MonoBehaviour:
   rb: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   randomDropChance: 0.5
-  pickUps: []
+  pickUps:
+  - {fileID: 6771688579432759611, guid: 215bb351c58bd7f4bbfa5a6f5ff87d01, type: 3}
+  - {fileID: 7366372056326265573, guid: 347ce856099440b42a63eafc7144b472, type: 3}
+  - {fileID: 3679504391216795944, guid: 7e117c683cea4d4438f889f88f6c9949, type: 3}
+  - {fileID: 175651811641338554, guid: bb0c281d7ba86754794af04ff0897520, type: 3}
+  - {fileID: 0}
   dissolveSpeed: 0.5
   startDissolveColor: {r: 0.447392, g: 0, b: 1, a: 1}
   stopDissolveColor: {r: 1, g: 1, b: 1, a: 1}
@@ -334,7 +339,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 4e7eae1ecc1795e4fa18bda7fc95d6af, type: 3}
   m_Color: {r: 0, g: 1, b: 0.8062601, a: 1}
   m_FlipX: 0

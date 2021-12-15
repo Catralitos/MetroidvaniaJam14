@@ -1,4 +1,5 @@
 using Extensions;
+using GameManagement;
 using UI;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Buffs
             if (playerMask.HasLayer(other.gameObject.layer))
             {
                 if(upgradeWarning != null) upgradeWarning.SwitchSprite();
+                LevelManager.Instance.itemsCollected++;
                 SetUpgrade();
                 Destroy(gameObject);
             }
