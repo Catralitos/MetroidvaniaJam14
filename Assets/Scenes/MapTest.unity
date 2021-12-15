@@ -731,14 +731,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5455294407224361427, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455294407224361427, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455294407224361427, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5
       objectReference: {fileID: 0}
@@ -781,26 +773,6 @@ PrefabInstance:
     - target: {fileID: 5455294407224361448, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
       propertyPath: m_Name
       value: Behemot
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455294407224361448, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: regular
-      value: 
-      objectReference: {fileID: 21300000, guid: dfba25cb8ac7a0446b3b6c4e25b37fc0, type: 3}
-    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: attacking
-      value: 
-      objectReference: {fileID: 21300000, guid: 217861907bd2d4a48a37282bb5890551, type: 3}
-    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: maxHealth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5455294407224361463, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
-      propertyPath: currentHealth
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5e3e5c00886b574eb57d5d026f55cf1, type: 3}
