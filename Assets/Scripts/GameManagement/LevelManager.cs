@@ -244,7 +244,7 @@ namespace GameManagement
 
         private void LoadCredits()
         {
-            GameManager.Instance.LoadMainScene();
+            GameManager.Instance.LoadCredits();
         }
     }
 }
