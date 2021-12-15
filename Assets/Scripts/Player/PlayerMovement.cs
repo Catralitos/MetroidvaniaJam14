@@ -128,6 +128,7 @@ namespace Player
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _audioManager = GetComponent<AudioManager>();
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             _canDetectLedge = true;
             _dashCooldownLeft = 0;

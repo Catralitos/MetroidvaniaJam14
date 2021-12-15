@@ -31,6 +31,7 @@ namespace Player
         // Start is called before the first frame update
         private void Start()
         {
+            _audioManager = GetComponent<AudioManager>();
             _rb = GetComponent<Rigidbody2D>();
             _dissolve = GetComponent<DissolveEffect>();
             _initialCons = _rb.constraints;

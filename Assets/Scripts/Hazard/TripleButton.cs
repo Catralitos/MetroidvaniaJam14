@@ -1,6 +1,5 @@
 using GameManagement;
 using Player;
-using UnityEditor;
 using UnityEngine;
 
 namespace Hazard
@@ -23,8 +22,14 @@ namespace Hazard
             if (button1.pressed && button2.pressed && button3.pressed)
             {
                 pressed = true;
-                PlayerEntity.Instance.threeButtonDoorsOpened[
-                    ArrayUtility.IndexOf(LevelManager.Instance.threeButtonDoors, this)] = true;
+                for (int i = 0; i < PlayerEntity.Instance.threeButtonDoorsOpened.Length; i++)
+                {
+                    if (LevelManager.Instance.threeButtonDoors[i] == this)
+                    {
+                        PlayerEntity.Instance.threeButtonDoorsOpened[i] = true;
+                        break;
+                    }
+                }
                 door.Open();
                 if (startsFinalCountdown)
                 {

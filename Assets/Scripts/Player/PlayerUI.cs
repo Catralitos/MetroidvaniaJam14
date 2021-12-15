@@ -65,7 +65,7 @@ namespace Player
             PlayerEntity.Instance.displayingTooltip = true;
             tooltip.text = text;
             tooltipObject.SetActive(true);
-            Invoke(nameof(SetCancel), 3f);
+            Invoke(nameof(SetCancel), 0.5f);
         }
 
         public void CloseTooltip()

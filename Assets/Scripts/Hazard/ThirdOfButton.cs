@@ -17,6 +17,7 @@ namespace Hazard
 
         private void Start()
         {
+            _audioManager = GetComponent<AudioManager>();
             _timer = parent.hitTimeframe;
             _sprite = GetComponent<SpriteRenderer>();
             _sprite.sprite = beforeHitting;

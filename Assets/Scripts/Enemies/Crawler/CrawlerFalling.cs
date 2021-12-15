@@ -15,6 +15,7 @@ namespace Enemies.Crawler
         public override void StateStart()
         {
             base.StateStart();
+            _audioManager = GetComponent<AudioManager>();
             target.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             target.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
             _audioManager.Stop("Crawling");

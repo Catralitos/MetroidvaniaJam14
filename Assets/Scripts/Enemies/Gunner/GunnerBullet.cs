@@ -10,7 +10,7 @@ namespace Enemies.Gunner
         public int bulletDamage = 60;
 
         private Rigidbody2D _rb;
-        private CircleCollider2D _collider;
+        private BoxCollider2D _collider;
 
         private DissolveEffect _dissolve;
 
@@ -24,10 +24,11 @@ namespace Enemies.Gunner
 
         public void Start()
         {
-            //_audioManager = GetComponent<AudioManager>();
-            //_audioManager.Play("Spawn");
+            _audioManager = GetComponent<AudioManager>();
+            _audioManager.Play("Spawn");
+            _audioManager = GetComponent<AudioManager>();
             _rb = GetComponent<Rigidbody2D>();
-            _collider = GetComponent<CircleCollider2D>();
+            _collider = GetComponent<BoxCollider2D>();
             _dissolve = GetComponent<DissolveEffect>();
         }
 

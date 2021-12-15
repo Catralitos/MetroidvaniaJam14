@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 4643622492123209662}
   - component: {fileID: 1504555185}
   - component: {fileID: 9203731462941818831}
+  - component: {fileID: -4325130986541553502}
   m_Layer: 8
   m_Name: Crawler
   m_TagString: Untagged
@@ -185,7 +186,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.8991456, y: -2.926999}
+  m_Offset: {x: -0.2678876, y: -0.20262241}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.4973887, y: 0.41904947}
@@ -196,7 +197,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.133105, y: 8.091631}
+  m_Size: {x: 9.1995535, y: 9.021906}
   m_EdgeRadius: 0
 --- !u!114 &4643622492123209651
 MonoBehaviour:
@@ -222,7 +223,6 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0}
   rb: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
-  randomDropChance: 0.5
   pickUps:
   - {fileID: 6771688579432759611, guid: 215bb351c58bd7f4bbfa5a6f5ff87d01, type: 3}
   - {fileID: 7366372056326265573, guid: 347ce856099440b42a63eafc7144b472, type: 3}
@@ -273,8 +273,8 @@ MonoBehaviour:
   coyoteTime: 0
   shouldDrawGizmo: 1
   castType: 0
-  castDimensions: {x: 1.5, y: 0.1}
-  positionalOffset: {x: 0.1, y: -0.6}
+  castDimensions: {x: 2, y: 0.1}
+  positionalOffset: {x: 0, y: -0.6}
   capsuleDirection2D: 0
   isInContact: 0
 --- !u!114 &1504555185
@@ -309,3 +309,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-4325130986541553502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643622492123209652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Crawling
+    clip: {fileID: 8300000, guid: b22b06d994ee2294a977268751b3003f, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}

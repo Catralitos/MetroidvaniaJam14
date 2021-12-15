@@ -13,11 +13,12 @@ namespace Hazard
         private AudioManager _audioManager;
 
         [SerializeField] public Openable toOpen;
-        
+
         private SpriteRenderer _sprite;
 
-        void Start()
+        private void Start()
         {
+            _audioManager = GetComponent<AudioManager>();
             _timer = pressedCooldown;
             _sprite = GetComponent<SpriteRenderer>();
             _sprite.sprite = beforeHitting;
@@ -56,7 +57,7 @@ namespace Hazard
             HitSprite();
             _audioManager.Play("Button");
         }
-        
+
         public override void UnPress()
         {
             _timer = 0;

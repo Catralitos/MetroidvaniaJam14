@@ -17,6 +17,7 @@ namespace Enemies.Swordfighter
         public override void StateStart()
         {
             base.StateStart();
+            _audioManager = GetComponent<AudioManager>();
             //animator.SetTrigger("Attack");
             _audioManager.Play("BehemotAttacking");
             target.rb.velocity = Vector2.zero;

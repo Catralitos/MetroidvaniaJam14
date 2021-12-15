@@ -18,6 +18,7 @@ namespace Enemies.Swordfighter
         public override void StateStart()
         {
             base.StateStart();
+            _audioManager = GetComponent<AudioManager>();
             target.spriteRenderer.sprite = target.regular;
             _cooldownLeft = target.holdPositionTime;
             target.rb.velocity = Vector2.zero;

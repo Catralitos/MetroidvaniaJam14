@@ -12,13 +12,14 @@ namespace Hazard
         private Vector3 startPosition;
         private BoxCollider2D _collider;
         private AudioManager _audioManager;
-        
-        void Start()
+
+        private void Start()
         {
             startPosition = transform.position;
+            _audioManager = GetComponent<AudioManager>();
 
             _collider = GetComponent<BoxCollider2D>();
-            
+
             if (!startClosed)
             {
                 closed = false;

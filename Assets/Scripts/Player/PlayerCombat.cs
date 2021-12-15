@@ -45,11 +45,9 @@ namespace Player
         private AudioManager _audioManager;
         public void Start()
         {
+            
             _shotTimer = shotCooldown;
-            /*_material = new Material(Shader.Find("Unlit/Texture"));
-            lineRenderer.material = _material;
-            lineRendererUp.material = _material;
-            lineRendererDown.material = _material;*/
+            _audioManager = GetComponent<AudioManager>();
         }
 
         public void IncreaseMaxDamage()
@@ -106,7 +104,6 @@ namespace Player
                 lineRendererDown.enabled = true;
             }
             
-            _audioManager.Play("Shooting_weak");
             int i = PlayerEntity.Instance.isCrouched ? 1 : 0;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);
@@ -139,7 +136,8 @@ namespace Player
 
                 LayerMask mask = PlayerEntity.Instance.unlockedPiercingBeam ? hitMaskPiercing : hitMaskNormal;
                 hitInfo = Physics2D.Raycast(shotOrigin[i].position, aimDirection, shotRange, mask);
-                
+                _audioManager.Play("Shooting_weak");
+
                 PlayerEntity.Instance.animators[i + 2].SetTrigger("Shoot");
 
                 if (hitInfo)

@@ -8,7 +8,6 @@ namespace Enemies.Gunner
         private int _shotsFired;
         private float _bulletCooldown;
 
-        private AudioManager _audioManager;
         private Animator _animator;
 
         public static GunnerAttack Create(Gunner target)
@@ -19,7 +18,6 @@ namespace Enemies.Gunner
 
         public override void StateStart()
         {
-            _audioManager.Play("GunnerFiring");
             base.StateStart();
             _bulletCooldown = target.fireRate;
             target.rb.velocity = Vector2.zero;

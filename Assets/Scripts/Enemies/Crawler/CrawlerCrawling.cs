@@ -19,6 +19,7 @@ namespace Enemies.Crawler
         public override void StateStart()
         {
             base.StateStart();
+            _audioManager = GetComponent<AudioManager>();
             _colliderSize = target.boxCollider.bounds.extents.y;
             _audioManager.Play("Crawling");
         }

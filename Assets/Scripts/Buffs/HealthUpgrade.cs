@@ -1,6 +1,6 @@
 using GameManagement;
 using Player;
-using UnityEditor;
+
 
 namespace Buffs
 {
@@ -10,11 +10,16 @@ namespace Buffs
         {
             PlayerEntity.Instance.UI.DisplayTooltip(
                 "You have collected a health upgrade. Your health has been extended.");
-
+            
             PlayerEntity.Instance.UI.healthPipsCollected++;
-            PlayerEntity.Instance.healthUpgradesCollected[
-                    ArrayUtility.IndexOf(LevelManager.Instance.healthUpgrades, this)] =
-                true;
+            for (int i = 0; i < PlayerEntity.Instance.healthUpgradesCollected.Length; i++)
+            {
+                if (LevelManager.Instance.healthUpgrades[i] == this)
+                {
+                    PlayerEntity.Instance.healthUpgradesCollected[i] = true;
+                    break;
+                }
+            }
             PlayerEntity.Instance.Health.IncreaseMaxHealth();
             Destroy(gameObject);
         }

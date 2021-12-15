@@ -100,8 +100,14 @@ namespace Hazard
 
         private void OpenDoor()
         {
-            PlayerEntity.Instance.combatRoomsBeaten[ArrayUtility.IndexOf(LevelManager.Instance.combatRooms, this)] =
-                true;
+            for (int i = 0; i < PlayerEntity.Instance.combatRoomsBeaten.Length; i++)
+            {
+                if (LevelManager.Instance.combatRooms[i] == this)
+                {
+                    PlayerEntity.Instance.combatRoomsBeaten[i] = true;
+                    break;
+                }
+            }
             leftDoor.Open();
             rightDoor.Open();
             Destroy(gameObject);
