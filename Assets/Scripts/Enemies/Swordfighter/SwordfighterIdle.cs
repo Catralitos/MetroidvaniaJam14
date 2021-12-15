@@ -15,6 +15,7 @@ namespace Enemies.Swordfighter
         public override void StateStart()
         {
             base.StateStart();
+            target.spriteRenderer.sprite = target.regular;
             _cooldownLeft = target.holdPositionTime;
             target.rb.velocity = Vector2.zero;
         }

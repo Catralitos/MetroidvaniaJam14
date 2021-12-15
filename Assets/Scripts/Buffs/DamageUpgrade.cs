@@ -8,6 +8,7 @@ namespace Buffs
     {
         protected override void SetUpgrade()
         {
+            PlayerEntity.Instance.UI.DisplayTooltip("You have collected a damage upgrade. Shots will do more damage.");
             PlayerEntity.Instance.damageUpgradesCollected[ArrayUtility.IndexOf(LevelManager.Instance.damageUpgrades, this)] =
                 true;
             PlayerEntity.Instance.Combat.IncreaseMaxDamage();

@@ -27,7 +27,11 @@ namespace Enemies.Swordfighter
         private bool _touchingLeftWall;
         private bool _touchingRightWall;
 
+        public Sprite regular;
+        public Sprite attacking;
 
+        [HideInInspector] public SpriteRenderer spriteRenderer;
+        
         [Header("Collision")] public ContactTrigger leftGroundTrigger;
         public ContactTrigger rightGroundTrigger;
         public ContactTrigger leftWallTrigger;
@@ -54,6 +58,7 @@ namespace Enemies.Swordfighter
             base.Start();
             if (!started)
             {
+                spriteRenderer = GetComponent<SpriteRenderer>();
                 rb = GetComponent<Rigidbody2D>();
                 state = SwordfighterPatrol.Create(this);
                 currentPatrolAnchor = transform.position;

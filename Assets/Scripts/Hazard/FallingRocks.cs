@@ -23,9 +23,6 @@ namespace Hazard
                 Destroy(gameObject);
             }
         }
-        protected virtual void Hit(GameObject target) { }
-
-
 
     }
 }

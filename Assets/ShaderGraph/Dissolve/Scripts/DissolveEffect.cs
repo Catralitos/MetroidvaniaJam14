@@ -40,6 +40,11 @@ public class DissolveEffect : MonoBehaviour {
     }
 
     private void Update() {
+        if (!gameObject.activeSelf)
+        {
+            ResetDissolve();
+            return;
+        }
         if (isDissolving) {
             dissolveAmount = Mathf.Clamp01(dissolveAmount + dissolveSpeed * Time.deltaTime);
             _material.SetFloat("_DissolveAmount", dissolveAmount);
@@ -50,17 +55,30 @@ public class DissolveEffect : MonoBehaviour {
     }
 
     public void StartDissolve(float dissolveSpeed, Color dissolveColor) {
-        Debug.Log(gameObject.name + " started dissolving");
+        if (!gameObject.activeSelf)
+        {
+            ResetDissolve();
+            return;
+        }
         isDissolving = true;
         _material.SetColor("_DissolveColor", dissolveColor);
         this.dissolveSpeed = dissolveSpeed;
     }
 
     public void StopDissolve(float dissolveSpeed, Color dissolveColor) {
-        Debug.Log(gameObject.name + " stopped dissolving");
+        if (!gameObject.activeSelf)
+        {
+            ResetDissolve();
+            return;
+        }
         isDissolving = false;
         _material.SetColor("_DissolveColor", dissolveColor);
         this.dissolveSpeed = dissolveSpeed;
+    }
+
+    public void ResetDissolve()
+    {
+        _material.SetFloat("_DissolveAmount", 0f);
     }
 
 }

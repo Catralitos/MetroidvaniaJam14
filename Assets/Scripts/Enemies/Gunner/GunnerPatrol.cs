@@ -8,6 +8,7 @@ namespace Enemies.Gunner
         private Vector2 _patrolLeftPoint;
         private Vector2 _patrolRightPoint;
 
+        private Animator _animator;
         public static GunnerPatrol Create(Gunner target)
         {
             GunnerPatrol state = GunnerState.Create<GunnerPatrol>(target);
@@ -20,9 +21,10 @@ namespace Enemies.Gunner
             _patrolLeftPoint = (Vector2) target.currentPatrolAnchor + Vector2.left * target.horizontalRange;
             _patrolRightPoint = (Vector2) target.currentPatrolAnchor + Vector2.right * target.horizontalRange;
             target.Flip();
-            //animator.SetBool("Stopped", false);
-            //animator.SetBool("Patrolling", true);
-            //animator.SetBool("Chasing", false);
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("Shooting", false);
+            _animator.SetBool("Idle", false);
+            _animator.SetBool("Walking", true);
         }
 
         public override void StateFixedUpdate()

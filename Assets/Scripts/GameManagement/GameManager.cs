@@ -12,7 +12,11 @@ namespace GameManagement
         [HideInInspector] public float timeElapsed;
  
         [HideInInspector] public string savePath;
-    
+
+        public int lastMaxItems;
+        public int lastCollectedItems;
+        public float lastRecordedTime;
+        
         public void Awake()
         {
             if (Instance == null)
@@ -51,9 +55,17 @@ namespace GameManagement
             SceneManager.LoadScene(0);
         }
     
-        public void LoadNextScene()
+        public void LoadMainScene()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            countingTime = true;
+            SceneManager.LoadScene(1);
+        }
+        
+        public void LoadCredits()
+        {
+            countingTime = false;
+            lastRecordedTime = timeElapsed;
+            SceneManager.LoadScene(2);
         }
     
         public void ReloadScene()

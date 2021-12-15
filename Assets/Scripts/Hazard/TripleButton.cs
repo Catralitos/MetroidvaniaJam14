@@ -11,11 +11,13 @@ namespace Hazard
         public ThirdOfButton button2;
         public ThirdOfButton button3;
 
+        public bool startsFinalCountdown = false;
+
         [SerializeField] public Openable door;
 
         public float hitTimeframe;
         public bool pressed = false;
-        
+
         private void Update()
         {
             if (button1.pressed && button2.pressed && button3.pressed)
@@ -24,6 +26,10 @@ namespace Hazard
                 PlayerEntity.Instance.threeButtonDoorsOpened[
                     ArrayUtility.IndexOf(LevelManager.Instance.threeButtonDoors, this)] = true;
                 door.Open();
+                if (startsFinalCountdown)
+                {
+                    LevelManager.Instance.StartFinalCountdown();
+                }
             }
         }
     }

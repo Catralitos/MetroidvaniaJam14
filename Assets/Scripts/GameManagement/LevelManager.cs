@@ -1,3 +1,4 @@
+using System;
 using Buffs;
 using Hazard;
 using Player;
@@ -15,9 +16,13 @@ namespace GameManagement
         public float finalCountdownTime;
         private float _finalCountdown;
 
+        public int itemsCollected;
+        public int maxItems = 20;
+        
         public GameObject hud;
         public PauseScreenManager pauseScreen;
-
+        public TextMeshProUGUI countdownText;
+        
         public bool gameIsPaused;
 
         public TripleButton[] threeButtonDoors;
@@ -167,18 +172,20 @@ namespace GameManagement
 
         public void Update()
         {
-            /*if (gameIsPaused)
+            if (gameIsPaused)
             {
                 Time.timeScale = 0;
             }
             else
             {
                 Time.timeScale = 1;
-            }*/
+            }
 
             if (countingDown && !gameIsPaused)
             {
                 _finalCountdown -= Time.deltaTime;
+                countdownText.gameObject.SetActive(true);
+                countdownText.text = FormatTime(_finalCountdown);
                 if (_finalCountdown <= 0)
                 {
                     PlayerEntity.Instance.Health.Die();
@@ -220,12 +227,24 @@ namespace GameManagement
             PlayerEntity.Instance.frozeControls = true;
             countingDown = false;
             GameManager.Instance.StopCountingTime();
+            GameManager.Instance.lastMaxItems = maxItems;
+            GameManager.Instance.lastCollectedItems = itemsCollected;
             Invoke(nameof(LoadCredits), 3f);
+        }
+        
+        private string FormatTime (float time){
+            int intTime = (int)time;
+            int minutes = intTime / 60;
+            int seconds = intTime % 60;
+            float fraction = time * 1000;
+            fraction = (fraction % 1000);
+            string timeText = String.Format ("{0:00}:{1:00}:{2:000}", minutes, seconds, fraction);
+            return timeText;
         }
 
         private void LoadCredits()
         {
-            GameManager.Instance.LoadNextScene();
+            GameManager.Instance.LoadCredits();
         }
     }
 }

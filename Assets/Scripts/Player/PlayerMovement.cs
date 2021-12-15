@@ -13,9 +13,9 @@ namespace Player
         public int numberOfMidairJumps;
         public float somersaultThreshold;
         private float _currentJumpForce;
-        [HideInInspector] public float currentJumpTimer;
+        public float currentJumpTimer;
         private float _currentMoveSpeed;
-        [HideInInspector] public float currentMoveTimer;
+        public float currentMoveTimer;
 
         [Header("Dash")] public float dashCooldown;
         public float dashSpeed;
