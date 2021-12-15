@@ -1,4 +1,5 @@
 using System;
+using Audio;
 using Buffs;
 using Hazard;
 using Player;
@@ -219,6 +220,9 @@ namespace GameManagement
 
         public void StartFinalCountdown()
         {
+            GameManager.Instance.GetComponent<AudioManager>().Stop("GameMusic");
+            GameManager.Instance.GetComponent<AudioManager>().Play("EscapeSequence");
+
             countingDown = true;
         }
 
@@ -244,6 +248,7 @@ namespace GameManagement
 
         private void LoadCredits()
         {
+            GameManager.Instance.GetComponent<AudioManager>().Stop("EscapeSequence");
             GameManager.Instance.LoadCredits();
         }
     }
