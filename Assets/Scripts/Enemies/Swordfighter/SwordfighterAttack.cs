@@ -18,7 +18,7 @@ namespace Enemies.Swordfighter
             //animator.SetTrigger("Attack");
             //audioManager.Play("Attack");
             target.rb.velocity = Vector2.zero;
-
+            target.spriteRenderer.sprite = target.attacking;
             // Detect enemies and doors in range of attack
             Collider2D[] hits =
                 Physics2D.OverlapCircleAll(target.attackPoint.position, target.attackRange, target.playerMask);

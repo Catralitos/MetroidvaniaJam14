@@ -17,6 +17,7 @@ namespace Enemies.Swordfighter
         public override void StateStart()
         {
             base.StateStart();
+            target.spriteRenderer.sprite = target.regular;
             _patrolLeftPoint = (Vector2) target.currentPatrolAnchor + Vector2.left * target.horizontalRange;
             _patrolRightPoint = (Vector2) target.currentPatrolAnchor + Vector2.right * target.horizontalRange;
         }
