@@ -30,11 +30,6 @@ namespace Player
                 ? 0
                 : Mathf.RoundToInt(Mathf.Floor(1.0f * PlayerEntity.Instance.Health.currentHealth /
                                                PlayerEntity.Instance.Health.healthPerMaxIncrement));
-
-            if (PlayerEntity.Instance.Health.currentHealth < 100)
-            {
-                int x = 0;
-            }
             
             int mod = Mathf.RoundToInt(PlayerEntity.Instance.Health.currentHealth %
                                        PlayerEntity.Instance.Health.healthPerMaxIncrement);

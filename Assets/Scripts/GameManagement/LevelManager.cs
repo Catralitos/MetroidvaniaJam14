@@ -15,6 +15,9 @@ namespace GameManagement
         public float finalCountdownTime;
         private float _finalCountdown;
 
+        public int itemsCollected;
+        public int maxItems = 20;
+        
         public GameObject hud;
         public PauseScreenManager pauseScreen;
 
@@ -220,12 +223,14 @@ namespace GameManagement
             PlayerEntity.Instance.frozeControls = true;
             countingDown = false;
             GameManager.Instance.StopCountingTime();
+            GameManager.Instance.lastMaxItems = maxItems;
+            GameManager.Instance.lastCollectedItems = itemsCollected;
             Invoke(nameof(LoadCredits), 3f);
         }
 
         private void LoadCredits()
         {
-            GameManager.Instance.LoadNextScene();
+            GameManager.Instance.LoadMainScene();
         }
     }
 }
