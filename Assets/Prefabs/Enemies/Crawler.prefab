@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4643622491728409211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: -2.5, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4643622492123209663}
@@ -223,12 +223,17 @@ MonoBehaviour:
   rb: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0, w: 0}
   randomDropChance: 0.5
-  pickUps: []
+  pickUps:
+  - {fileID: 6771688579432759611, guid: 215bb351c58bd7f4bbfa5a6f5ff87d01, type: 3}
+  - {fileID: 7366372056326265573, guid: 347ce856099440b42a63eafc7144b472, type: 3}
+  - {fileID: 3679504391216795944, guid: 7e117c683cea4d4438f889f88f6c9949, type: 3}
+  - {fileID: 175651811641338554, guid: bb0c281d7ba86754794af04ff0897520, type: 3}
+  - {fileID: 0}
   dissolveSpeed: 0.5
   startDissolveColor: {r: 1, g: 0, b: 0, a: 1}
   stopDissolveColor: {r: 1, g: 1, b: 1, a: 1}
   moveSpeed: 1
-  rayDistance: 1
+  rayDistance: 0.5
   movingRight: 1
   backTrigger: {fileID: 4643622492123209662}
   head: {fileID: 4643622491728409210}

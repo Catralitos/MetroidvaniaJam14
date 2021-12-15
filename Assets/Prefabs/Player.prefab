@@ -1291,7 +1291,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e05314ac37774824a80771e947961564, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1405,12 +1405,12 @@ MonoBehaviour:
   isMorphed: 0
   isUnderwater: 0
   dying: 0
-  unlockedDash: 1
+  unlockedDash: 0
   unlockedDoubleJump: 0
   unlockedGravitySuit: 0
-  unlockedMorphBall: 1
-  unlockedTripleBeam: 1
-  unlockedPiercingBeam: 1
+  unlockedMorphBall: 0
+  unlockedTripleBeam: 0
+  unlockedPiercingBeam: 0
   combatRoomsBeaten: 
   healthUpgradesCollected: 
   damageUpgradesCollected: 
@@ -1538,7 +1538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kickDuration: 0.7
-  shotCooldown: 2
+  shotCooldown: 1.5
   shotRange: 10
   normalShotDamage: 20
   boostedShotDamage: 30
@@ -1658,6 +1658,7 @@ MonoBehaviour:
   jumpBuff: {fileID: 0}
   speedBuff: {fileID: 0}
   tooltip: {fileID: 0}
+  tooltipObject: {fileID: 0}
   canCancelTooltip: 0
 --- !u!114 &601116179
 MonoBehaviour:
