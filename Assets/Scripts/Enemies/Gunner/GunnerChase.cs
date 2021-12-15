@@ -4,6 +4,9 @@ namespace Enemies.Gunner
 {
     public class GunnerChase : GunnerState
     {
+
+        private Animator _animator;
+        
         // Start is called before the first frame update
         public static GunnerChase Create(Gunner target)
         {
@@ -14,9 +17,10 @@ namespace Enemies.Gunner
         public override void StateStart()
         {
             base.StateStart();
-            //animator.SetBool("Stopped", false);
-            //animator.SetBool("Patrolling", false);
-            //animator.SetBool("Chasing", true);
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("Shooting", false);
+            _animator.SetBool("Idle", false);
+            _animator.SetBool("Walking", true);
         }
     
         // Update is called once per frame
