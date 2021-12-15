@@ -1,9 +1,12 @@
 using UnityEngine;
+using Audio;
 
 namespace Enemies.Crawler
 {
     public class CrawlerFalling : CrawlerState
     {
+        private AudioManager _audioManager;
+        
         public static CrawlerFalling Create(Crawler target)
         {
             return CrawlerState.Create<CrawlerFalling>(target);
@@ -14,6 +17,7 @@ namespace Enemies.Crawler
             base.StateStart();
             target.rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             target.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
+            _audioManager.Stop("Crawling");
         }
 
         public override void StateUpdate()

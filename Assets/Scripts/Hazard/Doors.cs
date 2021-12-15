@@ -1,3 +1,4 @@
+using Audio;
 using UnityEngine;
 
 namespace Hazard
@@ -10,6 +11,7 @@ namespace Hazard
         public LayerMask blockMask;
         private Vector3 startPosition;
         private BoxCollider2D _collider;
+        private AudioManager _audioManager;
         
         void Start()
         {

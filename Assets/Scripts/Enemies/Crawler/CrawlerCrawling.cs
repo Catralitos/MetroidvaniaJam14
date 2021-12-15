@@ -1,3 +1,4 @@
+using Audio;
 using Extensions;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Enemies.Crawler
         private bool _hitFloor = false;
         private float _colliderSize = 0.5f;
         private Vector2 _direction = new Vector2(1, 0);
+        private AudioManager _audioManager;
 
         public static CrawlerCrawling Create(Crawler target)
         {
@@ -18,19 +20,11 @@ namespace Enemies.Crawler
         {
             base.StateStart();
             _colliderSize = target.boxCollider.bounds.extents.y;
-            //audioManager.Play("Crawling");
+            _audioManager.Play("Crawling");
         }
 
         public override void StateUpdate()
         {
-            //se o pontapé lhe tirou as contraints (meio hacky mas deve dar)
-            /*if (target.rb.constraints == RigidbodyConstraints2D.FreezeRotation)
-        {
-            SetState(CrawlerFalling.Create(target));
-            return;
-        }*/
-
-
             if (!_hitFloor)
             {
                 transform.localPosition +=
