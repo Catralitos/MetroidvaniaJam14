@@ -1,5 +1,6 @@
 using GameManagement;
 using UnityEngine;
+using Audio;
 
 namespace Player
 {
@@ -25,6 +26,7 @@ namespace Player
 
         [ColorUsageAttribute(true, true)] [SerializeField]
         private Color stopDissolveColor;
+        private AudioManager _audioManager;
         
         // Start is called before the first frame update
         private void Start()
@@ -45,6 +47,7 @@ namespace Player
         {
             if (PlayerEntity.Instance.dying) return;
             //fazer dano
+            _audioManager.Play("Hit");
             PlayerEntity.Instance.animators[0].SetBool("BeingHit", true);
             PlayerEntity.Instance.frozeControls = true;
             _rb.velocity = Vector2.zero;
@@ -60,6 +63,7 @@ namespace Player
 
         public void Die()
         {
+            _audioManager.Play("Death");
             PlayerEntity.Instance.DisableAllCollisions();
             PlayerEntity.Instance.dying = true;
             PlayerEntity.Instance.frozeControls = true;

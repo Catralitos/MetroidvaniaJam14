@@ -1,4 +1,5 @@
 using UnityEngine;
+using Audio;
 
 namespace Hazard
 {
@@ -10,6 +11,7 @@ namespace Hazard
         public Sprite afterHitting;
         public bool pressed;
         private float _timer = 0f;
+        private AudioManager _audioManager;
 
         private SpriteRenderer _sprite;
 
@@ -51,6 +53,7 @@ namespace Hazard
         {
             _timer = parent.hitTimeframe;
             HitSprite();
+            _audioManager.Play("Button");
         }
 
         public override void UnPress()

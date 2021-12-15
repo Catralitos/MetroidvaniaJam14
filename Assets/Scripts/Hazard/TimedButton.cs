@@ -1,4 +1,5 @@
 using UnityEngine;
+using Audio;
 
 namespace Hazard
 {
@@ -9,6 +10,7 @@ namespace Hazard
         public bool pressed;
         public float pressedCooldown = 4f;
         private float _timer = 0f;
+        private AudioManager _audioManager;
 
         [SerializeField] public Openable toOpen;
         
@@ -52,6 +54,7 @@ namespace Hazard
         {
             _timer = pressedCooldown;
             HitSprite();
+            _audioManager.Play("Button");
         }
         
         public override void UnPress()

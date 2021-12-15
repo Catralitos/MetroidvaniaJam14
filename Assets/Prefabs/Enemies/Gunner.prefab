@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 8973607182430717274}
   - component: {fileID: 267333617}
   - component: {fileID: 1476530738}
+  - component: {fileID: 5093017379052448441}
   m_Layer: 8
   m_Name: Gunner
   m_TagString: Untagged
@@ -347,3 +348,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5093017379052448441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973607182430717284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: GunnerFiring
+    clip: {fileID: 8300000, guid: f5acf3cafe01da048a631dcd0c1d8feb, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

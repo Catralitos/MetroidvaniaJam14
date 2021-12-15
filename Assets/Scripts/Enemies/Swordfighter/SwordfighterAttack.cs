@@ -1,11 +1,13 @@
 using Extensions;
 using Player;
 using UnityEngine;
+using Audio;
 
 namespace Enemies.Swordfighter
 {
     public class SwordfighterAttack : SwordfighterState
     {
+        private AudioManager _audioManager;
         public static SwordfighterAttack Create(Swordfighter target)
         {
             SwordfighterAttack state = SwordfighterState.Create<SwordfighterAttack>(target);
@@ -16,7 +18,7 @@ namespace Enemies.Swordfighter
         {
             base.StateStart();
             //animator.SetTrigger("Attack");
-            //audioManager.Play("Attack");
+            _audioManager.Play("BehemotAttacking");
             target.rb.velocity = Vector2.zero;
             target.spriteRenderer.sprite = target.attacking;
             // Detect enemies and doors in range of attack
