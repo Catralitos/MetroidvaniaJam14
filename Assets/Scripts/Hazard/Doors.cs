@@ -54,12 +54,14 @@ namespace Hazard
         {
             closed = false;
             _collider.enabled = false;
+            _audioManager.Play("DoorOpen");
         }
 
         public override void Close()
         {
             closed = true;
             _collider.enabled = true;
+            _audioManager.Play("DoorOpen");
         }
     }
 }

@@ -1,11 +1,14 @@
+using Audio;
 using UnityEngine;
+using Audio;
 
 namespace Enemies.Swordfighter
 {
     public class SwordfighterIdle : SwordfighterState
     {
         private float _cooldownLeft;
-
+        private AudioManager _audioManager;
+        
         public static SwordfighterIdle Create(Swordfighter target)
         {
             SwordfighterIdle state = SwordfighterState.Create<SwordfighterIdle>(target);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4847432853791663118}
   - component: {fileID: 4847432853791663120}
   - component: {fileID: 4847432853791663121}
+  - component: {fileID: 1798791040848786092}
   m_Layer: 13
   m_Name: Door
   m_TagString: Untagged
@@ -149,3 +150,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1798791040848786092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4847432853791663123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: DoorOpen
+    clip: {fileID: 8300000, guid: 20251bbc6fe2aff4d87a48db90a6ef21, type: 3}
+    volume: 0.211
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

@@ -306,6 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 928389017472908992}
   - component: {fileID: 928389017472908999}
+  - component: {fileID: 1981634299267324930}
   m_Layer: 0
   m_Name: TripleButton
   m_TagString: Untagged
@@ -345,9 +346,29 @@ MonoBehaviour:
   button1: {fileID: 5051508983222090991}
   button2: {fileID: 928389016936773708}
   button3: {fileID: 928389015459878048}
+  startsFinalCountdown: 0
   door: {fileID: 0}
   hitTimeframe: 0.7
   pressed: 0
+--- !u!114 &1981634299267324930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928389017472908998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Button
+    clip: {fileID: 8300000, guid: 34f6d88bb0c11304988376c64216e3a5, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &5051508983222090990
 GameObject:
   m_ObjectHideFlags: 0

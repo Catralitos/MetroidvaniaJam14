@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Audio;
 
 namespace Player
 {
@@ -76,6 +77,8 @@ namespace Player
         private Vector2 _ledgePosBottom;
         private Vector2 _ledgePos1;
         private Vector2 _ledgePos2;
+        
+        private AudioManager _audioManager;
 
         private void Awake()
         {
@@ -213,6 +216,8 @@ namespace Player
 
             if (dash && _dashCooldownLeft < 0)
             {
+                
+                _audioManager.Play("Dashing");
                 if (PlayerEntity.Instance.isCrouched)
                 {
                     Uncrouch();

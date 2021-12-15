@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5455294407224361463}
   - component: {fileID: 125657801}
   - component: {fileID: 3751433947972953907}
+  - component: {fileID: 8671004173268828277}
   m_Layer: 8
   m_Name: Behemot
   m_TagString: Untagged
@@ -292,6 +293,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8671004173268828277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5455294407224361448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: BehemotAttacking
+    clip: {fileID: 8300000, guid: fa27e07bf93942147b32112b0b60c2c6, type: 3}
+    volume: 0.202
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &5861962118553437033
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6467460525316104744}
   - component: {fileID: 6467460525316104745}
   - component: {fileID: 6467460525316104746}
+  - component: {fileID: 7713446620911610256}
   m_Layer: 14
   m_Name: TimedButton
   m_TagString: Untagged
@@ -149,3 +150,22 @@ MonoBehaviour:
   pressed: 0
   pressedCooldown: 4
   toOpen: {fileID: 0}
+--- !u!114 &7713446620911610256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467460525316104747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Button
+    clip: {fileID: 8300000, guid: 34f6d88bb0c11304988376c64216e3a5, type: 3}
+    volume: 0.202
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

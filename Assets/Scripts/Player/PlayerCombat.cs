@@ -3,6 +3,7 @@ using UnityEngine;
 using Extensions;
 using Enemies.Base;
 using Hazard;
+using Audio;
 
 namespace Player
 {
@@ -41,6 +42,7 @@ namespace Player
         public int damageIncreasePerUpgrade;
 
         private Material _material;
+        private AudioManager _audioManager;
         public void Start()
         {
             _shotTimer = shotCooldown;
@@ -103,7 +105,8 @@ namespace Player
                 lineRendererUp.enabled = true;
                 lineRendererDown.enabled = true;
             }
-
+            
+            _audioManager.Play("Shooting_weak");
             int i = PlayerEntity.Instance.isCrouched ? 1 : 0;
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
             armJoints[i].rotation = Quaternion.Euler(0, 0, angle);

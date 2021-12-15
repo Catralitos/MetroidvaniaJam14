@@ -1342,6 +1342,7 @@ GameObject:
   - component: {fileID: 792532265}
   - component: {fileID: 2123994783618295201}
   - component: {fileID: 601116179}
+  - component: {fileID: 3552956074171775768}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1673,3 +1674,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: f2fc7a74d499cc54e93e741d745b1c20, type: 2}
+--- !u!114 &3552956074171775768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980801993563420550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Death
+    clip: {fileID: 8300000, guid: 2fb1ee067bde28344b059fb7c05ba390, type: 3}
+    volume: 0.236
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: LowHealth
+    clip: {fileID: 8300000, guid: 0481702b5997bcb40b0fcc090c5d482b, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Dashing
+    clip: {fileID: 8300000, guid: 48167eada1c67fd40815644954b7fac2, type: 3}
+    volume: 0.216
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: 98415c5f90fc1744b8216369efbc3da6, type: 3}
+    volume: 0.217
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MissedKick
+    clip: {fileID: 8300000, guid: cf54565d6034bc440a54371c4b0abd26, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shooting_weak
+    clip: {fileID: 8300000, guid: 645f8ce19a490b742b43dc848ad4f206, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shooting_strong
+    clip: {fileID: 8300000, guid: 6e08fe54453493741b827502b5bacb62, type: 3}
+    volume: 0.207
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
