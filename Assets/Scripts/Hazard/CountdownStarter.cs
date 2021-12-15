@@ -5,6 +5,7 @@ public class CountdownStarter : Openable
 {
     public override void Open()
     {
+        
         LevelManager.Instance.StartFinalCountdown();
     }
     
