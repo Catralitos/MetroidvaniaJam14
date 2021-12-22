@@ -762,12 +762,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleScreen: {fileID: 1588294176}
-  optionsScreen: {fileID: 1377160773}
   newGameButton: {fileID: 1835966547}
   loadGameButton: {fileID: 170352115}
-  optionsButton: {fileID: 2116371023}
   exitButton: {fileID: 948426957}
-  backButton: {fileID: 0}
 --- !u!1 &805480890
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +798,9 @@ MonoBehaviour:
   countingTime: 0
   timeElapsed: 0
   savePath: 
+  lastMaxItems: 0
+  lastCollectedItems: 0
+  lastRecordedTime: 0
 --- !u!4 &805480892
 Transform:
   m_ObjectHideFlags: 0
@@ -824,38 +824,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 805480890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5be273afc94a044c9d346248e79629a, type: 3}
+  m_Script: {fileID: 11500000, guid: 204616e6a63d4ca4fad785085cdac221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftDoor: {fileID: 0}
-  rightDoor: {fileID: 0}
-  timeBetweenSpawns: 0
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  monsterLists:
-  - monsters:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - monsters:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - monsters:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+  sounds:
+  - name: GameMusic
+    clip: {fileID: 8300000, guid: 3587f4168771ae1419d8cd07dee108d0, type: 3}
+    volume: 0.2
+    pitch: 2
+    loop: 1
+    source: {fileID: 0}
+  - name: TitleMusic
+    clip: {fileID: 8300000, guid: b0bfe148e6e712a44ab638478a855240, type: 3}
+    volume: 0.2
+    pitch: 2
+    loop: 1
+    source: {fileID: 0}
+  - name: EscapeSequence
+    clip: {fileID: 8300000, guid: 9030a28ffc319e44aaae6ef33a3b5c71, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
 --- !u!1 &847834484
 GameObject:
   m_ObjectHideFlags: 0
